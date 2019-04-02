@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://0xp1n3.github.io/"/>
-  <updated>2019-03-27T15:06:40.025Z</updated>
+  <updated>2019-04-02T12:38:46.967Z</updated>
   <id>https://0xp1n3.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>记一次LFI-Fuzz字典构造</title>
+    <link href="https://0xp1n3.github.io/2019/04/01/LFI-Fuzz/"/>
+    <id>https://0xp1n3.github.io/2019/04/01/LFI-Fuzz/</id>
+    <published>2019-04-01T21:32:53.000Z</published>
+    <updated>2019-04-02T12:38:46.967Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Fuzz字典构造的必要性"><a href="#Fuzz字典构造的必要性" class="headerlink" title="Fuzz字典构造的必要性"></a>Fuzz字典构造的必要性</h2><p>当遇到一处文件包含漏洞时，一般操作大致如下</p><blockquote><ul><li>包含源码进行代码审计</li><li>包含文件(如日志)进行GetShell</li><li>包含配置文件获得敏感信息</li></ul></blockquote><p>对于后两个而言，手动一个个的去进行测试无疑是不够优雅的<br><a id="more"></a><br>所以就有了这次字典构造。</p><h2 id="Linux文件路径收集"><a href="#Linux文件路径收集" class="headerlink" title="Linux文件路径收集"></a>Linux文件路径收集</h2><blockquote><p>对于路径来说是有绝对路径和相对路径两种，考虑到限制路径的可能性<br>将以下所有目录加上多个<code>../</code>以保证在相对路径时达到绝对路径的效果<br><code>../../../../../../../../../../*</code></p></blockquote><h3 id="Apache日志"><a href="#Apache日志" class="headerlink" title="Apache日志"></a>Apache日志</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/var/<span class="built_in">log</span>/apache/access.log</span><br><span class="line">/var/<span class="built_in">log</span>/apache/access_log </span><br><span class="line">/var/<span class="built_in">log</span>/apache/error_log </span><br><span class="line">/var/<span class="built_in">log</span>/apache/error.log </span><br><span class="line">/var/<span class="built_in">log</span>/apache2/access.log</span><br><span class="line">/var/<span class="built_in">log</span>/apache2/access_log</span><br><span class="line">/var/<span class="built_in">log</span>/apache2/error.log</span><br><span class="line">/var/<span class="built_in">log</span>/apache2/error_log</span><br><span class="line">/usr/<span class="built_in">local</span>/apache/logs/access_log </span><br><span class="line">/usr/<span class="built_in">local</span>/apache/logs/access.log </span><br><span class="line">/usr/<span class="built_in">local</span>/apache/logs/error_log </span><br><span class="line">/usr/<span class="built_in">local</span>/apache/logs/error.log </span><br><span class="line">/usr/<span class="built_in">local</span>/apache2/logs/access_log </span><br><span class="line">/usr/<span class="built_in">local</span>/apache2/logs/access.log </span><br><span class="line">/usr/<span class="built_in">local</span>/apache2/logs/error_log </span><br><span class="line">/usr/<span class="built_in">local</span>/apache2/logs/error.log </span><br><span class="line">/usr/<span class="built_in">local</span>/app/apache/logs/access_log </span><br><span class="line">/usr/<span class="built_in">local</span>/app/apache/logs/access.log </span><br><span class="line">/usr/<span class="built_in">local</span>/app/apache/logs/error_log </span><br><span class="line">/usr/<span class="built_in">local</span>/app/apache/logs/error.log </span><br><span class="line">/usr/<span class="built_in">local</span>/app/apache2/logs/access_log </span><br><span class="line">/usr/<span class="built_in">local</span>/app/apache2/logs/access.log </span><br><span class="line">/usr/<span class="built_in">local</span>/app/apache2/logs/error_log </span><br><span class="line">/usr/<span class="built_in">local</span>/app/apache2/logs/error.log</span><br></pre></td></tr></table></figure><h3 id="WWW日志"><a href="#WWW日志" class="headerlink" title="WWW日志"></a>WWW日志</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/var/www/logs/access.log</span><br><span class="line">/var/www/logs/access_log</span><br><span class="line">/var/www/logs/error_log</span><br><span class="line">/var/www/logs/error.log</span><br><span class="line"></span><br><span class="line">/var/<span class="built_in">log</span>/access.log</span><br><span class="line">/var/<span class="built_in">log</span>/access_log </span><br><span class="line">/var/<span class="built_in">log</span>/error.log</span><br><span class="line">/var/<span class="built_in">log</span>/error_log</span><br><span class="line"></span><br><span class="line">/var/<span class="built_in">log</span>/httpd/access_log  </span><br><span class="line">/var/<span class="built_in">log</span>/httpd/error_log</span><br><span class="line">/var/<span class="built_in">log</span>/httpd/access.log  </span><br><span class="line">/var/<span class="built_in">log</span>/httpd/error.log</span><br><span class="line"></span><br><span class="line">/etc/httpd/logs/acces_log </span><br><span class="line">/etc/httpd/logs/acces.log </span><br><span class="line">/etc/httpd/logs/error_log </span><br><span class="line">/etc/httpd/logs/error.log </span><br><span class="line">/etc/httpd/conf/httpd.conf</span><br></pre></td></tr></table></figure><h3 id="SSH日志"><a href="#SSH日志" class="headerlink" title="SSH日志"></a>SSH日志</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">/var/log/secure</span><br><span class="line">/var/log/auth.log</span><br></pre></td></tr></table></figure><h3 id="FTP日志"><a href="#FTP日志" class="headerlink" title="FTP日志"></a>FTP日志</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/var/<span class="built_in">log</span>/messages</span><br></pre></td></tr></table></figure><h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#mysql 配置文件</span></span><br><span class="line">/etc/my.conf</span><br><span class="line"></span><br><span class="line"><span class="comment">#Apache2默认配置文件</span></span><br><span class="line">/usr/<span class="built_in">local</span>/app/apache2/conf/httpd.conf</span><br><span class="line">/usr/<span class="built_in">local</span>/app/apache2/conf/extra/httpd-vhost.conf</span><br><span class="line"></span><br><span class="line"><span class="comment">#PHP相关配置</span></span><br><span class="line">/usr/<span class="built_in">local</span>/app/php5/lib/php.ini</span><br><span class="line"></span><br><span class="line"><span class="comment">#用户&amp;密码信息</span></span><br><span class="line">/etc/passwd</span><br><span class="line">/etc/shadow</span><br></pre></td></tr></table></figure><h3 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/var/lib/php/session/sess_+sessionid</span><br></pre></td></tr></table></figure><h2 id="Win文件路径收集"><a href="#Win文件路径收集" class="headerlink" title="Win文件路径收集"></a>Win文件路径收集</h2><h3 id="FTP日志-1"><a href="#FTP日志-1" class="headerlink" title="FTP日志"></a>FTP日志</h3><blockquote><p>ex+年份的末两位数字+月份+日期，如2019年4月02日的WWW日志文件是ex190402.log</p></blockquote><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">%systemroot%/system32/logfiles/msftpsvc1/ex190402.log</span><br></pre></td></tr></table></figure><h3 id="WWW日志-1"><a href="#WWW日志-1" class="headerlink" title="WWW日志"></a>WWW日志</h3><blockquote><p>ex+年份的末两位数字+月份+日期。如2019年4月02日的WWW日志文件是ex190402.log</p></blockquote><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">%systemroot%/system32/logfiles/w3svc1/ex190402.log</span><br></pre></td></tr></table></figure><h3 id="配置文件-1"><a href="#配置文件-1" class="headerlink" title="配置文件"></a>配置文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">%systemroot%\system32\inetsrv\MetaBase.xml <span class="comment">#IIS配置文件</span></span><br><span class="line">%systemroot%\php.ini <span class="comment">#php配置信息</span></span><br><span class="line">c:\ProgramFiles\mysql\my.ini <span class="comment">#MySQL配置</span></span><br></pre></td></tr></table></figure><h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>除去一些比较特殊没法通用化的，那么一份热乎乎的Fuzz字典就这么出炉啦!</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Fuzz字典构造的必要性&quot;&gt;&lt;a href=&quot;#Fuzz字典构造的必要性&quot; class=&quot;headerlink&quot; title=&quot;Fuzz字典构造的必要性&quot;&gt;&lt;/a&gt;Fuzz字典构造的必要性&lt;/h2&gt;&lt;p&gt;当遇到一处文件包含漏洞时，一般操作大致如下&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;包含源码进行代码审计&lt;/li&gt;
+&lt;li&gt;包含文件(如日志)进行GetShell&lt;/li&gt;
+&lt;li&gt;包含配置文件获得敏感信息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;对于后两个而言，手动一个个的去进行测试无疑是不够优雅的&lt;br&gt;
+    
+    </summary>
+    
+      <category term="渗透测试" scheme="https://0xp1n3.github.io/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"/>
+    
+    
+      <category term="文件包含" scheme="https://0xp1n3.github.io/tags/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/"/>
+    
+  </entry>
   
   <entry>
     <title>Linux花式弹shell指南</title>
@@ -315,11 +345,11 @@
       <category term="Web安全" scheme="https://0xp1n3.github.io/categories/Web%E5%AE%89%E5%85%A8/"/>
     
     
+      <category term="文件包含" scheme="https://0xp1n3.github.io/tags/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/"/>
+    
       <category term="渗透测试" scheme="https://0xp1n3.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"/>
     
       <category term="Web安全" scheme="https://0xp1n3.github.io/tags/Web%E5%AE%89%E5%85%A8/"/>
-    
-      <category term="文件包含" scheme="https://0xp1n3.github.io/tags/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/"/>
     
   </entry>
   

