@@ -85,7 +85,7 @@
 <meta property="og:site_name" content="不如茶酒伴">
 <meta property="og:description" content="Fuzz字典构造的必要性当遇到一处文件包含漏洞时，一般操作大致如下   包含源码进行代码审计 包含文件(如日志)进行GetShell 包含配置文件获得敏感信息   对于后两个而言，手动一个个的去进行测试无疑是不够优雅的">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-02T12:38:46.967Z">
+<meta property="og:updated_time" content="2019-04-09T09:13:28.601Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记一次LFI-Fuzz字典构造">
 <meta name="twitter:description" content="Fuzz字典构造的必要性当遇到一处文件包含漏洞时，一般操作大致如下   包含源码进行代码审计 包含文件(如日志)进行GetShell 包含配置文件获得敏感信息   对于后两个而言，手动一个个的去进行测试无疑是不够优雅的">
@@ -410,6 +410,7 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">%systemroot%/system32/logfiles/w3svc1/ex190402.log</span><br></pre></td></tr></table></figure>
 <h3 id="配置文件-1"><a href="#配置文件-1" class="headerlink" title="配置文件"></a>配置文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">%systemroot%\system32\inetsrv\MetaBase.xml <span class="comment">#IIS配置文件</span></span><br><span class="line">%systemroot%\php.ini <span class="comment">#php配置信息</span></span><br><span class="line">c:\ProgramFiles\mysql\my.ini <span class="comment">#MySQL配置</span></span><br></pre></td></tr></table></figure>
 <h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>除去一些比较特殊没法通用化的，那么一份热乎乎的Fuzz字典就这么出炉啦!</p>
+<p>接下来就是长时间的字典积累维护了</p>
 
       
     </div>
@@ -537,7 +538,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -559,7 +560,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
