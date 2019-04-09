@@ -88,7 +88,7 @@
 <meta property="og:image" content="https://0xp1n3.github.io/2018/11/17/web-scan/web-scan-1.png">
 <meta property="og:image" content="https://0xp1n3.github.io/2018/11/17/web-scan/web-scan-2.png">
 <meta property="og:image" content="https://0xp1n3.github.io/2018/11/17/web-scan/web-scan-3.png">
-<meta property="og:updated_time" content="2019-03-18T12:26:51.785Z">
+<meta property="og:updated_time" content="2019-04-09T13:26:11.543Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python打造基于scapy的扫描器">
 <meta name="twitter:description" content="准备事宜scapy库git clone https://github.com/secdev/scapy.gitcd ./scapypython setup.py 构思">
@@ -388,7 +388,7 @@
       
         <h2 id="准备事宜"><a href="#准备事宜" class="headerlink" title="准备事宜"></a>准备事宜</h2><p>scapy库<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/secdev/scapy.git</span><br><span class="line"><span class="built_in">cd</span> ./scapy</span><br><span class="line">python setup.py</span><br></pre></td></tr></table></figure></p>
 <h2 id="构思"><a href="#构思" class="headerlink" title="构思"></a>构思</h2><a id="more"></a>
-<p>放个三次握手原理图<br><img src="web-scan-1.png" alt=""><br>与被扫描机进行SYN握手，有回应就是开放了端口<br>基本思路参考</p>
+<p>放个三次握手原理图<br><img src="web-scan-1.png" alt=""><br>与被扫描机进行SYN握手，返回数据包不带 RST 标识就是开放了端口<br>基本思路参考</p>
 <ul>
 <li><a href="https://scapy.readthedocs.io/en/latest/usage.html#starting-scapy" target="_blank" rel="noopener">scapy官方文档</a></li>
 <li><a href="https://www.freebuf.com/sectool/94507.html" target="_blank" rel="noopener">如何用Scapy写一个端口扫描器？</a></li>
