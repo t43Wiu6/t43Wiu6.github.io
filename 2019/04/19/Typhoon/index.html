@@ -80,37 +80,37 @@
 <meta name="description" content="简介 目标：root 作者：PrismaCSI 难度定位：无   渗透过程中经历了好几次换环境，IP地址有点混乱，请体谅  MongoDB未授权访问">
 <meta property="og:type" content="article">
 <meta property="og:title" content="渗透实战:Typhoon靶机入侵">
-<meta property="og:url" content="https://0xp1n3.github.io/2019/04/19/Typhoon/index.html">
+<meta property="og:url" content="https://t43wiu6.github.io/2019/04/19/Typhoon/index.html">
 <meta property="og:site_name" content="不如茶酒伴">
 <meta property="og:description" content="简介 目标：root 作者：PrismaCSI 难度定位：无   渗透过程中经历了好几次换环境，IP地址有点混乱，请体谅  MongoDB未授权访问">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/mongoadmin.PNG">
-<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/ssh.PNG">
-<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/mongodb.PNG">
-<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/shell.PNG">
-<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/dvwa.PNG">
-<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/SSTI.PNG">
-<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/httpserver.PNG">
-<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/www-data.PNG">
-<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/drupal.PNG">
-<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/lotus.PNG">
-<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/psql.PNG">
-<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/passwd.PNG">
-<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/postgresql-shell.PNG">
-<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/redis.PNG">
-<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/cups.PNG">
-<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/tomcat.PNG">
-<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/struts2.PNG">
-<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/struts2-rs.PNG">
-<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/s2045.PNG">
-<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/vim-root.PNG">
-<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/root-flag.PNG">
-<meta property="og:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/autoroot.PNG">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/mongoadmin.PNG">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/ssh.PNG">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/mongodb.PNG">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/shell.PNG">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/dvwa.PNG">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/SSTI.PNG">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/httpserver.PNG">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/www-data.PNG">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/drupal.PNG">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/lotus.PNG">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/psql.PNG">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/passwd.PNG">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/postgresql-shell.PNG">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/redis.PNG">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/cups.PNG">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/tomcat.PNG">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/struts2.PNG">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/struts2-rs.PNG">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/s2045.PNG">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/vim-root.PNG">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/root-flag.PNG">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/autoroot.PNG">
 <meta property="og:updated_time" content="2019-04-20T06:07:29.077Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="渗透实战:Typhoon靶机入侵">
 <meta name="twitter:description" content="简介 目标：root 作者：PrismaCSI 难度定位：无   渗透过程中经历了好几次换环境，IP地址有点混乱，请体谅  MongoDB未授权访问">
-<meta name="twitter:image" content="https://0xp1n3.github.io/2019/04/19/Typhoon/mongoadmin.PNG">
+<meta name="twitter:image" content="https://t43wiu6.github.io/2019/04/19/Typhoon/mongoadmin.PNG">
 
 
 
@@ -140,7 +140,7 @@
 
 
 
-  <link rel="canonical" href="https://0xp1n3.github.io/2019/04/19/Typhoon/">
+  <link rel="canonical" href="https://t43wiu6.github.io/2019/04/19/Typhoon/">
 
 
 
@@ -181,7 +181,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle">你看，那个人好奇怪哦！是啊，好像一条狗！</p>
+        <p class="site-subtitle">大风起兮！</p>
       
   </div>
 
@@ -315,10 +315,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://0xp1n3.github.io/2019/04/19/Typhoon/">
+    <link itemprop="mainEntityOfPage" href="https://t43wiu6.github.io/2019/04/19/Typhoon/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="p1n3">
+      <meta itemprop="name" content="t43wiu6">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/uploads/avatar.jpg">
     </span>
@@ -564,6 +564,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/12/20/ShellCode-Loader/" rel="prev" title="ShellCode加载器的探索与学习">
+                ShellCode加载器的探索与学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -628,9 +632,9 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="p1n3">
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="t43wiu6">
             
-              <p class="site-author-name" itemprop="name">p1n3</p>
+              <p class="site-author-name" itemprop="name">t43wiu6</p>
               <p class="site-description motion-element" itemprop="description">何人的归宿是星辰大海?</p>
           </div>
 
@@ -641,7 +645,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -663,7 +667,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -684,7 +688,7 @@
             <div class="links-of-author motion-element">
                 
                   <span class="links-of-author-item">
-                    <a href="https://github.com/0xp1n3" target="_blank" title="GitHub">
+                    <a href="https://github.com/t43wiu6" target="_blank" title="GitHub">
                       
                         <i class="fa fa-fw fa-github"></i>GitHub</a>
                   </span>
@@ -705,7 +709,7 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://gh0st.cn/" title="gh0st" target="_blank">gh0st</a>
+                    <a href="https://gh0st.cn/" title="Acmesec_Chen" target="_blank">Acmesec_Chen</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -767,7 +771,7 @@
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">p1n3</span>
+  <span class="author" itemprop="copyrightHolder">t43wiu6</span>
 
   
 </div>

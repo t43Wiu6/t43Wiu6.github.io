@@ -81,17 +81,17 @@
 <meta name="keywords" content="docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker从入门到放弃">
-<meta property="og:url" content="https://0xp1n3.github.io/2018/10/28/docker-1/index.html">
+<meta property="og:url" content="https://t43wiu6.github.io/2018/10/28/docker-1/index.html">
 <meta property="og:site_name" content="不如茶酒伴">
 <meta property="og:description" content="docker">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://0xp1n3.github.io/2018/10/28/docker-1/docker-1-1.png">
-<meta property="og:image" content="https://0xp1n3.github.io/2018/10/28/docker-1/docker-1-2.png">
-<meta property="og:updated_time" content="2019-02-12T10:45:30.000Z">
+<meta property="og:image" content="https://t43wiu6.github.io/2018/10/28/docker-1/docker-1-1.png">
+<meta property="og:image" content="https://t43wiu6.github.io/2018/10/28/docker-1/docker-1-2.png">
+<meta property="og:updated_time" content="2019-12-25T01:28:34.091Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker从入门到放弃">
 <meta name="twitter:description" content="docker">
-<meta name="twitter:image" content="https://0xp1n3.github.io/2018/10/28/docker-1/docker-1-1.png">
+<meta name="twitter:image" content="https://t43wiu6.github.io/2018/10/28/docker-1/docker-1-1.png">
 
 
 
@@ -121,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="https://0xp1n3.github.io/2018/10/28/docker-1/">
+  <link rel="canonical" href="https://t43wiu6.github.io/2018/10/28/docker-1/">
 
 
 
@@ -162,7 +162,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle">你看，那个人好奇怪哦！是啊，好像一条狗！</p>
+        <p class="site-subtitle">大风起兮！</p>
       
   </div>
 
@@ -296,10 +296,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://0xp1n3.github.io/2018/10/28/docker-1/">
+    <link itemprop="mainEntityOfPage" href="https://t43wiu6.github.io/2018/10/28/docker-1/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="p1n3">
+      <meta itemprop="name" content="t43wiu6">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/uploads/avatar.jpg">
     </span>
@@ -394,19 +394,20 @@
 <li>仓库 -仓库存储镜像(类似于Git的管理机制)<br><img src="docker-1-2.png" alt=""></li>
 </ul>
 <h2 id="docker的安装"><a href="#docker的安装" class="headerlink" title="docker的安装"></a>docker的安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget -qO- https://get.docker.com/ | sh</span><br></pre></td></tr></table></figure>
-<p>安装完后,将docker账户添加到sherdh用户组(非root)以便执行,然后登出再登录<br>否则会报no permission<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo groupadd docker</span><br><span class="line">sudo gpasswd -a <span class="variable">$&#123;USER&#125;</span> docker</span><br><span class="line">sudo service docker restart</span><br><span class="line">newgrp - docker</span><br></pre></td></tr></table></figure></p>
+<p>安装完后,将docker账户添加到用户组(非root)以便执行,然后登出再登录<br>否则会报no permission</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo groupadd docker</span><br><span class="line">sudo gpasswd -a <span class="variable">$&#123;USER&#125;</span> docker</span><br><span class="line">sudo service docker restart</span><br><span class="line">newgrp - docker</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#启动docker</span></span><br><span class="line">sudo service docker start</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#测试docker</span></span><br><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
 <p><a href="http://www.runoob.com/docker/ubuntu-docker-install.html" target="_blank" rel="noopener">菜鸟教程</a></p>
 <h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 搜索镜像</span></span><br><span class="line">dicker search centos</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载镜像</span></span><br><span class="line">docker pull name</span><br><span class="line"></span><br><span class="line"><span class="comment"># -t 绑定伪终端 -i 保持标准输入 -d 后台运行 -p 端口映射</span></span><br><span class="line">docker run -t -i -p 1000:80 docker.io/centos /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 展示所有镜像</span></span><br><span class="line">docker images</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存镜像</span></span><br><span class="line">docker save -o centos7.tar docker.io/centos</span><br><span class="line"></span><br><span class="line"><span class="comment"># 载入镜像</span></span><br><span class="line">docker load --input centos7.tar</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存容器</span></span><br><span class="line">docker <span class="built_in">export</span> id &gt; name.tar</span><br><span class="line"></span><br><span class="line"><span class="comment"># 载入容器成为镜像</span></span><br><span class="line">cat name.tar | docker import - sherdh/ubuntu:v1.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看正在运行的容器(所有)</span></span><br><span class="line">docker ps （-a）</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动/终止容器</span></span><br><span class="line">docker start/stop id (-i)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除镜像</span></span><br><span class="line">docker rmi id</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除容器</span></span><br><span class="line">docker rm id</span><br></pre></td></tr></table></figure>
 <h2 id="那些折腾"><a href="#那些折腾" class="headerlink" title="那些折腾"></a>那些折腾</h2><h3 id="第一坑"><a href="#第一坑" class="headerlink" title="第一坑"></a>第一坑</h3><p>不要强制删除一个存在容器依赖的镜像<br>即 -f ,因为会产生各种莫名其妙的问题<br>先删除容器,如果容器在运行，需要先停止<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查看所有容器</span></span><br><span class="line">docker ps -a</span><br><span class="line">docker rm 容器id</span><br></pre></td></tr></table></figure></p>
-<h3 id="创建镜像"><a href="#创建镜像" class="headerlink" title="创建镜像"></a>创建镜像</h3><p>基于已有容器<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker commit -a <span class="string">"sherdh"</span> -m <span class="string">"add a new file"</span> 容器id <span class="built_in">test</span>(新镜像名字)</span><br></pre></td></tr></table></figure></p>
+<h3 id="创建镜像"><a href="#创建镜像" class="headerlink" title="创建镜像"></a>创建镜像</h3><p>基于已有容器<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker commit -a <span class="string">"test"</span> -m <span class="string">"add a new file"</span> 容器id <span class="built_in">test</span>(新镜像名字)</span><br></pre></td></tr></table></figure></p>
 <p>注意是容器id，不是镜像id</p>
-<h3 id="加tag"><a href="#加tag" class="headerlink" title="加tag"></a>加tag</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker tag <span class="built_in">test</span>:latest sherdh/<span class="built_in">test</span>:latest</span><br></pre></td></tr></table></figure>
+<h3 id="加tag"><a href="#加tag" class="headerlink" title="加tag"></a>加tag</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker tag <span class="built_in">test</span>:latest <span class="built_in">test</span>/<span class="built_in">test</span>:latest</span><br></pre></td></tr></table></figure>
 <p>加了tag后，有两个同id的images<br>这时删除镜像报错<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Error response from daemon: conflict: unable to delete c30eab908457 (must be forced) - image is referenced <span class="keyword">in</span> multiple repositories</span><br></pre></td></tr></table></figure></p>
 <p>删除时需要指定名字，而不是id</p>
 <h3 id="运行报错standard-init-linux-go-178-exec-user-process-caused-“exec-format-error”"><a href="#运行报错standard-init-linux-go-178-exec-user-process-caused-“exec-format-error”" class="headerlink" title="运行报错standard_init_linux.go:178: exec user process caused “exec format error”"></a>运行报错standard_init_linux.go:178: exec user process caused “exec format error”</h3><p>查到原因是docker不支持32位ubuntu…<br>乖乖重装系统去</p>
-<h2 id="使用dockerfile创建镜像"><a href="#使用dockerfile创建镜像" class="headerlink" title="使用dockerfile创建镜像"></a>使用dockerfile创建镜像</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">FROM ubuntu</span><br><span class="line">MAINTAINER PinE sherdh@gmail.com</span><br><span class="line"></span><br><span class="line">RUN <span class="built_in">echo</span> <span class="string">"deb http://archive.ubuntu.com/ubuntu/ raring main universe"</span> &gt;&gt; /etc/apt/sources.list</span><br><span class="line">RUN apt-get update &amp;&amp; apt-get install -y nginx inotify-tools apache2 openssh-server</span><br><span class="line">RUN <span class="built_in">echo</span> <span class="string">"\ndaemon off;"</span> &gt;&gt; /etc/nginx/nginx.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 自启动</span></span><br><span class="line">RUN bash -c <span class="string">'echo "firefox" &gt;&gt; /.bashrc'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 打开端口</span></span><br><span class="line">EXPOSE 5900</span><br><span class="line"></span><br><span class="line"><span class="comment"># 容器启动执行的命令</span></span><br><span class="line">CMD /usr/sbin/nginx</span><br></pre></td></tr></table></figure>
+<h2 id="使用dockerfile创建镜像"><a href="#使用dockerfile创建镜像" class="headerlink" title="使用dockerfile创建镜像"></a>使用dockerfile创建镜像</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">FROM ubuntu</span><br><span class="line">MAINTAINER <span class="built_in">test</span> <span class="built_in">test</span>@gmail.com</span><br><span class="line"></span><br><span class="line">RUN <span class="built_in">echo</span> <span class="string">"deb http://archive.ubuntu.com/ubuntu/ raring main universe"</span> &gt;&gt; /etc/apt/sources.list</span><br><span class="line">RUN apt-get update &amp;&amp; apt-get install -y nginx inotify-tools apache2 openssh-server</span><br><span class="line">RUN <span class="built_in">echo</span> <span class="string">"\ndaemon off;"</span> &gt;&gt; /etc/nginx/nginx.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 自启动</span></span><br><span class="line">RUN bash -c <span class="string">'echo "firefox" &gt;&gt; /.bashrc'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 打开端口</span></span><br><span class="line">EXPOSE 5900</span><br><span class="line"></span><br><span class="line"><span class="comment"># 容器启动执行的命令</span></span><br><span class="line">CMD /usr/sbin/nginx</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -525,9 +526,9 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="p1n3">
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="t43wiu6">
             
-              <p class="site-author-name" itemprop="name">p1n3</p>
+              <p class="site-author-name" itemprop="name">t43wiu6</p>
               <p class="site-description motion-element" itemprop="description">何人的归宿是星辰大海?</p>
           </div>
 
@@ -538,7 +539,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -560,7 +561,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -581,7 +582,7 @@
             <div class="links-of-author motion-element">
                 
                   <span class="links-of-author-item">
-                    <a href="https://github.com/0xp1n3" target="_blank" title="GitHub">
+                    <a href="https://github.com/t43wiu6" target="_blank" title="GitHub">
                       
                         <i class="fa fa-fw fa-github"></i>GitHub</a>
                   </span>
@@ -602,7 +603,7 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://gh0st.cn/" title="gh0st" target="_blank">gh0st</a>
+                    <a href="https://gh0st.cn/" title="Acmesec_Chen" target="_blank">Acmesec_Chen</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -664,7 +665,7 @@
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">p1n3</span>
+  <span class="author" itemprop="copyrightHolder">t43wiu6</span>
 
   
 </div>
