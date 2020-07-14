@@ -1,1163 +1,384 @@
 <!DOCTYPE html>
-
-
-
-
-<html class="theme-next mist" lang="zh-CN">
+<html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
+    <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!--Description-->
 
 
 
+    <meta name="description" content="INTJ!">
 
 
+<!--Author-->
 
 
+<!--Open Graph Title-->
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta property="og:title" content="Docker从入门到放弃">
 
 
+<!--Open Graph Description-->
 
+    <meta property="og:description" content="INTJ!">
 
 
+<!--Open Graph Site Name-->
+    <meta property="og:site_name" content="t43M!ne">
 
+<!--Type page-->
 
+    <meta property="og:type" content="article">
 
 
+<!--Page Cover-->
 
 
+    <meta property="og:image" content="https://t43wiu6.github.io/img/home-bg.jpg">
 
 
+<meta name="twitter:card" content="summary_large_image">
 
 
 
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
+    <meta name="twitter:image" content="https://t43wiu6.github.io/img/home-bg.jpg">
 
 
+<!-- Title -->
 
+<title>Docker从入门到放弃 - t43M!ne</title>
 
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
 
+<!-- Custom CSS -->
+<link rel="stylesheet" href="/css/main.css">
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="//./css/font-awesome_5.11.0_css_all.min.css">
+<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
 
+<!-- Gallery -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/featherlight@1.4.0/src/featherlight.css" integrity="sha256-30DV/STftlyQ6v8yaOWlabammvCYtRJERLj/m0b3zno=" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/css/lightgallery.min.css">
 
+<!-- favicon -->
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.ico?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.ico?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.ico?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="docker,">
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="不如茶酒伴" type="application/atom+xml">
-
-
-
-
-
-
-<meta name="description" content="docker">
-<meta name="keywords" content="docker">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Docker从入门到放弃">
-<meta property="og:url" content="https://t43wiu6.github.io/2018/10/28/docker-1/index.html">
-<meta property="og:site_name" content="不如茶酒伴">
-<meta property="og:description" content="docker">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://t43wiu6.github.io/2018/10/28/docker-1/docker-1-1.png">
-<meta property="og:image" content="https://t43wiu6.github.io/2018/10/28/docker-1/docker-1-2.png">
-<meta property="og:updated_time" content="2019-12-25T01:28:34.091Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Docker从入门到放弃">
-<meta name="twitter:description" content="docker">
-<meta name="twitter:image" content="https://t43wiu6.github.io/2018/10/28/docker-1/docker-1-1.png">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: 'Author'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="https://t43wiu6.github.io/2018/10/28/docker-1/">
-
-
-
-
-
-  <title>Docker从入门到放弃 | 不如茶酒伴</title>
-  
-
-
-
-
-
+<link rel="icon" href="/img/logo.ico">
 
 
 
 </head>
+<!-- Head tag -->
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+<body>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">不如茶酒伴</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top bg-transparent position-absolute w-100 p-0" id="nav">
+    <div class="container pl-0 pr-0">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand text-white p-1 pl-3" href="/">t43M!ne</a>
+        </div>
+        <div class="navbar-nav float-right">
+            <button class="btn btn-link search-btn navbar-item" data-toggle="modal" data-target="#searchModal">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
     </div>
-      
-        <p class="site-subtitle">大风起兮！</p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            Home
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            About
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
-            
-            Tags
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            Categories
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            Archives
-          </a>
-        </li>
-      
-
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
-            
-            Search
-          </a>
-        </li>
-      
-    </ul>
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
-
-
-
-    </div>
-  
+    <!-- /.container -->
 </nav>
 
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
 
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 text-center">
+                <div class="post-heading text-white">
+                    <h1>Docker从入门到放弃</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
 
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://t43wiu6.github.io/2018/10/28/docker-1/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="t43wiu6">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="不如茶酒伴">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">Docker从入门到放弃</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-28T23:00:17-07:00">
-                十月 29,2018
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/杂七杂八/" itemprop="url" rel="index">
-                    <span itemprop="name">杂七杂八</span>
-                  </a>
-                </span>
-
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Main Content -->
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
                 
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
+                    <span class="meta d-inline-block">
     
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p><img src="/2018/10/28/docker-1/docker-1-1.png" alt=""></p>
-<h2 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h2><a id="more"></a>
-<p>docker三大核心:</p>
-<ul>
-<li>镜像 -镜像不可写</li>
-<li>容器 -容器基于镜像生成(可写)</li>
-<li>仓库 -仓库存储镜像(类似于Git的管理机制)<br><img src="docker-1-2.png" alt=""></li>
-</ul>
-<h2 id="docker的安装"><a href="#docker的安装" class="headerlink" title="docker的安装"></a>docker的安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget -qO- https://get.docker.com/ | sh</span><br></pre></td></tr></table></figure>
-<p>安装完后,将docker账户添加到用户组(非root)以便执行,然后登出再登录<br>否则会报no permission</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo groupadd docker</span><br><span class="line">sudo gpasswd -a <span class="variable">$&#123;USER&#125;</span> docker</span><br><span class="line">sudo service docker restart</span><br><span class="line">newgrp - docker</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#启动docker</span></span><br><span class="line">sudo service docker start</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#测试docker</span></span><br><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
-<p><a href="http://www.runoob.com/docker/ubuntu-docker-install.html" target="_blank" rel="noopener">菜鸟教程</a></p>
-<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 搜索镜像</span></span><br><span class="line">dicker search centos</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载镜像</span></span><br><span class="line">docker pull name</span><br><span class="line"></span><br><span class="line"><span class="comment"># -t 绑定伪终端 -i 保持标准输入 -d 后台运行 -p 端口映射</span></span><br><span class="line">docker run -t -i -p 1000:80 docker.io/centos /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 展示所有镜像</span></span><br><span class="line">docker images</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存镜像</span></span><br><span class="line">docker save -o centos7.tar docker.io/centos</span><br><span class="line"></span><br><span class="line"><span class="comment"># 载入镜像</span></span><br><span class="line">docker load --input centos7.tar</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存容器</span></span><br><span class="line">docker <span class="built_in">export</span> id &gt; name.tar</span><br><span class="line"></span><br><span class="line"><span class="comment"># 载入容器成为镜像</span></span><br><span class="line">cat name.tar | docker import - sherdh/ubuntu:v1.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看正在运行的容器(所有)</span></span><br><span class="line">docker ps （-a）</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动/终止容器</span></span><br><span class="line">docker start/stop id (-i)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除镜像</span></span><br><span class="line">docker rmi id</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除容器</span></span><br><span class="line">docker rm id</span><br></pre></td></tr></table></figure>
-<h2 id="那些折腾"><a href="#那些折腾" class="headerlink" title="那些折腾"></a>那些折腾</h2><h3 id="第一坑"><a href="#第一坑" class="headerlink" title="第一坑"></a>第一坑</h3><p>不要强制删除一个存在容器依赖的镜像<br>即 -f ,因为会产生各种莫名其妙的问题<br>先删除容器,如果容器在运行，需要先停止<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查看所有容器</span></span><br><span class="line">docker ps -a</span><br><span class="line">docker rm 容器id</span><br></pre></td></tr></table></figure></p>
-<h3 id="创建镜像"><a href="#创建镜像" class="headerlink" title="创建镜像"></a>创建镜像</h3><p>基于已有容器<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker commit -a <span class="string">"test"</span> -m <span class="string">"add a new file"</span> 容器id <span class="built_in">test</span>(新镜像名字)</span><br></pre></td></tr></table></figure></p>
-<p>注意是容器id，不是镜像id</p>
-<h3 id="加tag"><a href="#加tag" class="headerlink" title="加tag"></a>加tag</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker tag <span class="built_in">test</span>:latest <span class="built_in">test</span>/<span class="built_in">test</span>:latest</span><br></pre></td></tr></table></figure>
-<p>加了tag后，有两个同id的images<br>这时删除镜像报错<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Error response from daemon: conflict: unable to delete c30eab908457 (must be forced) - image is referenced <span class="keyword">in</span> multiple repositories</span><br></pre></td></tr></table></figure></p>
-<p>删除时需要指定名字，而不是id</p>
-<h3 id="运行报错standard-init-linux-go-178-exec-user-process-caused-“exec-format-error”"><a href="#运行报错standard-init-linux-go-178-exec-user-process-caused-“exec-format-error”" class="headerlink" title="运行报错standard_init_linux.go:178: exec user process caused “exec format error”"></a>运行报错standard_init_linux.go:178: exec user process caused “exec format error”</h3><p>查到原因是docker不支持32位ubuntu…<br>乖乖重装系统去</p>
-<h2 id="使用dockerfile创建镜像"><a href="#使用dockerfile创建镜像" class="headerlink" title="使用dockerfile创建镜像"></a>使用dockerfile创建镜像</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">FROM ubuntu</span><br><span class="line">MAINTAINER <span class="built_in">test</span> <span class="built_in">test</span>@gmail.com</span><br><span class="line"></span><br><span class="line">RUN <span class="built_in">echo</span> <span class="string">"deb http://archive.ubuntu.com/ubuntu/ raring main universe"</span> &gt;&gt; /etc/apt/sources.list</span><br><span class="line">RUN apt-get update &amp;&amp; apt-get install -y nginx inotify-tools apache2 openssh-server</span><br><span class="line">RUN <span class="built_in">echo</span> <span class="string">"\ndaemon off;"</span> &gt;&gt; /etc/nginx/nginx.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 自启动</span></span><br><span class="line">RUN bash -c <span class="string">'echo "firefox" &gt;&gt; /.bashrc'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 打开端口</span></span><br><span class="line">EXPOSE 5900</span><br><span class="line"></span><br><span class="line"><span class="comment"># 容器启动执行的命令</span></span><br><span class="line">CMD /usr/sbin/nginx</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <div>
-      
-        <div>
-    
-        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束,感谢您的阅读-------------</div>
-    
-</div>
-      
-    </div>
-    
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/docker/" rel="tag"><i class="fa fa-tag"></i> docker</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/09/28/BugkuCTF-write-up/" rel="next" title="BugkuCTF-write-up(WEB题)">
-                <i class="fa fa-chevron-left"></i> BugkuCTF-write-up(WEB题)
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/09/web-migration/" rel="prev" title="小站迁移记(Nginx自动化部署)">
-                小站迁移记(Nginx自动化部署) <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
+        <i class="far fa-bookmark fa-fw"></i>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
 
-  <aside id="sidebar" class="sidebar">
+<a href="/categories/others/">others</a>
+
     
-    <div class="sidebar-inner">
+    
+    <!-- Date -->
+    
+        <span class="post-meta-split">&nbsp;|&nbsp;</span>
+        <i class="far fa-calendar-check fa-fw"></i>
+        October 28,2018
+    
+    <!-- word count and read count -->
+    
 
-      
+    
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
+    
+</span>  
+                
+                <div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="Oh, these decrypted content cannot be verified, but you can still have a look."><div class="hbe-input-container"><input type="password" id="hbePass" placeholder="Hey, password is required here."><label>Hey, password is required here.</label><div class="bottom-line"></div></div><script id="hbeData" type="hbeData" data-hmacdigest="f5d355df91be391f2c48e9ace6befc5370cdf2c96293dec7403dd8ac6197787d">ec9fb152b9386237c6e6f0e82df3482ee874c45d46dff0aeedf93e4feb7378c3a79a9eef7b7a565c2b560a52f301e35e221c2ae52bafa9497f288aaa0f4b709b26a6d1c7560bdba1776db3fe6121ac6a5b489f26b45a80752d58c492a2b8fd2e70b59b58498d80c1caae8427f4f7a7d7cbe7b77dbad54373009f8a6fe357ce2dd6dfc92d6d87b5b8a40a82e8b9f0ccd717ced0f4309c1243dc419d555adb291da91e49262f3917cabeb8468eb78ebba8fdf3ccb4731edd9be4fe50f6fad6a817a275227d55e27e1527d2d70abe07ea8f3caa6b4cb0ab6961cb5b3df751426b75724412e1d9ae57d7982b75fc59115afcb6219ff8e69af5ef15c3123ed2a55da56f4c4ce628d1589f67959aade87893964ddb33d27c2d6efd62866468440908eb46317c6281bf66b7d276209a64218e77ae57492f51581e7024d341f32638671527ec1a24109dc7dee09a97900aeeec27b9fb69c7ab6d1576904463441e4b0dee85c089f6505d1d0b2fb11965a92ee3e108e759c8eb7e95882ba246bde81d1f2d92f82806de069923667bb1477fd841f0460540e6b22386f4da9e6bc5b166e77e7a701a5a0f04139f5538fb4fb0ab6bacc399c7ffdaf148d175402ff0e636000e46a247df99aafafc12740f425a8190fef2c7638bf3d7841690fdf420f968aedf145a093362c17201700c3fca841be92d1e7636d7c39f37104939feef33f627e933215b408ecbcb804a23a23e9e111a6176d875e889d88ffb22f4eb229f942951d9efa7a2f2c1063d4a2a466208770d1fd390c74686631600ea58d86c21b09cdab60b6b3d6bf55bf94335f0d86f2ba786fc2a52dd7a98bf20f6bcf48c77b2f945c10c142ab5e0c70809f5637dcdbcc7edf7546a8d435462a775c1528c46130e906325e27de91b321eff7af165cd831549fc404a4590e028e26a8a84b01d81bcd3ca92b833afe7ad898ec8b1de2df2b153e04b7a3ad109ba35247fc72843fed999ce99dcba2ca2608f1d8625d2384206fcbe8fb7a9cbfa189fa754854bbe41931dcf9ed0a46a9b3c9092d40b45899bf809b4fdaf45334b2759f015ae32bfcf6ec4169ff290fdf514a651ea1e4c8438b103a95c55c96078c2a62a920696e2c4eeec9e09c2e53acd740e22ced85b5732ff5ff6f775e179b7094c07b45f87d73f04c62076b129263209a0312285e1da3d9b4d12276fa7a90e208749d823e00928fc87f4c97369289feadc8bbda76a315d95b11a6aa88a89c017592b54b7799e48c497a72c3339ec4961e7858ad28a61f1f3776c9eb423188be009fc9acdd4adc5a9359c9a62b612043f6ccd9ed8905f938cf47be8aa0573d197b2e80b0f3d926eb5d5e6553dff24ac994f2d9fbd8c888be6a74a6def9746d7b2a56d835a397d4d295fe347b7fe1eed812a0e8e1b2888644f5a6cf493b947b674c6fe34d22b72789aa33facd020192fb95093638b7e2cbaebb2bb56ce3b926407436652b9d61c8b5b7708b108872f6675820a58cd9270dcd2fe037f42978be2f50c50f1ae134a3fbb0910d4adde2ed777384358fd98fc99832d2c6be1d3b41ee4b036909b186ead6f902b1ba454ba6e61c68ddfd9b190f2ad852922f9234011b04fef0db57c28ce8e5904758340d7dce710edfd511ff18589fae0069bc4b1597e27e984df8d89ab17e41c507dd0f915446e6905765979dea63a7dc4bf1616fa1766d77331d3578a4e6d8fc8aa6940bf0da93c8f5cba5cc08a4497355c047a1e5c91e575d8c8030cea16723479637d13f0202beea775ff8b3864c466a5480b57ce8d0e4b277ed1c50ebf1723ba2a8a88df381d45f984c81d236de9adae4b1f206e113ac7250809db37ef7df2626089eb4b3bebceea6936aced2c7159bc35231e850aa778305cffb0d9aab3f46eaa82ad0bfe35d6687b1494f9469742baa1e116908efb4415d255fa44a32ef6fca4e46804c80d35317e236e7ca4d3a732988b4dd1e6306115217a4e9620de309dbf9e9b5c974a8404a3dfc94ad186950b9a4ebec3ca1e3bf0c33b7d79631e4a3e3ff289eedcf3e57193d68b79b998f239562d5e67eeba6d6fd4c95e1823645106a0dd17f3a3d2490029a13ba494a6ee2d804b81c2771261ad0ea2e671a162b959f694117b5ca070568726e440c523b519f1c50e3b959f793f6676a2a10201522e6b20afedfa0fbcaadccec0cce2973f752049f2240e819a929fdf71ca62a1220b7e3373c15c182ed5b757cea7f0279c60cb484ddabf35e5761d8e9fdf95a4f76b2d7f5574227a405e2306ff1597a0d2e387569181e85829a97cd3e6f4d5ab79ce3adce3a2b7cfb0eab9ca04c469b70d1a46bcbf6e6cdd5606f0bd496d410dc0a9d0e31aa1b68e9b9a026c19e74a5fb846367917f60b09073dca4fbaf28e047c4b7b94553ddb160b08392c3ccb9a975e5eb8215b5402e7c943a9033d2337bfba3e40ff367cc789a663ce9ec86cc2d34bb0ac7f08d4341ba01f1acbaf350725ffebdea7c088472e8d4f24b6055bc00f45a669178ad1182640289669c38bebeef53cbc0258402656578dc11a9f119e575fb7c2a1f2572b8bcd6c170f63052e911c14295656f5ebcc578294fb06db25439ab94d54de53fbd2663fe5ca95efd4fddc55ab28728d648fe065331ee2bee47be7c1c55c12fd831372acd1523d115c77ec538cfe91c12d000c59fc58425cd8b94982432614ceab6ca8855364fe656230f65dda85e3a62df9945ca031a6205d5574819a2d9377d61aa5c16f3899b141ebd584c7b1f83365b4a17057f76f59f2dd377a7acd9fd33609b519ccfb706098a60ef52bfde2737cbe9982a41c59c8683ff75cca0b2516cf96b4fba2fef7648ee78a90cb68f6b9d32d26e236525933adce7faf1701d83267c25d0e3d17ab4b6f4459d9b25474f3f095805f36053425fd2301c8b6fd3f0bf013fd4a6162396342e850c4ad96ae45642b672cf7fe6000a5b4bc6dbf7dad74748cd7f2d0a61214563a46c6a0e511ec071d44b26585a0466a76c83f00f4326030e4030b206af12bceb2a8e140e5177906bf1f93e49c9bc2eeda02a834788e92492178df0bd51eda8cf6404cdef3a436a2d73bb12e1a9c0bf75fe9e7f3fa94e84a59400bbbee6f8054748ff8da47ad58b82e39081fbabd78b5cfb3b30205c93af69982282a2ff5b77e4447dcf64682029cc0ab5b8106889fc20633d895459f5aa850db55e8b341521b4e967f679a6a0ece57c81c2d395cc63fe864ef1d6cf72f62d428f66fe746cca9a15d975c062cc4eda0af00fea21d82c273dc028e7f3ca65800a76d9dce90b5e16bc9c8af9313e1b1807ac7b9d629972df47193015e0c5aad5a50a6742573c81dd261de6e64b47b7f83f15fa4031f1333f82c7dfc69feec3d8412e7ba465c6e9af794c8fdb69546604e219471aa8d58407dcfee7184d5217c7e755813cc42c4b43d252d30b68ebbeab004adfc2e3edcb2d56540a26d41f875245b36d28f2cc9309b0b179ab2111d21f4cf71641f0f41a392934b8512c56a99dfb686868d122587844de8504e0fc4dc61ec7602aca51a5d316e5c97aa2e9935a5d7beba65db21cb6ce1497deecd91fdea186052d59e207d345fc5f735379f63b2eb0724ad2213abd92a99ed681d54c1cc7ce227f9a7ca230b1e9df451d62cb5f2bdfab5f4ba492d917cb2ac4023944fee55d2132799912cc7ce358d5deaf4dca874fb1e8eddfe45be425c1e20c74397ccc74308a9a9ae724f3d9a436be7da289731a31764bc1e05aaf5cb7b4f7175bca0adc31f754368e151874e1665d4e2ee1f6231ac0831f69fcd724b011c59da460df8c63c29455cd9fb63ddeed062cde2a353f63b727b01667230e259fc6260859e1c854defe62966adeee702b0d444ecbf1c55bc211bc818198c6eea5f44a7f852e42e745d30e8fd77c0b6542bf3749c95d82c3360c7b9f1bd0392a7f1425b58f31054db4ee8fd4c7a64c68a12314463fbe0dd0a25320734cfa14579052dfa816cb5da685a023856deac15c0d3b83efe536ecf101d4d7c29977a51e211941fc0cb0753a55699bb9468ead1b5e79cc43731cd8fae2492d124f04b501436545762e71216b1ca5303c838e79ac96e4214dac4ffebf60faf21fd61ea8becc1e6d9ac70c7f598c0b23114a3d6b666b59f1955bd6c892e1ed3e11cb61b76eeae0ebac4ede374cec50d4ad5bb1df3aefeae44014a9af238726764674766e32c969c8bcff216cbb5c49523d7da125432957b510baa215a5e1256cdad6605a9cde8c10d8817875fbeb26c48a3c49329c3cdb19a152dc3753e412a013a427bfa15ef8f8e3ecfc827b7cb84c08747a77bc5a1679c5de6accad69943a84b058b6cb02d61bacadcd81184fc203ba730d1961188c310a85d5cf92ad158d87bf1fe80fcdb06203cfd75a65060de64614d0d2dee043ca2d64bec41afbf4b761fda86a66c7b1fefda6b0235763fc2abb7d1ee862dab3d4c8082191b782ac8a9e43e513a2f5542d99d9ca85d804e2a7336b300f0cb47529bb549a567aa89e41539c98b48e1ea463df4eda722648b33ccb4ac08e3cd17b4d1e01f28cb13d83b3e8863c2c24b820eb7e195e2f9274435b77648724dfe020551b7e8d7e18194c067be8a3d566d3ada44213177962d336dab7e09b8019facdaadf17706288545c7073a6a5420c4e940411835fbbae829542509710fe572bcba6ff5e698989341a09588b20d9a08969a7023d968c628c7121903299f71c16cc84ed4a5b26135049a3e0599c0ca4f446b818a1e95bc7b75f82b081b6003ed28b9edfea04b6ba63144529ad6a975a428123e3b137f6e8394ad35864e67831c9df22c1b42ebf2b72c6c0d59d97dd9d1a1a957465f6b3fef297376c131211b7690cf07b0e5b84df0d291ad88ae20da485e4b9b96292c3c6ec0955a42b6392f9009e31793b9642e6b1467b82432c4daa669132d8ac306ce377a5c98c7fdfd00d7123028912e79f54ed4eff62be109388cba0225d85b3cf6ab55cd812fa421136537d05888268dcdb644d95d6cbcc0f9a83c4f1ecb5355c8ac5edbe1031a3f7a91f6ee051327c5a44a42b7c52c4ade11a71641838d441d44fdf13c553d8f5503eed0eeb4cd0c0b06538ebc1ae053cac038b40edf62da8f25f076af3b81b40bfd611bca1b004f882f791347fe1b3a99b2a6047150b22cedae50cf8b22c2aa62b46908f1060486376967aacae732ef7902352ca91b49626325f456a4bff29e4d3bf46e1ecd0a9374580f9678929c9fcedba60ac3700c69d65aae8773a366d57e2b68fca26087e1b4890e22785b3f1731ac083838a728d724111e0d8e778b51b9ec54c383d9e2d7d91d81ab26285c38c770296f518a269e6c1df31cb9bc501997a403fe5f67bcffbf576c858d4ee86edb09c286261b8662e4264ab16f9bb44dab7406bde3aa5abfb2d64da36a458e85a6d260e18b276ce9915b65142b7eb630434d8f362fb010f7984d4cdfed87baa999994306fac1782b5a3f752181404af17bf7050423f74f86239dc2ad613f37936f482ed62948a4f98a42cf717e11c2d6dd8f3f1d08d74f3e31dc90796821fe77a9a0d96ca289d2d4f9cf00c07b14d802d08c206593136ca7e1885fa14890e0b4c24feb675cbc6bb6f53c7e582240b947ac2463cbb9ce386535445aafc63dce8c0b94c0115fa4d8f2207fd6523d1d3d4bdaf916006d491e85340346cf6f2f7b533124c85424a1b32d145bf7de6e2b017cbd2eec862fe7f3a658e5f288a0fbf4fcd63209df0d28ba38a29f3d4e2cc45427de6d51ac9ff093c0f7b059ce36f95d60dc53e45ae2d94d4c04d20e91859a17804680f3e448079caed9f8f8fbff44bdfcff818ad9bd9bcaa35b0416be56f9e4a650ec19b7be80219dccb475c1d0c64fab797ebf9096f6f077572c682f5552a7482b085bac4bf3188b9ff735cd5aec4cd0e4ecb57645e490b36abf03b8fbe360d85b679f3560d8f4d4a7693995f433273650f9bdbca79c55feddffd871391d9a1a11a09db5c6bb60a8b76a04b651d4909f4cccaa9d75e12407822259e0793c07b72c78b5ad6ab9147e4487873089a5a874863e9d2adba7421b1f3d810afeab56ceb2d6a94a2947d852114b112b7f09d92a666ac7846bac632eed3bff93841be5ab212227a87d3a338e074635e7a025469cf914e0dfd98f362e6f70c9fa5c928cea85016b1941b9a8b6638b1668f6137f682989289ab3fbb818376542a3d64a83fd870e98f9cdd1ddb2c1052026e15fed76a4821512bf92fabb31b905f2ff8252fb9cb17ef5afb7981f722a77ccac24180b9fefa53f4b50758eddfeaa74b166dc622fc16392cf25036efbdc3636801def27c06554592477305875c8e31451cab50916fa1617d927ae6b926b1b03308781f99515510f6812f8bf5e36178385d0ce23d24c27e4d570869167b29cd68335a6ae03751772b657891e46e3cf9b6d6613eab35840f3198616bb46da10838d6daece6bcdfd506b410ba015cccb6089c9e8a70f994c3e2a1b6943f67c0e99f2b22685573e31c1a33790883ed72b898788f5e596590f058dff6609a101af91896e5d0d70301949e5fbf560e1456a1a046e279e12b86f74a73e2f181b96d6e021990543250408b9dd77277d6a7dbee675afb36c15d1a804ae06b9c7b8bcd514894138e02f2726e47eb3dbf2e05da7a8bf52431637b51bc9fc22812d29526c9be79640bc54c8e5e909c3c7d7523ff51023aa767075d46732f1c375f78e276258272870739f74ba1e575165b761a7cc9824f27f9d07ecd37de168d4f3d66c5996ec7c8aa3b460721922ecfcfa7a74e735e11f4573e40b783682cd304393a2804f43967b96d89c10e3a8947fcd3d9ad55cbe8626504ea0b02dc39dcb983547689414f8db1f6866849cca51ba0db9de824fc7fd4633a23fa21138666f4765e371497624d5ef8b4c50f866d70bca5feedd2ad80af2f5b525f0957beb07f3526ec44ab3f7f0fd59dbff01d8bcc2ca95e378a6a067c5624ac4b247403c324a4a39e0d9045474a43afb7a26c6183c2b5cebb19bd78a3294cb1ec4ded94868583e806e07889b6fdb83f9614a586cbf76411396849e5f1f25312800f688ef2849071c45a0efc6b1d6a167dd1744e3d635ea4d513b69c36fc74dd183f37c2ba9158f50ff1753fd5ba23f3338d95a08cc0a7fdc45bf0a99d832d354b6f4398d5750d958f2f4d175f1d782d6ed1380bca4db74d027cdea61de2652dc5850833493d602d43674097361c2a9a66ebf4d3819b2f3fbfa76050fa2c155e1107d83ba8b6ee0c085414db56e805bff66ab4f34afc60177e832b9783febcefc6c7321060ba42289ad9a115eb748227fed28873bc174e4f79f6564a9213a1cc991e6f27ea60bd4503103b7c122160604e3c348edc0c334a2044c8027990dc23f7d668e9da8a8291cfc8c4bfdac5e9c9ef14b37ae47870f8b93c798f6fd517d3bce10b131e6f53ae8f2d672569fd647c2f4404eaae029b702dc5c7897952eb559f581de064187947da98cdcca65bb00eff91e9154fe99d0e2ead1db122871ac4f85485602b8d835a79e712a5fd95d65b75f6fe533fca9a0f1fc6e6d7ee1228f07267f975b0532bc9c7eac37ddb2828a4e7a26c5df4ca729ea6289756d2be364c5f2d45407ad4c7068ce179f61b9199953ea853b246d48e73b1185a76e65b7f9fc3b41e852c1df81f0b7ab6b742142017d64fbcfc48adc807ae2b03fe31597faf61e1fe1e03d41d501d0b357746efca8ee01fcd472950e84967a5b9e75e0a021be1b9f4e97b42f7fed8f3ba4ffa348895e6229516efd0cdd0f6b301efc51a51dffa26483e6c199d371f8b8c65b2e87c08cb48a7ec378d575595959063a90ca01ec83fb42e12cebc7c0bf6e924bd08c3dca527087bdebf781b34441805f8c14e045a7fd0929bd69d2051479e21b989884f3b6c766f98aef3b0c2e77e85347f61ff65d27c52d15510456cf463a5ce2738a46cd2d4a00f1d8ad3ce5e73a9bcd3d95b6d0560a17c60d243c877a809e7c30cea2eebe6894a11b67a67879d69e5bca9c9ab8dd78b74cbf401d8d776054dda011cafe4bb13bbc269b3fccfc01e3d0e472a6b71b8a280a72081dceaeb263490648c41285564814a04d87a5fa01f7fd3ea9b94f36182b17a457196094ca9ff1422e054132e1b7b2f2aa123012a5332b55d1591977a87e3edeb1863e85b129bc6753f3e4976315192b0fb23e1880e08ae41091098d61f4d5018a9a694c3f947b026b9571880799f752382c1e684ac11304c01f5409b49ec27a22bc565a5462ddc1898415946b63fb1cef1652b3794b411f3d0b2be450a7368f9847d9822423c06d095b9550a3c382716363f5606cf7df7cc35d3026c76f0085905e7cc4c55a0786ee5f94fdf5f8caa1e6935dfe8ee512f0eb6c362b57f23cdee173f97dbd08f18cfefe754c5a2f40896bd5c1a0d4f89203099ad3fd310244713b3ef7da0c60660a5c432e8e8f595404887b9f4b67030ef2480134de468e4d2aed3ceb32a6759b887d7e04e7a04ecf2f4a8c4f32bc950eb776b95cdabef386f5e0bdec957c86ab6cf598928ceeb024926bc6843ee04d4644773237caeb5d9a319a28f7a554aacc0c7ac619cfd77b2602047991dfa483ea4a431a410fb44fe7e1e08e8b1c98102a68a04b95aac862d4244a5012fcbe70da71616d9bfaf6fd039b28df03fd92ee18c80a9b2af816d80c58adc6d4f9c29c7e5aeb4ff6619454379a9fe1d5c51b39618e7d343b42e820b41d5a59ada321562a7afb7b8d53f1b1e2509d78e9de7b12406775ae89cfb703da5298957eab18224b5efd70f9ce2b6c431c50ef6bb23cc5aa1fc64d0aee485e16b54ae648f71a280590078d428d99c9db70e8e219affe4f97fb296ec3a05d8175e0d9a8c6cb0ecf75c02272fafdd6f572a74fb3f8cb068b35409272c781b8847334c2dc2f916f13b1ca2d0618b1ba10fa05df0de02bf0e158030f5efedb6df61f52930d5f435a1eb943afc6b474ae01cc01019939fccd58f3b5840e7f8afc19bd25ee2b5e60a2ac24c42b36e9e340a1f1f36ebf89e085ee2d42cc408cf033e26f291a89cd2642a2bc30155ac477728910d63fcf250629c921ea22389636b325964eb6648c17684ab826dd9b0c87bcbe75d159257ce31279faa6d97a139bb0f95b3f7caeabf1bb5fc716f9b9a72a43c983a564d2b319f55d6dabfcab4a408c8f78f212684d3b14439261d3670e796a84adf0d167fae743a0695b85228e87da9af57037f51db4cc26c5d5999c96555a14b9c74411f8c687bb9126ac4a7a4c1811fb76fa019c77cdd94daca6147e6905f08696164089f9b047277352100c8334cd109eda3cae27b895cf55c56cc4fb6131201f12528aa4070bb83359527a71bef28c3373081cb8ae6ae590cf543cdf59501198a4af5e2d0fe44138567dfa4fc5b3fc6cbe69015f1618737bb5afc56e7b854cbd82f00028685b2fcbcf751ae7e8d4cd231240db4fa762926a0ac923c8bf5fa32f18649df215ba124f5381712e4aeef70c8371140de2a8ecb9be71171b185ccf1099c042b3178fd79b91545a2041cceffbcdcc3ddc2b452aa5fbf223eee6f94be4ccc90a289d1d40d5a54b0c43a55616be3112bdc70b57e6839db06aa2988d1aa105aeb974f99ac1ce7759e7fee632d29bec2f3af6dfe9d801ff347bb6bfcd03952d1727e8a967b1782905a3f7b5981cfd35053e8bb71a8efca3848e4eebc112008f37f6a529dd87ab271ddb1d59f6ca40ba1ae749322130304933ebdbb55002246a00cc2230d3ca27a48d752d411779c958e5d4740ee60ba142bfee3858d23a114f776528e8e3009c0c96893f57f510189282bed6b70026fee68e49c2be682f38f16bee17cbbf5abfda9a2f0f1e4f55d1b1b12d13e0620bf830fc5c1ccee1229dbe820a4d1939b713a748f0625ab3cf3f84f07c87e581448f1a7f158feea5c9a1061f61af7fae6ffcb30ce855a2a952d73ef054aed62c49234b25857b74261185e27fba9ee6669408df2cd4133b0da6a8774da4a236ee2c86da3f1c98a9dc4ac6c1cb604c8a8ebddd1629fa775a866306703cb0ca2b0ad02462782eb37b68414020914d9ec071b331c8067144ff9ab37ef4debd18eec9be63f65ef9eef9fcd5ceb4607f30a140d2fe0c95026762ae99cc43ece4d4ce9dc629cf87c0fc19a407d82540c90d917f174dc1567a1bececd1d8e3fc4ee2cc7095cf6415bd26e50cb8ed1500d32d4eabd30a776ee9903635de74922cc1f58e602929508342b6b616a0d5e47a88e8517bc2a92cbba4af91da092afb52eacfbf2cc6489771f102a29f85cf8a1dc4c87b1a4d392e59757f94129d15d5272b1c8fafef981fa180454c192165141b1f6fcf4d66ecb336ca3171a5389d475879c4d861868cdbf623d0135668d123b45d8afc3ce76058223370011b6c2c64a69e5f302bb64aac59a146056a3261631cdbc952f2ff138fd7e2eadf292c26b6a487149df4e02529df11b9ac9026a49451dc72ac86a23612dae9fab1c37c7e59d09d826699971e27868ba9f70277fcfcffd9d7dfa53fc0ca29a3dda82e3399ba03ed00232e954e5237297bd99e406ef9ee06239cdef26612a166fce0f544b7aaebce44d58d6f285c07d2f8f1d37ee947925175707ddae189f8f256444e3ead617a12745dd1f19186bb29f12d3d9bd45928e3449a3ae71fa0449a4958a55d12def79eff947bf2b32c3519064e8e06a8274e5f694b15fc4c5a9bfdf2766a1585b30f99c9308b9321e39ce48e8852a76cec5a5a35081613e9f530868eb1a9fce2e0920db4441d31246525220edd46d26f81f447e22198ce70764a600320025ab5e8973e20f945dba76b11c489d17586225118e849255c99a5b8b59fe7d62c77e208af733aee809d47fc4cb99705ad8259ec0f410163a88174362c7aaa4b8668f94361a96f7f58056a03aa64b4c72e36a970d099781405812f644820a6348b5a1343cfd6ecbed3cca36930a97c696483bdb150b3db48b3395aebe4c34e05f51ab12324f6f1edeeae668c1bb8d040c6a59878f0611b4cd74be6d1f8eb72d85341c1a2f08c88508bcd698b1f007949d18726e54f23ababc849a6838262e872b0e6037f790eb8f1e991f636d736e10f33f3931a6d89c4dfbe0ff107ef6fcc17121c4fc0c6bbe76aa4dcdcc1ab59963657311aaf370ec9f154985565622a7a4235e3a030e24252b8f55de71c362d093992dc844285760721d47dcb0dfdda1b410291ed3d8fda7e62a2e0e665f44ec7c470d5cf3c38f43065ffd5255108495365e5d0604d2ad2b3f58bdea1bde2307533370d31fbfa241967cfe89a30f4bd615947836b22e39e27767e5f276d5a2480485b16a554fed48d7ba726f0050dca23611a8e66db19e8d990aa192cda4bc49b85a313fd7c31092f89f4d00fb063c64efe887dd881bc2c583e272f579f0e2e5eb2008210b194aa8013f15841603179625eb0906c5709172950f5f0e565802b6600f114dd925b7884a027e7</script></div><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">
+            </div>
+
+            <!-- Post information -->
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 post-tags">
+        
+            <i class="fas fa-tag" style="vertical-align: middle;font-size: .8rem;"></i>
+            tags:&nbsp;
+            
+            
+        
+            <a href="/tags/docker/">#docker</a>
+        
+    </div>
+
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+        <ul class="pagination d-block text-center">
+            
+                <li class="previous page-item d-inline"><a href="/2018/11/09/web-migration/" class="page-link float-left">&larr;  Newer</a></li>
+            
+            
+                <li class="next page-item d-inline"><a href="/2018/09/28/BugkuCTF-write-up/" class="page-link float-right">Older  &rarr;</a></li>
+            
         </ul>
-      
+    </div>
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="t43wiu6">
-            
-              <p class="site-author-name" itemprop="name">t43wiu6</p>
-              <p class="site-description motion-element" itemprop="description">何人的归宿是星辰大海?</p>
-          </div>
-
-          <nav class="site-state motion-element">
 
             
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">14</span>
-                  <span class="site-state-item-name">posts</span>
-                </a>
-              </div>
-            
+                <!-- Comments -->
+                
+
+                
 
             
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
-                  <span class="site-state-item-name">categories</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
-                  <span class="site-state-item-name">tags</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/t43wiu6" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
-            </div>
-          
-
-          
-          
-
-          
-          
-            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
-              <div class="links-of-blogroll-title">
-                <i class="fa  fa-fw fa-link"></i>
-                Links
-              </div>
-              <ul class="links-of-blogroll-list">
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://gh0st.cn/" title="Acmesec_Chen" target="_blank">Acmesec_Chen</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://quyunjie.cn/" title="quyunjie" target="_blank">quyunjie</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://chybeta.github.io/" title="chybeta" target="_blank">chybeta</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://rcoil.me/" title="Rcoll" target="_blank">Rcoll</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://yulige.top/" title="郁离歌" target="_blank">郁离歌</a>
-                  </li>
-                
-              </ul>
-            </div>
-          
-
-          
 
         </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#docker"><span class="nav-number">1.</span> <span class="nav-text">docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker的安装"><span class="nav-number">2.</span> <span class="nav-text">docker的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用命令"><span class="nav-number">3.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#那些折腾"><span class="nav-number">4.</span> <span class="nav-text">那些折腾</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一坑"><span class="nav-number">4.1.</span> <span class="nav-text">第一坑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建镜像"><span class="nav-number">4.2.</span> <span class="nav-text">创建镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加tag"><span class="nav-number">4.3.</span> <span class="nav-text">加tag</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行报错standard-init-linux-go-178-exec-user-process-caused-“exec-format-error”"><span class="nav-number">4.4.</span> <span class="nav-text">运行报错standard_init_linux.go:178: exec user process caused “exec format error”</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用dockerfile创建镜像"><span class="nav-number">5.</span> <span class="nav-text">使用dockerfile创建镜像</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
     </div>
-  </aside>
+</article> 
 
 
-        
-      </div>
-    </main>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    <style>
+        #toc-content .toc-link::before {
+            background-color: transparent;
+            max-height: 25px;
+        }
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">t43wiu6</span>
+        #toc-content .toc-link.is-active-link::before {
+            background-color: #404040;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <div class="ui-toc dropup scrollspy-body pull-right" style="right: 3%;">
+        <button type="button" class="toc-btn btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <i class="fas fa-list"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right p-2" aria-labelledby="tocLabel">
+            <div class="toc-widget">
+                <div id="toc-content" class="text-truncate">
+                </div>
+            </div>
+            <div class="toc-menu pt-3 pl-4">
+                <a class="expand-toggle d-block py-1" href="#"><span class="expand-text">Expand all</span><span class="close-text" style="display: none;">Collapse all</span></a>
+                <a class="back-to-top d-block py-1" href="#">Back to top</a>
+                <a class="go-to-bottom d-block py-1" href="#">Go to bottom</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '#toc-content',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: 'article',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            // For headings inside relative or absolute positioned containers within content.
+            hasInnerContainers: true,
+        });
+    </script>
 
-  
-</div>
-
-
-
-
-
-
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a></div>
-
-
-
-
-        
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
 
     
 
-  </div>
 
-  
+    <!-- Footer -->
+    <hr>
 
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 text-center">
+                <ul class="list-inline">
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <ul class="copyright footer-menu list-inline">
+                    
+                    
+                        <li class="list-inline-item">
+                            
+                            
+                            <a href="/">
+                                
+                                    Home
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/archives">
+                                
+                                    Archives
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/tags">
+                                
+                                    Tags
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/categories">
+                                
+                                    Categories
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/about">
+                                
+                                    About
+                                
+                            </a>
+                        </li>
+                    
+                </ul>
+                <p class="copyright footer-author">
+                    &copy; -2020 
+                    <a rel="external" class="copyright-link" href="t43" target="_blank">t43M!ne</a><br>
+                    Powered by <a rel="external" class="copyright-link" href="https://hexo.io/" target="_blank">Hexo</a>  
+                    <span class="copyright-split">&nbsp;|&nbsp;&nbsp;</span>
+                    Theme <a rel="external" class="copyright-link" href="https://github.com/luswdev/hexo-theme-clean.git" target="_blank">Clean</a>
+                    
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    <!-- jQuery -->
+<script src="//cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+
+<!-- For drop down -->
+<script src="//cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<!-- Gallery -->
+<script src="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js"></script>
+<!-- Busuanzi -->
+
+
+<!-- Search script -->
+<script src="/js/search.js"></script>
 <script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
+    $(function () {
+        searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+    });
 </script>
 
 
+<script src="/js/main.js"></script>
+
+
+    <!-- Search Modal -->
+    <!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <input type="text" class="form-control" placeholder="Searching Keywords..." id="searchInput">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="searchResult">
+                    <div class="search-empty text-center text-muted p-5">
+                        <i class="far fa-meh"></i>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
 
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url);
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>

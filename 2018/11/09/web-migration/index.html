@@ -1,1162 +1,384 @@
 <!DOCTYPE html>
-
-
-
-
-<html class="theme-next mist" lang="zh-CN">
+<html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
+    <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!--Description-->
 
 
 
+    <meta name="description" content="INTJ!">
 
 
+<!--Author-->
 
 
+<!--Open Graph Title-->
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta property="og:title" content="小站迁移记(Nginx自动化部署)">
 
 
+<!--Open Graph Description-->
 
+    <meta property="og:description" content="INTJ!">
 
 
+<!--Open Graph Site Name-->
+    <meta property="og:site_name" content="t43M!ne">
 
+<!--Type page-->
 
+    <meta property="og:type" content="article">
 
 
+<!--Page Cover-->
 
 
+    <meta property="og:image" content="https://t43wiu6.github.io/img/home-bg.jpg">
 
 
+<meta name="twitter:card" content="summary_large_image">
 
 
 
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
+    <meta name="twitter:image" content="https://t43wiu6.github.io/img/home-bg.jpg">
 
 
+<!-- Title -->
 
+<title>小站迁移记(Nginx自动化部署) - t43M!ne</title>
 
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
 
+<!-- Custom CSS -->
+<link rel="stylesheet" href="/css/main.css">
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="//./css/font-awesome_5.11.0_css_all.min.css">
+<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
 
+<!-- Gallery -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/featherlight@1.4.0/src/featherlight.css" integrity="sha256-30DV/STftlyQ6v8yaOWlabammvCYtRJERLj/m0b3zno=" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/css/lightgallery.min.css">
 
+<!-- favicon -->
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.ico?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.ico?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.ico?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="web,vps,nginx,ssh,">
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="不如茶酒伴" type="application/atom+xml">
-
-
-
-
-
-
-<meta name="description" content="SSH部署阿里云vps直接在阿里云控制台导入ssh-keygen生成的秘钥秘钥生成看这里ssh git@serverip -i ~/.ssh/id_rsa 安装nginx">
-<meta name="keywords" content="web,vps,nginx,ssh">
-<meta property="og:type" content="article">
-<meta property="og:title" content="小站迁移记(Nginx自动化部署)">
-<meta property="og:url" content="https://t43wiu6.github.io/2018/11/09/web-migration/index.html">
-<meta property="og:site_name" content="不如茶酒伴">
-<meta property="og:description" content="SSH部署阿里云vps直接在阿里云控制台导入ssh-keygen生成的秘钥秘钥生成看这里ssh git@serverip -i ~/.ssh/id_rsa 安装nginx">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-12T02:40:12.994Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="小站迁移记(Nginx自动化部署)">
-<meta name="twitter:description" content="SSH部署阿里云vps直接在阿里云控制台导入ssh-keygen生成的秘钥秘钥生成看这里ssh git@serverip -i ~/.ssh/id_rsa 安装nginx">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: 'Author'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="https://t43wiu6.github.io/2018/11/09/web-migration/">
-
-
-
-
-
-  <title>小站迁移记(Nginx自动化部署) | 不如茶酒伴</title>
-  
-
-
-
-
-
+<link rel="icon" href="/img/logo.ico">
 
 
 
 </head>
+<!-- Head tag -->
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+<body>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">不如茶酒伴</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top bg-transparent position-absolute w-100 p-0" id="nav">
+    <div class="container pl-0 pr-0">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand text-white p-1 pl-3" href="/">t43M!ne</a>
+        </div>
+        <div class="navbar-nav float-right">
+            <button class="btn btn-link search-btn navbar-item" data-toggle="modal" data-target="#searchModal">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
     </div>
-      
-        <p class="site-subtitle">大风起兮！</p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            Home
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            About
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
-            
-            Tags
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            Categories
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            Archives
-          </a>
-        </li>
-      
-
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
-            
-            Search
-          </a>
-        </li>
-      
-    </ul>
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
-
-
-
-    </div>
-  
+    <!-- /.container -->
 </nav>
 
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
 
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 text-center">
+                <div class="post-heading text-white">
+                    <h1>小站迁移记(Nginx自动化部署)</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
 
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://t43wiu6.github.io/2018/11/09/web-migration/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="t43wiu6">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="不如茶酒伴">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">小站迁移记(Nginx自动化部署)</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-09T02:24:07-08:00">
-                十一月 09,2018
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/杂七杂八/" itemprop="url" rel="index">
-                    <span itemprop="name">杂七杂八</span>
-                  </a>
-                </span>
-
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Main Content -->
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
                 
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
+                    <span class="meta d-inline-block">
     
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h2 id="SSH部署阿里云vps"><a href="#SSH部署阿里云vps" class="headerlink" title="SSH部署阿里云vps"></a>SSH部署阿里云vps</h2><p>直接在阿里云控制台导入ssh-keygen生成的秘钥<br><a href="/2018/07/24/git-config/">秘钥生成看这里</a><br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh git@serverip -i ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure></p>
-<h2 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h2><a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get install nginx</span><br><span class="line">/etc/init.d/nginx start</span><br></pre></td></tr></table></figure>
-<p>访问ip,看到<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Welcome to nginx!</span><br></pre></td></tr></table></figure></p>
-<p>配置成功了</p>
-<h2 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install git</span><br><span class="line"><span class="comment">#创建一个git用户,用于运行git服务</span></span><br><span class="line">sudo adduser git</span><br><span class="line"><span class="comment">#导入秘钥到</span></span><br><span class="line">/home/git/.ssh/authorized_keys</span><br><span class="line"><span class="comment">#修改权限</span></span><br><span class="line">chmod 600 authorized_keys</span><br><span class="line"><span class="comment">#初始化git仓库</span></span><br><span class="line">git init --bare blo.git</span><br><span class="line"><span class="comment">#更改所有权</span></span><br><span class="line">sudo chown -R git:git blog.git</span><br><span class="line"><span class="comment">#禁止shell登录</span></span><br><span class="line">修改/etc/passwd的git:x:1003:1003::/home/git:/bin/bash</span><br><span class="line">改为git:x:1003:1003::/home/git:/usr/bin/git-shell</span><br><span class="line"><span class="comment">#克隆远程仓库</span></span><br><span class="line">git <span class="built_in">clone</span> git@serverip:/home/git/blog.git</span><br></pre></td></tr></table></figure>
-<h2 id="配置nginx"><a href="#配置nginx" class="headerlink" title="配置nginx"></a>配置nginx</h2><p>懒的配了,直接把html删了<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> /home/git/blog.git html</span><br></pre></td></tr></table></figure></p>
-<p>从仓库克隆过来直接替换掉</p>
-<h2 id="配置Git钩子hooks"><a href="#配置Git钩子hooks" class="headerlink" title="配置Git钩子hooks"></a>配置Git钩子hooks</h2><p>blog.git文件家里有一个hooks文件夹<br>里边有各种hook例子<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim blog.git/hooks/post-receive</span><br></pre></td></tr></table></figure></p>
-<p>写如下代码<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">unset</span> GIT_DIR <span class="comment">#还原环境变量，否则会拉不到代码</span></span><br><span class="line"><span class="built_in">cd</span> /var/www/html</span><br><span class="line">git pull origin master</span><br></pre></td></tr></table></figure></p>
-<p>注意要chmod 755 blog.git/hooks/post-receive</p>
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>本地修改hexo配置文件<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  <span class="comment"># 部署到我的git仓库</span></span><br><span class="line">  repo: git@serverip:/home/git/blog.git</span><br><span class="line">  <span class="comment"># 分支默认master</span></span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><a href="https://www.jianshu.com/p/59c4fc2684be" target="_blank" rel="noopener">ssh参考</a></li>
-<li><a href="https://www.jianshu.com/p/7cb1a824333e" target="_blank" rel="noopener">nginx安装参考</a></li>
-<li><a href="http://www.runoob.com/linux/nginx-install-setup.html" target="_blank" rel="noopener">nginx配置参考</a></li>
-<li><a href="https://www.jianshu.com/p/0c939f63af41" target="_blank" rel="noopener">Git服务器搭建参考</a></li>
-<li><a href="https://www.jianshu.com/p/a90d7ee90440" target="_blank" rel="noopener">详细参考</a></li>
-</ul>
-
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <div>
-      
-        <div>
-    
-        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束,感谢您的阅读-------------</div>
-    
-</div>
-      
-    </div>
-    
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/web/" rel="tag"><i class="fa fa-tag"></i> web</a>
-          
-            <a href="/tags/vps/" rel="tag"><i class="fa fa-tag"></i> vps</a>
-          
-            <a href="/tags/nginx/" rel="tag"><i class="fa fa-tag"></i> nginx</a>
-          
-            <a href="/tags/ssh/" rel="tag"><i class="fa fa-tag"></i> ssh</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/10/28/docker-1/" rel="next" title="Docker从入门到放弃">
-                <i class="fa fa-chevron-left"></i> Docker从入门到放弃
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/17/web-scan/" rel="prev" title="python打造基于scapy的扫描器">
-                python打造基于scapy的扫描器 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
+        <i class="far fa-bookmark fa-fw"></i>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
 
-  <aside id="sidebar" class="sidebar">
+<a href="/categories/others/">others</a>
+
     
-    <div class="sidebar-inner">
+    
+    <!-- Date -->
+    
+        <span class="post-meta-split">&nbsp;|&nbsp;</span>
+        <i class="far fa-calendar-check fa-fw"></i>
+        November 09,2018
+    
+    <!-- word count and read count -->
+    
 
-      
+    
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
+    
+</span>  
+                
+                <div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="Oh, these decrypted content cannot be verified, but you can still have a look."><div class="hbe-input-container"><input type="password" id="hbePass" placeholder="Hey, password is required here."><label>Hey, password is required here.</label><div class="bottom-line"></div></div><script id="hbeData" type="hbeData" data-hmacdigest="2b7fe13652ea4194fffc625cb128fe07e45594b71562d1f0cd8b6fb45f0e60a1">175fa4188ac9bebae33236aa13292d46af6e99dbdd29cc0dc077dc8b2150321c805338e8826ed6a978fcc3b58100f16eb0a19748b2d5533d5db6d41465804249e917c700732a88b02cef0082b812ac79aa874c86cda634ffc19bab9655bb969405c771f3c689402ce031ec5ad1e2757e340f7f25e540995c4ab5c054801730b66615fff61ad966e711f94eae42ec512b59ba13a4226b33a35f56acb51f8df360775e3ba69a2fc709ef47fe58413946acfbcb70b219d237a28631006e5974170af38f17a6b18a9cf95cc56556ef2216ff9641fa65fe08061b41487ea609e4ce16651bf0486cc4ff3c13a2df89fe0de2e71bc69d058244086add359899b672721dcf2d8f3191a3c923f25bce590dc88885a4f9a02a471683bf09c2b3a43084ebe674258db8ba142bebd06839f57a9b34fe329554d7761629e3b494daa391c052a2cfd9c322dccda927458052ee71d11b13cf2c93d5aa9406638655535b71d94a8da09deb257eacfe3653a908005ccf4b18de1aa816ece191fc3bb51e1fcdf56d136e585384531fbc471a877936853918a4478bd132b912aa12a54788dd60163c161f16a41aff5c43108aac14f97d9868ce78754ace1a6cd3826cb34544b295a781a5769adfceb8d3ad55dfd4c9741a824916e95a265c6480f32ed772e2ddda8f7249734e34fcaf34bf863ba717890c13abbabe9c3be9892c4992864eae45983ae67105fa5de7d32f0dca6a77a7f3e09696517792bd9da51bcb6bacd66b51ecf6ee6e12260898d5ac9a02f476ab9071fe635c7de7cd30d0ff63413319d9141552674719e1df577183dcfb3399c4f4c2c73d8d920044e9b3b22731d0d5a3782c830199c7efe260d6c02081517103f081975cd6c1dd90a83b4c1533600ec7209411c4c1adbcc835929d507567ce3a186efad9ddda784367b924294ca328cde6ff372f6fc8693dfd7921c6a5822bf5b3dafeba7ad5222b69979926224daa41e86b2caab3f45dbda37c8413272d11b7b8bec3237f2899e43824101c361c43fc614943611d60ca225d356e8a7d442421080817f038ac2fa36c31f7bf3b262f37a946fb3f6fabd56e3d4045cc48263eef8511d2ddff73bc6c3a027f3f706aa0b5c26d0443a5d5d453748a024c96f43ffe911c84122c473764eaa130ffaccc414663fe77f07e6cb3fdbad7b264fccce3b33cd2f5be440e28ebf154181855e14ab78cab654292c835246508b2c31df8b343cd219323914e98a43e6350f23cc5e8b4e1552aea1241566c9ce8e9fa34efe414727971c1c8dea4988998820ec00fe2f09e970e3bdcda431da5751feeb6931fed543dbe99c82129c863c7e7a645e197dbf316c48b3a53c32b9b73a60bd2301432ef3989710298e4944adc93716a8a3bbc64ca0d4c317381080b538cda90d2b614a88353ab2066ccd7201af4bf88ef7646499867af2955b29edf54329f68a58488e3f0c8dbe0d00b574a182c8077d293c3a2af420342471f45be102cb52cadf1cc5b04f4a4908b448c45778dd797c901b8fc4a0daeb1b853982d08b2f560f09d0a4d06320919db04278746e3d78d21471378f33c15e0bd48986a04838ff69aeddbc31bd658988b27c4c1e666045ba4f6a6dc7433de8ab38e87bdf5d4c20ec0ec57ac3c444027573e25114dcee2b68eb050d78b8405596060ea7987f4c56b5ed6cd13cfe8f83d49dfcfa1f8c82eaf272064ab430d048043ddeacaf4a34a9718c172bb363f5483871b9d22e12d564a89c450494ba1fe154c4df463144d6bbfa3dd4b1b2461c8ba99c7a3a358c298ff58ba4490714545e2ad93d42561333cf6ba073e9f189ab011d557637599c01469b70aafcffed5b98b31cd2f1cd092fb71f33b919d998e28a14334b18f1c41254e5d4e7839f3f61b359bfaed9e5f5f4455082d3b4fc12b18e3d908d48f6ab2ce244ceb80bc3f2100df81e40d56f621fbed6d08ef9f68c42b80e9dd57a108969593296492d8f5f24455719a8b25e2bf6459098c6733f5cba497d3906061b5f7164d817171c45a7dcfe0538039f7f9867286ef2af28b279003f4f0731d1d0f82b1d0967472e97d723b165d2b84263ff3b7e6acce9f80b74b4fb6bc616e66d59a3db2f3de69c0336d9f2b193c780c42e4743a2eaf8758ae68d21dd6a63a530f24300b2878f05406e6cd539a797ed61380315c6d95bbd9ca2ab6e0e57f05e39651eac3f1744ac68d337a550d6fb0c802f130f20e07cb5df5eef641b797373349a60cdd1bb38de77bb5d4e158a44d71d1a7e17a65330d64585ccc51385f1f93325cc86ccbd5ec1ec4c9202fe3a1fe95ff91a4551561c12717434fa0c1e5a8a1ad9be8515e2c5fcdd4e16c4fefcbaecc894a05b55a274a26998e8539c0d2b2676b41541fe9ba39f0f0f377063d8121d7bb18efee1a78cc90df46777246838a4ecbbf325ea37c013d95ad771c59ce85aa41875c71faa6985d620f86642000c9109af2ee95f0306345477473fe4b842e6e8d46d9d06e0e3cb4ea4836145ccef9f915322c0ee89a30b3a568791c58d99a36f2f576debd181fa65345fc2f4ab696077feb6eed72c216edb8ee7f138ede856d88ecb75e94bd2c010d4193ca731ac381adabb27f58ad16f0f2a42a9a30237f14ce79cfa1103b2c5772ee235f5886458d2bc0c3f0368d49e487971d7b0174e8fe75f2000fdfabf214db0f2b3473ee0414703e37b9f945695dd83808b07649bbbdf67d0637559392a12fc9f623203ec870da49c3e3cd8a7fc7bd1db6ac76b4fd1a0470b9c4193aacd2035516f8d1f6a8874a38580d48f4802cd293cabea25ac26a0cb5fe99e7c24524d793ac9a90fb23bf93d3161a56b4708b26936f120d30972ddacc8d6c9d4ffdb29faabf54d64e6ed0dfa0f8f4183e4bd564cfcc784c75381f6ce7a89df950ae6816dc8e289f623695a4acb3ba8cb2aff682bca8a9bdb8e0c74143d6619951fda93d94d08be7f409b82be193bf0fef41fc609a1fd394fdf422fd013dd520aaa97b070e2cee8a06e882ebff9e580c41fd81d33df4bb8e97304a8ecee092865beabd7dd42a635e8645cc3de34e152a3325394eff362451a85c38cc0d0946e48e8d0970f4500fe9f68c759c2556e16c4509f331b11e3dd917fe9309bbdc135dc1227bfb5bddfa5c7868c8a018fee31e670eef4f7a43ee5a7dfb24a1e04188e07e621acdc2006bfa39e73183793442ef911215345989526e9521be9af6c65d4c87c37b0e99b7019c45ad7eb3b32a65f03cf043aba57d289ed0ccf329f442b50770aa7a39eea514db57b91093316dac72e8165acfd4eaa8d3072c643f9b0391e7a485471468dc9cbdfb997e0a1a81a3e3f974c2ae7611fb5e8f7018d5e67cadaccaa834e8aafff990a41b59f1c55147bd7e20928da6676ed27cdc08cc17fe40af4385f12cacf88eadced0d82a288df4303e478a4681ef3cd9b745500a8e733714efcb2d0d2c7c856511b7186e8d67fe70a3b3eb34ed134f8d0eb3388f6086da589ee0378303e8ac73f48e21881d245fe97d66feceeec5a395921e431a89c0a0c19a1ec3d3f96ba5ecb29275af35f443a67c54ac0cbd9d933a24d350b049a7b21230ffd514c0fde79e99b1b277bb1dfd459fb1320193d2fb61c6172f804603e0dcf23ffe13f16df20b77060539bdaf69e4bae8814086ad82e41011e46e823083bb3eda2282897f1806df843fbd813f17bd40de46308103b11d65c38e538e7b371ae02fbb732be356958a936e4660df5e8b8b3bbd57b8873b325fc8da3a6eba7f5053325493fb597c2303b923ec895a0939935d5b22c896c205dd7f57aa83b90b15ee31019f58bf78db2c8390dffbfd8b0ff8b79a4dbbc1376dda5d2765a884fc571f20cda12e5f6ff849ad60b8a42b6b5c0b4c5a8986b4f1a4f6fbdb0dffff29f63c61aa9deda9ae0b2af65fe7c1790c1b505b5597b48f91dc6907bc898dbf9e3eb4916e185ac09ae2b894e3f297a22c6e94ec8e18124bd0f28fd5eeb33409ba11be0961a27494c8a3ed0d494a0aa13ed5fd1490cc90295a11723a4af0970dd3eede661b3a9f83b85eef13f7ad4d5cda6f59259862605be8700cf5340b9cae0a3a1340ef9077f9d63742201d577d9b1c6a87e463f1da79e40c0914a9af5e17e8fcc43c7781c42dacf520050a1f34e341c75d34d634bd1661afaaac963b402b7b431e341d053b8ece5d0f0cf643d6c05b739e3b4e8bad3d01803470246ced99c139cc6dc41653a18e7f8cbaa3dd3155a60a2ffdba3dfc9662930642b7277cde21c7095e169148ae1c6e5cafe86cff7829e2e7d433d5b04bf188286f21fbac55aaa787f6ff026a597dbe88b9d49f87497c8063bef0eb208f2cb757ab9ec0bed3621dce41f449f592933ae28c135bcf5ba0aec9512d1c16d436ec1bfe62912f30ca8b950fe5de60d31df62bc403d1bced95948569d97d9ac7dbbac9e7b300e4f39b9dd602ec06d555354edffe800f29dda0f1a70e381708ab2eaf0913b72ed424ac709f2f93437086907b73178682e8109cf1d1441735fb87d23f74301cca9f7ece68f1c8966eb9512c24eea5ac9ff04049aa5cee56ab9d207c136e2c05aa388872ab8ef2541200bb01f92c888b8d6f164ad87293fd180137444180d91917900452a0f663d7fb79b3ee073a73e49eac8b692c6cca21999b5bfb5dda55990d12070b4eaa221316342f0392ac0a0f745d4a7842ba47d29cb89891ac01fdd07476134d86219e5cd9f0a113398a000a06788e21047e791ee559666b44b7cc31535f87e562b5ae2c64594f518d9dcc4d571916b0062f827c4130c0af1fa742b3c7f5b7a585c09d46a9beb007dc778237b33581971f6e70407ec0e9a8f735c8d228c0745ac90ec6b73c6f454755035109435d90527a162f88c250b92bc75041344ccaa7ec7222b38af01f2afaf8cd0839f185ce87787bf6217264c29284b13393d8b655441a1809e2772667b8c67a4cbeecf16f67d92b77ae993da0ec0a12ba4fd7a386907344f37f15586ab7203eb1ed72b45e6435760e0376304fd5c57ea4d9332cf66b730932c78dbdc0d3bc02652c3b32834c63e23403fc6653e6f3e949eb4b2d7ddbf6772a8d824a84b1909e9c5ade89c73fc0b59b8fc17d046e42b7b2290dbb3816ed5d6d0d3247902c57f4277b8cee267f81d5bb8c93914c6c4e4bc3d1d5fe0f479a31e80f7170d1c102c008f7dc6f9c375cdfb3ec3d06a1aba0fc5c7c23dbd5e9464ac093bcd5f5869a252fb2b02f50ad8a00b1514314a40bb7d983e45da7935a673c62bb4762c672306caf74d28edc5f436875011631790aa16d396281eff0eca4e517d821b02d71e32b9ed86cf41f8ff443a35ed39233f4f2a08bba6a1ea7b1e83f4536a5fe78cd2801cf9a013b6de618c56e2e899cdb37b29ddd6806191b57dba3e88e20fda14dc34ceb24e0851c4693c8f1e91f220ed121678a110f0d03c201bf086e8f2071eaf00fe1b4bc44a5d267e5bf301dba18bfb9c577afd0a689122563098822525ed9b31d4ae15adc33bf8976305f9be9393dc858bf38c7467734c16e51f2db5d81dc1f5dd3beda309e4d6fbf5333e47345491cdb6572350a69f39217642ba5f047868017e32cd4ba4fc396bab0ba85fe54ab7d00ca5d292b52d2299e711681a90cad1f68ef9be6c5fffb609d39fde25cd26ca7e5e3fe7fa93086e8a9835e53cb89a2879c5b773a8eb3125af128e142a2486cd0bd9c65b6ed416f70464012fef190a35a74a851a7f58cf31fed24293cb68a51190e9fbd0de94127498172fb2e24708ce226d972553932aa10ae4963fc0331aee330ae65dd007aed692033a5fe893b3f76b4ba4039a0c0c524630b323d1eaaba042ead6ec224521646a8845a322f3af291badc9032a076b251def52b6292e87b6ac39ef36867e65798fe1d69849c39408e80b71a37aad9ebed3e1bbe819560384e75d688c844b26cc7f18e8d44cd3139036cac1c0bb69c77e56c635022e8996c5da49a5037f8a16c0695c06a0fb38c57e6ae8707fff5698d0f2896a8a445d3fc3c7578dd05f8bc7c1dcf9fb5f29e12ad9a53d30b2096012d63d8662e1fcee73e0de6dac7851f443733a0c72e82de4f0b968fff8cdb4dc916c2e803d9f892a40b0a6425696b45ba038ed063afdbd688d90de3275d40f17a97f59d49f31596575716734a028e635e7c9bd03d25ffd898735f77626010e9b16250666347acd3dfd726023a06f766e3d836adf30ab8ffa69c06bd859b72da7c7490d67b7af79a7056302b3bc07c36640930c6b6ce386202dd0db99c155fad760eeeb489a9ece7e6cb68075615a2c4571dca4c9f01788f440ffa14736e36f12b3ea1a52cd9532e00dcc2f8a1aa8afe92dadaeca5858e5ca0c7d033f6601465ba5ebcc2f5ca3a4481333804d45c4924e4136c577b6ad39fde2f5bbc1e9a968b38bef6f5d02996bb9de23d73d2aaf051cbe906bfdd642ae418b3da35e48b21852ec311201cec2ea65d318550f8c6c3cc44117fc82383eeecc7ad9e05af2e076905f37d6ea1e284f2eaa77afa40a6b158bd4b809d04f78cc3d08f80965bbfa514b63ccfe317d45c0e8fd01c5fa00f9b1b9d057078e9561c2392762156e0b517794d84db5639fa202ed534bfc5dd37735d1a49ca0d44e1d9f33688645cd3450670a19645f09043501e0c7e2b167403aba3a29b79754c1e72628fd977628dfcd976290d07288788fefecaacde671bfcc50eee68c99899f41e6162c38f5ece9b2e6cecf793744315e6c9137b8ec57196875bce802499d8a65c46fd7179af9ab23ef920bce87de7c56b957864cfa812d1659dedf7063fabcfe341d197cd8e47ea0644ef53326e5ae53b67efd0b918e8eaff89763e879fba161852c1</script></div><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">
+            </div>
+
+            <!-- Post information -->
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 post-tags">
+        
+            <i class="fas fa-tag" style="vertical-align: middle;font-size: .8rem;"></i>
+            tags:&nbsp;
+            
+            
+        
+            <a href="/tags/web/">#web</a> <a href="/tags/vps/">#vps</a> <a href="/tags/nginx/">#nginx</a> <a href="/tags/ssh/">#ssh</a>
+        
+    </div>
+
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+        <ul class="pagination d-block text-center">
+            
+                <li class="previous page-item d-inline"><a href="/2019/01/11/thinkphp-5-x-pocsuite/" class="page-link float-left">&larr;  Newer</a></li>
+            
+            
+                <li class="next page-item d-inline"><a href="/2018/10/28/docker-1/" class="page-link float-right">Older  &rarr;</a></li>
+            
         </ul>
-      
+    </div>
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="t43wiu6">
-            
-              <p class="site-author-name" itemprop="name">t43wiu6</p>
-              <p class="site-description motion-element" itemprop="description">何人的归宿是星辰大海?</p>
-          </div>
-
-          <nav class="site-state motion-element">
 
             
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">14</span>
-                  <span class="site-state-item-name">posts</span>
-                </a>
-              </div>
-            
+                <!-- Comments -->
+                
+
+                
 
             
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
-                  <span class="site-state-item-name">categories</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
-                  <span class="site-state-item-name">tags</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/t43wiu6" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
-            </div>
-          
-
-          
-          
-
-          
-          
-            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
-              <div class="links-of-blogroll-title">
-                <i class="fa  fa-fw fa-link"></i>
-                Links
-              </div>
-              <ul class="links-of-blogroll-list">
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://gh0st.cn/" title="Acmesec_Chen" target="_blank">Acmesec_Chen</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://quyunjie.cn/" title="quyunjie" target="_blank">quyunjie</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://chybeta.github.io/" title="chybeta" target="_blank">chybeta</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://rcoil.me/" title="Rcoll" target="_blank">Rcoll</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://yulige.top/" title="郁离歌" target="_blank">郁离歌</a>
-                  </li>
-                
-              </ul>
-            </div>
-          
-
-          
 
         </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SSH部署阿里云vps"><span class="nav-number">1.</span> <span class="nav-text">SSH部署阿里云vps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装nginx"><span class="nav-number">2.</span> <span class="nav-text">安装nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Git"><span class="nav-number">3.</span> <span class="nav-text">安装Git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置nginx"><span class="nav-number">4.</span> <span class="nav-text">配置nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Git钩子hooks"><span class="nav-number">5.</span> <span class="nav-text">配置Git钩子hooks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">6.</span> <span class="nav-text">测试</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
     </div>
-  </aside>
+</article> 
 
 
-        
-      </div>
-    </main>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    <style>
+        #toc-content .toc-link::before {
+            background-color: transparent;
+            max-height: 25px;
+        }
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">t43wiu6</span>
+        #toc-content .toc-link.is-active-link::before {
+            background-color: #404040;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <div class="ui-toc dropup scrollspy-body pull-right" style="right: 3%;">
+        <button type="button" class="toc-btn btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <i class="fas fa-list"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right p-2" aria-labelledby="tocLabel">
+            <div class="toc-widget">
+                <div id="toc-content" class="text-truncate">
+                </div>
+            </div>
+            <div class="toc-menu pt-3 pl-4">
+                <a class="expand-toggle d-block py-1" href="#"><span class="expand-text">Expand all</span><span class="close-text" style="display: none;">Collapse all</span></a>
+                <a class="back-to-top d-block py-1" href="#">Back to top</a>
+                <a class="go-to-bottom d-block py-1" href="#">Go to bottom</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '#toc-content',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: 'article',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            // For headings inside relative or absolute positioned containers within content.
+            hasInnerContainers: true,
+        });
+    </script>
 
-  
-</div>
-
-
-
-
-
-
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a></div>
-
-
-
-
-        
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
 
     
 
-  </div>
 
-  
+    <!-- Footer -->
+    <hr>
 
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 text-center">
+                <ul class="list-inline">
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <ul class="copyright footer-menu list-inline">
+                    
+                    
+                        <li class="list-inline-item">
+                            
+                            
+                            <a href="/">
+                                
+                                    Home
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/archives">
+                                
+                                    Archives
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/tags">
+                                
+                                    Tags
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/categories">
+                                
+                                    Categories
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/about">
+                                
+                                    About
+                                
+                            </a>
+                        </li>
+                    
+                </ul>
+                <p class="copyright footer-author">
+                    &copy; -2020 
+                    <a rel="external" class="copyright-link" href="t43" target="_blank">t43M!ne</a><br>
+                    Powered by <a rel="external" class="copyright-link" href="https://hexo.io/" target="_blank">Hexo</a>  
+                    <span class="copyright-split">&nbsp;|&nbsp;&nbsp;</span>
+                    Theme <a rel="external" class="copyright-link" href="https://github.com/luswdev/hexo-theme-clean.git" target="_blank">Clean</a>
+                    
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    <!-- jQuery -->
+<script src="//cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+
+<!-- For drop down -->
+<script src="//cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<!-- Gallery -->
+<script src="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js"></script>
+<!-- Busuanzi -->
+
+
+<!-- Search script -->
+<script src="/js/search.js"></script>
 <script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
+    $(function () {
+        searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+    });
 </script>
 
 
+<script src="/js/main.js"></script>
+
+
+    <!-- Search Modal -->
+    <!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <input type="text" class="form-control" placeholder="Searching Keywords..." id="searchInput">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="searchResult">
+                    <div class="search-empty text-center text-muted p-5">
+                        <i class="far fa-meh"></i>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
 
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url);
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>
